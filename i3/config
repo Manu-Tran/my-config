@@ -14,7 +14,7 @@ set $sup Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 12
+font pango:Noto Mono for Powerline 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -31,19 +31,24 @@ font pango:monospace 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec i3-sensible-terminal
+
+# Unbinding Cap Lock and bind it to Esc
+exec setxkbmap -option caps:swapescape
+
+
 
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $mod+Shift+w exec i3lock -feb -c 444444
+bindsym $mod+Shift+w exec i3lock-fancy -- scrot
 bindsym $mod+Shift+p exec shutdown now
-exec xautolock -notify -time 15 -locker 'i3lock -feb -c 444444' &
+exec xautolock -notify -time 15 -locker 'i3lock-fancy -- scrot' &
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+m focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -52,10 +57,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+m move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -70,10 +75,18 @@ bindsym $mod+Control+Up move workspace to output up
 bindsym $mod+Control+Down move workspace to output down
 
 # move focused workspace between monitors
-bindsym $mod+Control+m move workspace to output right
-bindsym $mod+Control+j move workspace to output left
-bindsym $mod+Control+l move workspace to output up
-bindsym $mod+Control+k move workspace to output down
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+j move workspace to output down
+bindsym $mod+Control+k move workspace to output up
+bindsym $mod+Control+l move workspace to output right
+
+# move to last workspace
+bindsym $mod+Tab workspace back_and_forth
+
+# add to scrapboard
+bindsym $mod+shift+Escape move scratchpad
+bindsym $mod+Escape scratchpad show
+
 
 # split in horizontal orientation
 bindsym $mod+b split h
@@ -101,6 +114,10 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# screenshot
+bindsym Print exec scrot ~/Pictures/Screenshots/screenshot_%Y_%m_%d_%H_%M_%S.png
+bindsym $sup+Shift+s exec gnome-screenshot -a
+
 
 ##### WORKSPACES ### ##################################################
 
@@ -111,11 +128,13 @@ set $ws2 "2: Navigateur"
 set $ws3 "3: Console"
 set $ws4 "4: Chat"
 set $ws5 "5: Mail"
-set $ws6 "6: Auxiliaire-1"
-set $ws7 "7: Auxiliaire-2"
-set $ws8 "8: Auxiliaire-3"
-set $ws9 "9: Auxiliaire-4"
-set $ws10 "10: Musique"
+set $ws6 "6: Aux-1"
+set $ws7 "7: Aux-2"
+set $ws8 "8: Aux-3"
+set $ws9 "9: Aux-4"
+set $ws10 "10: Aux-5"
+set $ws11 "11: Monitoring"
+set $ws12 "12: Musique"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -128,6 +147,10 @@ bindsym $sup+2 workspace $ws7
 bindsym $sup+3 workspace $ws8
 bindsym $sup+4 workspace $ws9
 bindsym $sup+5 workspace $ws10
+bindsym $sup+twosuperior workspace $ws11
+bindsym $mod+twosuperior workspace $ws12
+bindsym $sup+grave workspace $ws11
+bindsym $mod+grave workspace $ws12
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -140,12 +163,22 @@ bindsym $sup+Shift+2 move container to workspace $ws7
 bindsym $sup+Shift+3 move container to workspace $ws8
 bindsym $sup+Shift+4 move container to workspace $ws9
 bindsym $sup+Shift+5 move container to workspace $ws10
+bindsym $sup+Shift+twosuperior move container to workspace $ws11
+bindsym $sup+Shift+grave move container to workspace $ws11
+bindsym $mod+Shift+twosuperior move container to workspace $ws12
+bindsym $mod+Shift+grave move container to workspace $ws12
 
-assign [class="Telegram"]   "4: Chat"
-assign [class="Riot"]       "4: Chat"
-assign [class="Slack"]      "4: Chat"
-
-assign [class="Thunderbird"] "5: Mail"
+assign [class="Telegram"]   $ws4
+assign [class="Riot"]       $ws4
+assign [class="Thunderbird"] $ws5
+assign [class="^Mailspring"] $ws5
+for_window [class="Spotify"] move to workspace $ws12
+assign [class="^Code$"] $ws1
+assign [class="^Google$"] $ws2
+for_window [title="^Vim$"] move to workspace $ws1
+for_window [title="^Gtop$"] move to workspace $ws11
+for_window [title="^YouTube Music$"] move to workspace $ws12
+for_window [title="^WhatsApp$"] move to workspace $ws4
 
 ###########################################################################
 
@@ -165,10 +198,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym m resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -187,14 +220,20 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks
+	#status_command sh -c 'i3status | ~/i3status-netusage --interface=wlp2s0'
+	font pango:Noto Mono for Powerline 11
+
 }
 
 ###### EXEC ON STARTUP ###################################################
 
 
-exec --no-startup-id clipit
-exec --no-startup-id nm-applet
+#exec --no-startup-id clipit
+exec --no-startup-id nm-applet                #Network Manager Widget
+exec --no-startup-id compton                  #Transparency for terminal
+exec --no-startup-id source ~/.fehbg          #Set Background
+exec --no-startup-id xset r rate 250 18       #Key Pressed Rate (initial delay in ms, nb of repeat per sec)
 
 ##### AUDIO CONTROL ######################################################
 
@@ -224,8 +263,8 @@ bindsym $mod+Shift+a mode "$mode_alsa"
 
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 2 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 2 # decrease screen brightness
 
 
 ##### PROGRAMS LAUNCHERS ##################################################
@@ -247,11 +286,22 @@ mode "$mode_launcher" {
     bindsym e exec "telegram-desktop"
     bindsym r exec "riot-desktop"
     bindsym s exec "slack"
+    bindsym g exec "google-chrome"
+    bindsym s exec "spotify"
+    bindsym c exec "code"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 
-set $mode_launcher Launch: [f]irefox [t]hunderbird [r]iot t[e]legram [s]lack
+set $mode_launcher Launch: [f]irefox [t]hunderbird [r]iot t[e]legram [g]oogle-chrome [s]potify [c]ode [s]lack
 bindsym $mod+o mode "$mode_launcher"
+
+
+# i3-gaps feature
+gaps inner 10
+gaps outer 0
+smart_gaps on
+for_window [class="^.*"] border pixel 1
+new_window 1pixel
 
