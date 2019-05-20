@@ -263,8 +263,8 @@ bindsym $mod+Shift+a mode "$mode_alsa"
 
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 2 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 2 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
 
 
 ##### PROGRAMS LAUNCHERS ##################################################
@@ -302,6 +302,6 @@ bindsym $mod+o mode "$mode_launcher"
 gaps inner 10
 gaps outer 0
 smart_gaps on
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 5
 new_window 1pixel
 

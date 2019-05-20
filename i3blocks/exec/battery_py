@@ -16,7 +16,12 @@ for line in rawOutput:
         line=line.split(" ")
         percent[line[1][0]] = int( onlyDigit( line[3] ))
         if line[2][:-1] == "Charging":
-            charging = True
+            charging = 1
+        elif line[2][:-1] == "Discharging":
+            charging = 0
+        else :
+            charging = 0.5
+
 
 rawOutputCapacity = os.popen(bash_command_bis).read().split('\n')
 capacity = dict()
@@ -33,10 +38,13 @@ truePercentage = 0
 for i in range(len(percent)):
     modifier = capacity[str( i )]/sum(capacity.values())
     truePercentage += percent[str(i)]*modifier
-if charging :
+if ( charging ) == 1 :
     status = " CHR"
-else :
+elif ( charging ) == 0:
     status = " DIS"
+else :
+    status = " ---"
+
 print(str(int(truePercentage)) + "%" + status)
 print(str(int(truePercentage)) + "%" + status)
 
@@ -48,7 +56,7 @@ if not(charging) :
     elif (int(truePercentage) < 60) :
         print("#FFF600\n")
     elif (int(truePercentage) < 99) :
-        print("#A8FF00\n")
+        print("#88FF00\n")
 
     if (int(truePercentage) < 5) :
         exit(33);
