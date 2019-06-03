@@ -1,0 +1,9 @@
+#!/bin/bash
+sleep 1
+DISPLAY=":0"
+HOME="/home/manu/"
+XAUTHORITY=$HOME/.Xauthority
+export DISPLAY XAUTHORITY
+
+xset r rate 250 18
+setxkbmap -option caps:swapescape
