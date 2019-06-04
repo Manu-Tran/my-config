@@ -31,7 +31,7 @@ font pango:Noto Mono for Powerline 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec gnome-terminal
 
 # Unbinding Cap Lock and bind it to Esc
 exec setxkbmap -option caps:swapescape
@@ -111,6 +111,7 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+focus_follows_mouse no
 # focus the child container
 #bindsym $mod+d focus child
 
@@ -239,17 +240,23 @@ exec --no-startup-id xset r rate 250 18       #Key Pressed Rate (initial delay i
 
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
-bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
-bindsym XF86AudioMute exec amixer set Master toggle # mute sound
+    # increase sound volume
+    bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ && pkill -RTMIN+10 i3block
+    # decrease sound volume
+    bindsym XF86AudioLowerVolume exec amixer set Master 5%- && pkill -RTMIN+10 i3block
+    # mute sound
+    bindsym XF86AudioMute exec amixer set Master toggle && pkill -RTMIN+10 i3block
 
 # For keyboards without Audio keys
 # Press $mod+Shift+a to enter alsamixer mode
 mode "$mode_alsa" {
-    bindsym m exec "amixer sset Master mute"
-    bindsym u exec "amixer sset Master unmute"
-    bindsym Up exec "amixer sset Master 5%+"
-    bindsym Down exec "amixer sset Master 5%-"
+    bindsym m exec "amixer sset Master mute && pkill -RTMIN+10 i3block"
+    bindsym u exec "amixer sset Master unmute && pkill -RTMIN+10 i3block"
+
+    bindsym Up exec "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
+    bindsym Down exec "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
+    bindsym k exec "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
+    bindsym j exec "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -263,15 +270,18 @@ bindsym $mod+Shift+a mode "$mode_alsa"
 
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
+
+# increase screen brightness
+bindsym XF86MonBrightnessUp exec light -A 5 && pkill -RTMIN+11 i3block
+# decrease screen brightness
+bindsym XF86MonBrightnessDown exec light -U 5 && pkill -RTMIN+11 i3block
 
 
 ##### PROGRAMS LAUNCHERS ##################################################
 
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec dmenu_run -fn Inconsolata
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
