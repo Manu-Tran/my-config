@@ -40,9 +40,6 @@ exec setxkbmap -option caps:swapescape
 
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $mod+Shift+w exec i3lock-fancy -- scrot
-bindsym $mod+Shift+p exec shutdown now
-exec xautolock -notify -time 15 -locker 'i3lock-fancy -- scrot' &
 
 # change focus
 bindsym $mod+h focus left
@@ -109,11 +106,12 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+p focus parent
+
+# focus the child container
+bindsym $mod+o focus child
 
 focus_follows_mouse no
-# focus the child container
-#bindsym $mod+d focus child
 
 # screenshot
 bindsym Print exec scrot ~/Pictures/Screenshots/screenshot_%Y_%m_%d_%H_%M_%S.png
@@ -183,6 +181,25 @@ for_window [title="^WhatsApp$"] move to workspace $ws4
 
 ###########################################################################
 
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (q) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym q exec --no-startup-id systemctl poweroff, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+p mode "$mode_system"
+
+# lock the computer
+bindsym $mod+Shift+w exec i3lock-fancy -- scrot
+exec xautolock -notify -time 15 -locker 'i3lock-fancy -- scrot' &
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -258,24 +275,23 @@ exec --no-startup-id xset r rate 250 18       #Key Pressed Rate (initial delay i
 # For keyboards without Audio keys
 # Press $mod+Shift+a to enter alsamixer mode
 mode "$mode_audio" {
-    bindsym m exec "amixer sset Master mute && pkill -RTMIN+10 i3block"
-    bindsym u exec "amixer sset Master unmute && pkill -RTMIN+10 i3block"
+    bindsym m exec "amixer sset Master toggle && pkill -RTMIN+10 i3block"
 
     bindsym Up exec "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
     bindsym Down exec "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
     bindsym k exec "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
     bindsym j exec "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
 
-    bindsym l exec "player_control next"
-    bindsym h exec "player_control previous"
-    bindsum space exec "player_control playpause"
+    bindsym l exec "player_control next && pkill -RTMIN+10 i3block"
+    bindsym h exec "player_control previous && pkill -RTMIN+10 i3block"
+    bindsym space exec "player_control playpause && pkill -RTMIN+10 i3block"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 
-set $mode_audio Audio Control: [m]ute [u]nmute [Up] [Down]
-bindsym $mod+Shift+a mode "$mode_audio"
+set $mode_audio Audio Control: ToggleMute[m]  +[Up|k] -[Down|j] Play-Pause[Space] Next[l] Previous[h]
+bindsym $mod+a mode "$mode_audio"
 
 
 
@@ -304,21 +320,23 @@ bindsym $mod+d exec dmenu_run -fn Inconsolata
 # Press $mod+o to enter launch mode
 mode "$mode_launcher" {
 
-    bindsym f exec "firefox"
-    bindsym t exec "thunderbird"
-    bindsym e exec "telegram-desktop"
-    bindsym r exec "riot-desktop"
-    bindsym s exec "slack"
-    bindsym g exec "google-chrome"
-    bindsym s exec "spotify"
     bindsym c exec "code"
+    bindsym f exec "firefox"
+    bindsym g exec "google-chrome"
+    bindsym l exec "slack"
+    bindsym m exec "mailspring"
+    bindsym s exec "spotify"
+    bindsym t exec "telegram-desktop"
+    bindsym w exec "whatsapp"
+    bindsym y exec "youtube-music"
+
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 
-set $mode_launcher Launch: [f]irefox [t]hunderbird [r]iot t[e]legram [g]oogle-chrome [s]potify [c]ode [s]lack
-bindsym $mod+o mode "$mode_launcher"
+set $mode_launcher Launch: [m]ailspring [t]elegram [g]oogle-chrome [s]potify [c]ode s[l]ack [y]outube-music [w]hats-app
+bindsym $mod+Shift+Return mode "$mode_launcher"
 
 
 # i3-gaps feature
