@@ -56,7 +56,7 @@ cnoremap jk <C-c>
 " inoremap <C-j> <C-o>j
 " inoremap <C-k> <C-o>k
 " inoremap <C-^> <C-o><C-^>
-
+let g:AutoPairsShortcutJump='<C-o>'
 " qq to record, Q to replay
 nnoremap Q @q
 
@@ -192,6 +192,8 @@ set mouse=a                                   " Mouse scrolling
 set ttymouse=xterm2                           " Mouse setting for tmux
 set ttymouse=sgr
 
+" Tests
+set viewoptions=cursor,folds,slash,unix
 " ====================== Plugins ========================
 
 " The following 3 lines are required for vundle
@@ -292,7 +294,8 @@ Plugin 'google/vim-searchindex'
 " Better Completion for external modules
 Plugin 'maralla/completor.vim'
 Plugin 'tpope/vim-abolish'
-
+" Save State
+Plugin 'zhimsel/vim-stay'
 call vundle#end()
 
 
@@ -499,6 +502,7 @@ nmap <leader>d <Plug>(ale_fix)
 
 " ======================= Folds =======================
 
+let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
 let g:javaScript_fold = 1
 let g:sh_fold_enabled= 7

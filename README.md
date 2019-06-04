@@ -14,6 +14,7 @@ Package needed :
   i3lock-fancy
   i3lock-color
   acpi
+    playerctl
 
 # powerlevel9k
 Package needed :
