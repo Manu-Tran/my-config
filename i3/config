@@ -282,9 +282,10 @@ mode "$mode_audio" {
     bindsym k exec "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
     bindsym j exec "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
 
-    bindsym l exec "player_control next && pkill -RTMIN+10 i3block"
-    bindsym h exec "player_control previous && pkill -RTMIN+10 i3block"
-    bindsym space exec "player_control playpause && pkill -RTMIN+10 i3block"
+    bindsym l exec "player_control next && pkill -RTMIN+10 i3block", mode "default"
+    bindsym h exec "player_control previous && pkill -RTMIN+10 i3block", mode "default"
+    bindsym space exec "player_control playpause && pkill -RTMIN+10 i3block", mode "default"
+
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
