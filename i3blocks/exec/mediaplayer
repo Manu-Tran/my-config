@@ -16,8 +16,6 @@ if (BLOCK_INSTANCE) :
 # } elsif ($ENV{'BLOCK_BUTTON'} == 3) {
 #     system("playerctl $player_arg next");
 # }
-
-artist = os.popen("playerctl " +player_arg+ " metadata artist").read().strip('\n')
-title = os.popen("playerctl " +player_arg+ " metadata title").read()
-print(artist + " - " + title)
+output = os.popen('playerctl metadata '+ player_arg+ ' --format "{{ status }} : {{ artist }} - {{ title }}"').read()
+print(output)
 
