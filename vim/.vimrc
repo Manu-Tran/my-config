@@ -222,15 +222,15 @@ Plugin 'scrooloose/nerdcommenter'                 " Commenting Shorcuts
 Plugin 'djoshea/vim-autoread'                     " Auto reload unchanged buffers on disk change
 Plugin 'luochen1990/rainbow'                      " Rainbow parentheses matching
 
-if has('python3')
-  " Snippets [Ultisnips]
-  Plugin 'SirVer/ultisnips'                         " Track the engine.
-  Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
+" if has('python3')
+"   " Snippets [Ultisnips]
+"   Plugin 'SirVer/ultisnips'                         " Track the engine.
+"   Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
 
   " AutoCompletion - Requires compiling
-  Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
-endif
-
+  " Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
+"endif
+Plugin 'davidhalter/jedi-vim'
 " SupeTab - To make snippets and auto complete work nicely together
 Plugin 'ervandew/supertab'                        " Use Tab for insert completion needs
 
@@ -341,6 +341,15 @@ else
   let &t_SI = "\<esc>]50;CursorShape=1\x7"
   let &t_EI = "\<esc>]50;CursorShape=0\x7"
 endif
+
+" ===================== Jedi Config ======================
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>o"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "<leader>k"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
 
 " ====================== NERDTree Config ==================
 
@@ -553,6 +562,10 @@ function! s:go_indent(times, dir)
 endfunction
 nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
 nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
+
+" =========================== Autocompletion ==============================
+
+let g:jedi#popup_on_dot = 0
 
 " ----------------------------------------------------------------------------
 " <Leader>?/! | Google it / Feeling lucky
