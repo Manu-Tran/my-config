@@ -121,16 +121,17 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
-[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
+[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-history
+[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-history
 [[ -n "$key[Left]"   ]] && bindkey -- "$key[Left]" backward-word
 [[ -n "$key[Right]" ]] && bindkey -- "$key[Right]" forward-word
 
-bindkey "^K" up-line-or-history
-bindkey "^J" down-line-or-history
+bindkey "^K" up-line-or-beginning-search
+bindkey "^J" down-line-or-beginning-search
 bindkey "^H" backward-char
 bindkey "^L" forward-char
 bindkey "^N" clear-screen
+bindkey "^D" backward-delete-char
 
 ################### FZF #####################################
 #
