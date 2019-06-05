@@ -124,6 +124,7 @@ pcmanfm
 perl
 perl-file-mimeinfo
 pkgconf
+playerctl
 powertop
 sbxkb
 screenfetch
