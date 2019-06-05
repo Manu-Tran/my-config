@@ -33,8 +33,10 @@ markup=none
 
 [brightness]
 label=☀
-interval=5
+interval=once
+signal=11
 color=#FF1111
+
 # Volume indicator
 #
 # The first parameter sets the step (and units to display)
@@ -45,7 +47,7 @@ label=🔊
 #label=♪
 instance=Master
 #instance=PCM
-interval=1
+interval=once
 signal=10
 color=#FFAA00
 
