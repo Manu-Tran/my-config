@@ -56,7 +56,7 @@ cnoremap jk <C-c>
 " inoremap <C-j> <C-o>j
 " inoremap <C-k> <C-o>k
 " inoremap <C-^> <C-o><C-^>
-let g:AutoPairsShortcutJump='<C-M>'
+let g:AutoPairsShortcutJump='<C-s>'
 " qq to record, Q to replay
 nnoremap Q @q
 
