@@ -134,6 +134,7 @@ speedtest-cli
 sudo
 sysfsutils
 syslog-ng
+sysstat
 systemd-fsck-silent
 systemd-sysvcompat
 tar

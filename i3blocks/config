@@ -110,7 +110,7 @@ color=#0000FF
 # see the script for details.
 [cpu_usage]
 label=CPU
-interval=1
+interval=5
 min_width=CPU:100%
 #separator=false
 
