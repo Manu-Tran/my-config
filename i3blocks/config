@@ -58,7 +58,7 @@ instance=Master
 #instance=PCM
 interval=once
 signal=10
-color=#FFAA00
+color=#FFAA22
 
 # Memory usage
 #
@@ -73,7 +73,7 @@ color=#FFFFOO
 label=SYS
 interval=30
 separator=false
-color=#FFFF00
+color=#FFFF49
 # Disk usage
 #
 # The directory defaults to $HOME if the instance is not specified.
@@ -90,7 +90,7 @@ color=#FFFF00
 # The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
 [iface]
 #instance=wlan0
-color=#00FF00
+color=#39FF39
 interval=10
 separator=false
 
@@ -102,8 +102,9 @@ separator=false
 [bandwidth]
 #instance=eth0
 interval=1
-color=#0000FF
-
+color=#2abafa
+min_width=D 99K U 9K
+align=right
 # CPU usage
 #
 # The script may be called with -w and -c switches to specify thresholds,
@@ -111,7 +112,8 @@ color=#0000FF
 [cpu_usage]
 label=CPU
 interval=5
-min_width=CPU:100%
+min_width= CPU 99.9%
+align=center
 #separator=false
 
 #[load_average]
@@ -129,9 +131,9 @@ interval=5
 # Date Time
 #
 [time]
-command=date '+%Y-%m-%d %H:%M:%S'
+command=date '+%Y-%m-%d %H:%M:%S '
 interval=5
-color=#DD00FF
+color=#DD22FF
 
 
 # OpenVPN support

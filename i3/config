@@ -290,6 +290,9 @@ bar {
 }
 
 bar {
+    colors {
+        background  #1a1a1a
+    }
     position top
     workspace_buttons no
     status_command i3blocks
@@ -328,6 +331,8 @@ mode "$mode_audio" {
 
     bindsym l exec "player_control next && pkill -RTMIN+10 i3block", mode "default"
     bindsym h exec "player_control previous && pkill -RTMIN+10 i3block", mode "default"
+    bindsym Shift+l exec "player_control next && pkill -RTMIN+10 i3block"
+    bindsym Shift+h exec "player_control previous && pkill -RTMIN+10 i3block"
     bindsym space exec "player_control playpause && pkill -RTMIN+10 i3block", mode "default"
 
 
