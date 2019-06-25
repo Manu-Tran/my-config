@@ -26,9 +26,12 @@ case "$1" in
     ${CMD}.Play
     exit $?
   ;;
+  "pause" )
+    ${CMD}.Pause
+    ;;
   *)
     echo "Usage: $0 [command]"
-    echo "  commands are: playpause, next, previous, stop, play"
+    echo "  commands are: playpause, next, previous, stop, play, pause"
     exit 1
   ;;
 esac

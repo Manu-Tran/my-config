@@ -119,6 +119,7 @@ palemoon-bin
 pamac
 patch
 patchutils
+pavucontrol
 pciutils
 pcmanfm
 perl

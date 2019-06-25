@@ -37,6 +37,7 @@ markup=none
 instance=spotify
 interval=1
 signal=10
+align=left
 
 # Brightness Indicator
 
@@ -68,12 +69,14 @@ label=RAM
 separator=false
 interval=30
 color=#FFFFOO
+align=center
 
 [root-disk]
 label=SYS
 interval=30
 separator=false
 color=#FFFF49
+align=center
 # Disk usage
 #
 # The directory defaults to $HOME if the instance is not specified.
@@ -84,6 +87,8 @@ label=HOME
 #instance=/mnt/data
 interval=30
 color=#FFFF00
+align=center
+
 # Network interface monitoring
 #
 # If the instance is not specified, use the interface used for default route.
@@ -127,6 +132,7 @@ align=center
 label=⚡
 instance=1
 interval=5
+align=center
 
 # Date Time
 #

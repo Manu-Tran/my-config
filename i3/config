@@ -319,6 +319,15 @@ exec --no-startup-id source ~/.fehbg          #Set Background
     # mute sound
     bindsym XF86AudioMute exec amixer set Master toggle && pkill -RTMIN+10 i3block
 
+    # start the player
+    bindsym XF86AudioPlay exec player_control play && pkill -RTMIN+10 i3block
+    # pause the player
+    bindsym XF86AudioPause exec player_control pause && pkill -RTMIN+10 i3block
+    # previous track
+    bindsym XF86AudioPrev exec player_control next && pkill -RTMIN+10 i3block
+    # next track
+    bindsym XF86AudioNext exec player_control next && pkill -RTMIN+10 i3block
+
 # For keyboards without Audio keys
 # Press $mod+Shift+a to enter alsamixer mode
 mode "$mode_audio" {
@@ -355,6 +364,8 @@ bindsym XF86MonBrightnessUp exec light -A 5 && pkill -RTMIN+11 i3block
 # decrease screen brightness
 bindsym XF86MonBrightnessDown exec light -U 5 && pkill -RTMIN+11 i3block
 
+bindsym $sup+k exec --no-startup-id xdotool click 4
+bindsym $sup+j exec --no-startup-id xdotool click 5
 
 ##### PROGRAMS LAUNCHERS ##################################################
 
@@ -367,7 +378,7 @@ bindsym $mod+d exec dmenu_run -fn Inconsolata
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 
-# Press $mod+o to enter launch mode
+# Press $mod+Shift+Enter to enter launch mode
 mode "$mode_launcher" {
 
     bindsym c exec "code"
@@ -375,6 +386,7 @@ mode "$mode_launcher" {
     bindsym g exec "google-chrome"
     bindsym l exec "slack"
     bindsym m exec "mailspring"
+    bindsym p exec "pavucontrol"
     bindsym s exec "spotify"
     bindsym t exec "telegram-desktop"
     bindsym w exec "whatsapp"
@@ -385,9 +397,8 @@ mode "$mode_launcher" {
     bindsym Return mode "default"
 }
 
-set $mode_launcher Launch: [m]ailspring [t]elegram [g]oogle-chrome [s]potify [c]ode s[l]ack [y]outube-music [w]hats-app
+set $mode_launcher Launch: [m]ailspring [t]elegram [g]oogle-chrome [s]potify [c]ode s[l]ack [y]outube-music [w]hats-app [p]avucontrol
 bindsym $mod+Shift+Return mode "$mode_launcher"
-
 
 # i3-gaps feature
 gaps inner 10
