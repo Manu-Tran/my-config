@@ -102,6 +102,7 @@ POWERLEVEL9K_ANACONDA_BACKGROUND='teal'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='teal'
 
+eval $(thefuck --alias)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
