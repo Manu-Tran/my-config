@@ -23,6 +23,8 @@ set colorcolumn=80                            " show a column at 80 chars
 set ttimeoutlen=10                            " Fast Esc key
 let mapleader=" "                             " Map leader to space bar
 
+set viminfo+=n~/.vim/viminfo
+
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1
 
