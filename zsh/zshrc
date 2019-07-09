@@ -36,7 +36,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # You can set one of the optional three formats:
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd/mm/yyyy"
+HIST_STAMPS="dd.mm.yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -49,7 +49,6 @@ HIST_STAMPS="dd/mm/yyyy"
 plugins=(
   archlinux
   common-aliases
-  colorize
   command-not-found
   copydir
   copyfile
