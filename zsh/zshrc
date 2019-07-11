@@ -147,3 +147,8 @@ bindkey "^D" backward-delete-char
 ####################### Custom autocompletion ######################
 
 compctl -/ -W ~/CurrentProject uvim
+
+######################## Unaliases #################################
+
+unalias fd
+
