@@ -36,7 +36,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # You can set one of the optional three formats:
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd/mm/yyyy"
+HIST_STAMPS="dd.mm.yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -47,7 +47,17 @@ HIST_STAMPS="dd/mm/yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  archlinux
+  common-aliases
+  command-not-found
+  copydir
+  copyfile
+  cp
   git
+  sudo
+  wd
+  web-search
+  z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -102,6 +112,7 @@ POWERLEVEL9K_ANACONDA_BACKGROUND='teal'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='teal'
 
+eval $(thefuck --alias)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -133,11 +144,11 @@ bindkey "^L" forward-char
 bindkey "^N" clear-screen
 bindkey "^D" backward-delete-char
 
-################### FZF #####################################
-#
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
-export FZF_DEFAULT_OPTS="--layout=reverse --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' --bind ctrl-h:preview-up,ctrl-l:preview-down --color fg:252,hl:67,fg+:252,hl+:81"
-
 ####################### Custom autocompletion ######################
 
 compctl -/ -W ~/CurrentProject uvim
+
+######################## Unaliases #################################
+
+unalias fd
+

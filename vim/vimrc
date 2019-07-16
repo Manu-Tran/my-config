@@ -23,6 +23,8 @@ set colorcolumn=80                            " show a column at 80 chars
 set ttimeoutlen=10                            " Fast Esc key
 let mapleader=" "                             " Map leader to space bar
 
+set viminfo+=n~/.vim/viminfo
+
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1
 
@@ -222,8 +224,9 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'tpope/vim-surround'                       " Easy way to swap & remove surrounding quotes or brackets
 Plugin 'tpope/vim-commentary'                     " Comment command
 Plugin 'vim-scripts/ReplaceWithRegister'          " Register management
-Plugin 'jiangmiao/auto-pairs'                     " Auto pairs
 Plugin 'tpope/vim-repeat'                         " Repeat command for other plugin
+
+Plugin 'jiangmiao/auto-pairs'                     " Auto pairs
 Plugin 'terryma/vim-multiple-cursors'             " Multiple cursor matching
 Plugin 'scrooloose/nerdcommenter'                 " Commenting Shorcuts
 "Plugin 'prettier/vim-prettier'                    " Wrapper for prettier
@@ -255,7 +258,7 @@ Plugin 'qpkorr/vim-bufkill'                       " Allows for buffer closing wi
 Plugin 'christoomey/vim-tmux-navigator'           " Vim and tmux harmony
 
 " Markdown
-Plugin 'JamshedVesuna/vim-markdown-preview'       " Vim Markdown Generation
+" Plugin 'JamshedVesuna/vim-markdown-preview'       " Vim Markdown Generation
 
 " HTML
 Plugin 'slim-template/vim-slim.git'               " Syntax Highlighting for Slim
@@ -266,6 +269,7 @@ Plugin 'pangloss/vim-javascript'                  " Better JS Syntax
 Plugin 'mxw/vim-jsx'                              " Better JSX syntax
 Plugin 'othree/javascript-libraries-syntax.vim'   " Syntax for JS Libraries
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'ternjs/tern_for_vim'                      " Async code analysis engine for js
 
 " Liniting
 Plugin 'w0rp/ale'                                 " Async Linting tool
@@ -286,7 +290,7 @@ Plugin 'chrisbra/vim-diff-enhanced'
 " Relative Line Numbers
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
-" Search Indexer
+" Search Indexer : Count the number of finding
 Plugin 'google/vim-searchindex'
 
 " Plugin in test phase :
@@ -294,13 +298,19 @@ Plugin 'google/vim-searchindex'
 " Better Completion for external modules
 Plugin 'maralla/completor.vim'
 Plugin 'tpope/vim-abolish'
+
 " Save State
 Plugin 'zhimsel/vim-stay'
+
+" Show Marks
+Plugin 'kshenoy/vim-signature'
+
 call vundle#end()
 
 
 " ====================== Theme Config ==================
 
+filetype on
 syntax enable on
 "set termguicolors
 "set term=xterm-256color
@@ -378,6 +388,7 @@ if has('python3')
   let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
   let g:ycm_key_list_accept_completion = ['<C-y>']
   let g:SuperTabDefaultCompletionType = '<C-n>'
+  let g:ycm_autoclose_preview_window_after_completion = 1
 
   " better key bindings for UltiSnipsExpandTrigger
   "let g:UltiSnipsExpandTrigger="<c-i>"
@@ -394,19 +405,22 @@ if has('python3')
         \ }
 endif
 
-" ====================== FZF Config ==================
+" ====================== Completor Config ==================
+
+
+" ====================== FZF && Fugitive Config ==================
 
 nnoremap <C-p> :Files<CR>
 
-"nnoremap <C-b> :Buffers<CR>
-nnoremap <C-g>c :Commands<CR>
-
+nnoremap <C-g>t :Buffers<CR>
 nnoremap <C-g>g :Ag<CR>
 nnoremap <C-g>l :BLines<CR>
 nnoremap <C-g>c :BCommits<CR>
-nnoremap <C-g>b :Buffers<CR>
+nnoremap <C-g>b :Gblame<CR>
 nnoremap <C-g>p :GFiles<CR>
 nnoremap <C-g>? :GFiles?<CR>
+nnoremap <C-g>s :Gstatus<CR>
+nnoremap <C-g>d :Gdiff<CR>
 
 " Find word under cursor
 nnoremap <Leader>g :Ag <C-R><C-W><CR>
@@ -459,8 +473,9 @@ set updatetime=100
 " ====================== Markdown Config ==================
 
 " Markdown use github
-let vim_markdown_preview_github=1
-let vim_markdown_preview_browser="Google Chrome"
+" let vim_markdown_preview_github=1
+" let vim_markdown_preview_browser="Google Chrome"
+" let vim_markdown_preview_hotkey='<C-w>'
 
 " ====================== Javascript Config ==================
 
@@ -502,6 +517,9 @@ nmap <leader>d <Plug>(ale_fix)
 
 " ======================= Folds =======================
 
+set foldmethod=syntax
+set foldlevelstart=1
+let javaScript_fold=1         " JavaScript
 let g:fastfold_savehook = 0
 let g:fastfold_fold_command_suffixes = []
 let g:javaScript_fold = 1
@@ -551,29 +569,29 @@ noremap J :call smooth_scroll#down(3, 6, 1)<CR>
 
 let g:airline#extensions#tabline#show_tabs = 0
 
-" ----------------------------------------------------------------------------
-" #gi / #gpi | go to next/previous indentation level
-" ----------------------------------------------------------------------------
-function! s:go_indent(times, dir)
-  for _ in range(a:times)
-    let l = line('.')
-    let x = line('$')
-    let i = s:indent_len(getline(l))
-    let e = empty(getline(l))
+" " ----------------------------------------------------------------------------
+" " #gi / #gpi | go to next/previous indentation level
+" " ----------------------------------------------------------------------------
+" function! s:go_indent(times, dir)
+"   for _ in range(a:times)
+"     let l = line('.')
+"     let x = line('$')
+"     let i = s:indent_len(getline(l))
+"     let e = empty(getline(l))
 
-    while l >= 1 && l <= x
-      let line = getline(l + a:dir)
-      let l += a:dir
-      if s:indent_len(line) != i || empty(line) != e
-        break
-      endif
-    endwhile
-    let l = min([max([1, l]), x])
-    execute 'normal! '. l .'G^'
-  endfor
-endfunction
-nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
-nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
+"     while l >= 1 && l <= x
+"       let line = getline(l + a:dir)
+"       let l += a:dir
+"       if s:indent_len(line) != i || empty(line) != e
+"         break
+"       endif
+"     endwhile
+"     let l = min([max([1, l]), x])
+"     execute 'normal! '. l .'G^'
+"   endfor
+" endfunction
+" nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
+" nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 
 " ----------------------------------------------------------------------------
 " <Leader>?/! | Google it / Feeling lucky
