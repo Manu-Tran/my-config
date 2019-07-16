@@ -212,8 +212,6 @@ Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plugin 'junegunn/fzf.vim'
 " you will need to install the_silver_searcher
 
-" Preview
-Plugin 'skywind3000/vim-preview'
 
 " File Actions
 Plugin 'tpope/vim-eunuch'                         " Vim wrapper for most common UNIX shell commands
@@ -243,7 +241,7 @@ if has('python3')
 endif
 
 " SupeTab - To make snippets and auto complete work nicely together
-Plugin 'ervandew/supertab'                        " Use Tab for insert completion needs
+" Plugin 'ervandew/supertab'                        " Use Tab for insert completion needs
 
 " Themes
 Plugin 'vim-airline/vim-airline'                  " Bottom Airline Bar
@@ -384,10 +382,11 @@ map <Leader>f :NERDTreeToggle<CR>
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 if has('python3')
   " make YCM compatible with UltiSnips (using supertab)
-  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-  let g:ycm_key_list_accept_completion = ['<C-y>']
-  let g:SuperTabDefaultCompletionType = '<C-n>'
+  " let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+  " let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+  " let g:ycm_key_list_accept_completion = ['<C-y>']
+  " let g:SuperTabDefaultCompletionType = '<C-n>'
+  let g:ycm_add_preview_to_completeopt = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
 
   " better key bindings for UltiSnipsExpandTrigger
@@ -395,9 +394,9 @@ if has('python3')
   "let g:UltiSnipsJumpForwardTrigger="<c-f>"
   "let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
-  let g:UltiSnipsExpandTrigger = "<tab>"
-  let g:UltiSnipsJumpForwardTrigger = "<c-f>"
-  let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
+  " let g:UltiSnipsExpandTrigger = "<tab>"
+  " let g:UltiSnipsJumpForwardTrigger = "<c-f>"
+  " let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
 
   " Auto CSS recommendations for YCM
   let g:ycm_semantic_triggers = {

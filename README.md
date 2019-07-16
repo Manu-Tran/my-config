@@ -15,6 +15,7 @@ Package needed :
   i3lock-color
   acpi
     playerctl
+    browser-playerctl
 
 # powerlevel9k
 Package needed :
@@ -26,3 +27,5 @@ Package needed :
     fzf
     fd
     bat
+
+
