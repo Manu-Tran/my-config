@@ -305,6 +305,9 @@ Plugin 'zhimsel/vim-stay'
 " Show Marks
 Plugin 'kshenoy/vim-signature'
 
+" Theme
+Plugin 'joshdick/onedark.vim'
+
 call vundle#end()
 
 
@@ -312,13 +315,14 @@ call vundle#end()
 
 filetype on
 syntax enable on
-"set termguicolors
-"set term=xterm-256color
 set termguicolors
+
+"set term=xterm-256color
+"let g:onedark_termcolors=256
 
 "colorscheme onedark
 
-colorscheme special
+colorscheme onedark
 let g:airline_theme='onedark'
 
 
