@@ -19,7 +19,8 @@ Package needed :
 # powerlevel9k
 Package needed :
 	powerline-fonts-git
-  powerline
+    awesome-terminal-fonts
+    powerline
 
 # vim
     Vundle

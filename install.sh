@@ -22,6 +22,7 @@ mv ~/.config/i3/config "$old_dir"/i3config 2> /dev/null
 mv ~/.config/compton.conf "$old_dir"	   2> /dev/null
 mv ~/.config/i3blocks/config "$old_dir"    2> /dev/null
 mv ~/.zshrc "$old_dir"/zshrc		   2> /dev/null
+mv ~/.zshenv "$old_dir"/zshenv		   2> /dev/null
 
 #################### Linking Files #########################
 
@@ -31,6 +32,7 @@ ln -rsf "i3/config" ~/.config/i3/config
 ln -rsf "compton/compton.conf" ~/.config/compton.conf
 ln -rsf "i3blocks/config" ~/.config/i3blocks/config
 ln -rsf "zsh/zshrc" ~/.zshrc
+ln -rsf "zsh/zshenv" ~/.zshenv
 
 
 #################### Installation ##########################
@@ -41,8 +43,14 @@ read -p "Do you want to install the package ? (y/N) : " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Installing packages..."
-	sudo pacman -S --needed - < pkglist.txt
+    sudo pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
 fi
+
+echo "Installing OhMyZsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"  #Pour OhMyZsh
+
+echo "Installing Vundle..."
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim #Pour Vundle
 
 echo "Installing vim dependencies..."
 vim +PluginInstall +qall
@@ -59,8 +67,6 @@ xrdb Xresources
 
 ########### TO-DO : installation de paquet AUR & Git #######
 
-#sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"  #Pour OhMyZsh
-#git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim #Pour Vundle
 echo "Done !"
 
 
