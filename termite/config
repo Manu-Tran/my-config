@@ -48,7 +48,7 @@ scrollbar = right
 #cursor = #dcdccc
 #cursor_foreground = #dcdccc
 
-foreground = #dcdccc
+foreground = #ececdc
 #foreground_bold = #ffffff
 # background = #3f3f3f
 
@@ -56,24 +56,44 @@ foreground = #dcdccc
 background = rgba(40, 40, 40, 0.5)
 
 # If unset, will reverse foreground and background
-highlight = #2f2f2f
+# highlight = #2f2f2f
 
 # Colors from color0 to color254 can be set
+# Color of the usual font + background of hostname
 color0 = #3f3f3f
-color1 = #a05050
+
+# Color of alerts
+color1 = #b05050
+
+# Color of validations
 color2 = #60b48a
-color3 = #dfaf8f
+
+# Color of the foreground of the hostname in Powerline
+color3 = #ffbf8f
+
+# Color of the backgroud of the path in Poweline
 color4 = #506070
 color5 = #dc8cc3
 color6 = #8cd0d3
+
+# Color of the background of the time in Powerline
 color7 = #dcdccc
 color8 = #709080
 color9 = #dca3a3
-color10 = #c3bf9f
+# Color of executable file
+color10 = #63bf7f
+
 color11 = #f0dfaf
-color12 = #94bff3
+
+# Color of the folder in ls
+color12 = #648ff3
+
+# Color of jpg file in ls
 color13 = #ec93d3
-color14 = #93e0e3
+
+# Color of the symbolics links in ls
+color14 = #93d0f3
+
 color15 = #ffffff
 
 [hints]
