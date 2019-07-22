@@ -35,8 +35,8 @@ markup=none
 # Supported players are: spotify, vlc, audacious, xmms2, mplayer, and others.
 [mediaplayer]
 instance=spotify
-interval=1
 signal=10
+interval=once
 align=left
 
 # Brightness Indicator
@@ -108,7 +108,7 @@ separator=false
 #instance=eth0
 interval=1
 color=#2abafa
-min_width=D 99K U 9K
+#min_width=D 99K U 9K
 align=right
 # CPU usage
 #
@@ -116,7 +116,7 @@ align=right
 # see the script for details.
 [cpu_usage]
 label=CPU
-interval=1
+interval=5
 min_width= CPU 99.9%
 align=center
 #separator=false
