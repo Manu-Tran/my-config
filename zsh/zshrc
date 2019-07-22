@@ -14,7 +14,7 @@
 # Do not autocorrect
   unsetopt correct_all
 
-POWERLEVEL9K_MODE="awesome-fontconfig"
+POWERLEVEL9K_MODE="awesome-patched"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
