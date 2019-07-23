@@ -35,8 +35,8 @@ markup=none
 # Supported players are: spotify, vlc, audacious, xmms2, mplayer, and others.
 [mediaplayer]
 instance=spotify
+interval=10
 signal=10
-interval=once
 align=left
 
 # Brightness Indicator
@@ -57,7 +57,7 @@ label=🔊
 #label=♪
 instance=Master
 #instance=PCM
-interval=once
+interval=5
 signal=10
 color=#FFAA22
 
