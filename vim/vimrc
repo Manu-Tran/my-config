@@ -52,6 +52,10 @@ nnoremap <Leader>Q :qa!<cr>
 inoremap jk <Esc>
 cnoremap jk <C-c>
 
+" Start and End of the line remap
+nnoremap L $
+nnoremap H ^
+
 " Movement in insert mode
 " imap <C-h> <C-o>h
 " inoremap <C-l> <C-o>a
@@ -181,8 +185,8 @@ nmap <Leader>r :redraw!<Enter>
 " Remove trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 
-" Map Control e to create/open file in current folder
-map <C-e> :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
+" Map Leader + e to create/open file in current folder
+map <leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 
 "nnoremap <C-e> :e %:p:h
 " Create folders on file save

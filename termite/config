@@ -54,47 +54,78 @@ foreground = #ececdc
 
 # 20% background transparency (requires a compositor)
 background = rgba(40, 40, 40, 0.5)
+# black
+    color0= #282C34
+    color8= #3E4452
+
+# red
+    color1= #E06C75
+    color9= #BE5046
+
+# green
+    color2= #98C379
+    color10= #98C379
+
+# yellow
+    color3= #E5C07B
+    color11= #D19A66
+
+# blue
+    color4= #61AFEF
+    color12= #61AFEF
+
+# magenta
+    color5= #C678DD
+    color13= #C678DD
+
+# cyan
+    color6= #56B6C2
+    color14= #56B6C2
+
+# white
+    color7= #ABB2BF
+    color15= #5C6370
 
 # If unset, will reverse foreground and background
 # highlight = #2f2f2f
 
 # Colors from color0 to color254 can be set
 # Color of the usual font + background of hostname
-color0 = #3f3f3f
+# color0 = #3f3f3f
 
-# Color of alerts
-color1 = #b05050
+# # Color of alerts
+# color1 = #b05050
 
-# Color of validations
-color2 = #60b48a
+# # Color of validations
+# color2 = #60b48a
 
-# Color of the foreground of the hostname in Powerline
-color3 = #ffbf8f
+# # Color of the foreground of the hostname in Powerline
+# color3 = #ffbf8f
 
-# Color of the backgroud of the path in Poweline
-color4 = #506070
-color5 = #dc8cc3
-color6 = #8cd0d3
+# # Color of the backgroud of the path in Poweline
+# color4 = #506070
+# color5 = #dc8cc3
+# color6 = #8cd0d3
 
-# Color of the background of the time in Powerline
-color7 = #dcdccc
-color8 = #709080
-color9 = #dca3a3
-# Color of executable file
-color10 = #63bf7f
+# # Color of the background of the time in Powerline
+# color7 = #dcdccc
+# color8 = #709080
+# color9 = #dca3a3
+# # Color of executable file
+# color10 = #63bf7f
 
-color11 = #f0dfaf
+# color11 = #f0dfaf
 
-# Color of the folder in ls
-color12 = #648ff3
+# # Color of the folder in ls
+# color12 = #648ff3
 
-# Color of jpg file in ls
-color13 = #ec93d3
+# # Color of jpg file in ls
+# color13 = #ec93d3
 
-# Color of the symbolics links in ls
-color14 = #93d0f3
+# # Color of the symbolics links in ls
+# color14 = #93d0f3
 
-color15 = #ffffff
+# color15 = #ffffff
 
 [hints]
 #font = Monospace 12
