@@ -14,13 +14,12 @@
 # Do not autocorrect
   unsetopt correct_all
 
-POWERLEVEL9K_MODE="awesome-fontconfig"
+POWERLEVEL9K_MODE="awesome-patched"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -66,7 +65,6 @@ plugins=(
   z
 )
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -75,18 +73,23 @@ source $ZSH/oh-my-zsh.sh
 # Alisases
  alias 0="cd ~/CurrentProject"
  alias :q="exit"
+
 #Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
+  export ZSH_THEME="robbyrussell"
 else
   export EDITOR='vim'
+  export ZSH_THEME="powerlevel9k/powerlevel9k"
 fi
+
+source $ZSH/oh-my-zsh.sh
 
 # Adding personal autocompletions
 fpath=(~/my-config/Scripts/autocomplete $fpath)
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Go to https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png for color code
 
@@ -120,10 +123,19 @@ POWERLEVEL9K_VIRTUALENV_BACKGROUND='045'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 
 eval $(thefuck --alias)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# Defer initialization of nvm until nvm, node or a node-dependent command is
+# run. Ensure this block is only run once if .bashrc gets sourced multiple times
+# by checking whether __init_nvm is a function.
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+    alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+    alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+fi
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # if [ -f `which powerline-daemon` ]; then
 #   powerline-daemon -q

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 import os
+from time import sleep
 
+sleep(0.1)
 BLOCK_INSTANCE = os.getenv("BLOCK_INSTANCE", "spotify")
 
 metadata = []
