@@ -1,0 +1,13 @@
+[Unit]
+Description=i3lock on suspend
+Before=sleep.target
+
+[Service]
+User=%i
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/bin/sh /home/manu/bin/locker
+ExecStartPost=/bin/sleep 3
+
+[Install]
+WantedBy=sleep.target
