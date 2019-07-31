@@ -16,6 +16,7 @@ Package needed :
   acpi
     playerctl
     browser-playerctl
+    blueman
 
 # powerlevel9k
 Package needed :

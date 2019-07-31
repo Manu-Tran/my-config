@@ -1,0 +1,3 @@
+#!/bin/bash
+
+playerctl metadata --follow --format "{{status}} : {{ artist }} - {{ title }}" 2>/dev/null
