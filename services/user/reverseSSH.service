@@ -1,0 +1,15 @@
+[Unit]
+Description=Keeps a tunnel to 'diablos.cgnan.fr' open
+After=network-online.target
+
+[Service]
+# -p [PORT]
+# -l [user]
+# -M 0 --> no monitoring
+# -N Just open the connection and do nothing (not interactive)
+# LOCALPORT:IP_ON_EXAMPLE_COM:PORT_ON_EXAMPLE_COM
+ExecStart=/usr/bin/autossh -N -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" sshtunnel
+Restart=always
+
+[Install]
+WantedBy=default.target

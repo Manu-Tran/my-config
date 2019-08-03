@@ -8,9 +8,6 @@
 # Added Path
   export PATH=$HOME/Scripts:$HOME/snap:$PATH
 
-# Path to your oh-my-zsh installation.
-  export ZSH="/home/manu/.oh-my-zsh"
-
 # Do not autocorrect
   unsetopt correct_all
 
@@ -31,7 +28,7 @@ POWERLEVEL9K_MODE="awesome-fontconfig"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+#COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -82,14 +79,13 @@ else
   export EDITOR='vim'
   export ZSH_THEME="powerlevel9k/powerlevel9k"
 fi
-
 source $ZSH/oh-my-zsh.sh
 
 # Adding personal autocompletions
-fpath=(~/my-config/Scripts/autocomplete $fpath)
+# fpath=(~/my-config/Scripts/autocomplete $fpath)
 
 # ssh
-export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # Go to https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png for color code
 
@@ -98,22 +94,22 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs anacon
 POWERLEVEL9K_ANACONDA_LEFT_DELIMITER=''
 POWERLEVEL9K_ANACONDA_RIGHT_DELIMITER=''
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='238'
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='178'
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='026'
-POWERLEVEL9K_DIR_HOME_BACKGROUND='061'
-POWERLEVEL9K_DIR_BACKGROUND='060'
+# POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='238'
+# POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='178'
+# POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+# POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='026'
+# POWERLEVEL9K_DIR_HOME_BACKGROUND='061'
+# POWERLEVEL9K_DIR_BACKGROUND='060'
 # POWERLEVEL9K_DIR_PATH_HIGHLIGHT_BOLD=true
 
 # `git hub colors`
 # POWERLEVEL9K_VCS_CLEAN_BACKGROUND='236'
 # POWERLEVEL9K_VCS_CLEAN_BACKGROUND='119'
 # POWERLEVEL9K_VCS_CLEAN_FOREGROUND='236'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='214'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='238'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='167'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='238'
+# POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='214'
+# POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='238'
+# POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='167'
+# POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='238'
 
 
 
