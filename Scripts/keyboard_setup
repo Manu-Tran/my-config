@@ -7,3 +7,4 @@ export DISPLAY XAUTHORITY
 
 xset r rate 250 18
 setxkbmap -option caps:swapescape
+setxkbmap -option ctrl:menu_rctrl
