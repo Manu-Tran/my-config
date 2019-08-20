@@ -223,8 +223,8 @@ mode "$mode_system" {
 bindsym $mod+Shift+p mode "$mode_system"
 
 # lock the computer
-bindsym $mod+Shift+w exec --no-startup-id i3lock-fancy -- scrot
-exec --no-startup-id xautolock -notify -time 15 -locker 'i3lock-fancy -- scrot' &
+bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
+exec --no-startup-id xautolock -notify -time 15 -locker '~/bin/locker' &
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -308,6 +308,7 @@ bar {
 #exec --no-startup-id clipit
 exec --no-startup-id nm-applet                #Network Manager Widget
 exec --no-startup-id blueman-applet                #Bluetooth Manager Widget
+exec --no-startup-id redshift-gtk                #Bluetooth Manager Widget
 exec --no-startup-id compton                  #Transparency for terminal
 exec --no-startup-id source ~/.fehbg          #Set Background
 
