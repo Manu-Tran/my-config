@@ -150,10 +150,10 @@ nnoremap <leader><leader> <c-^>
 " ========================  Splits ====================
 
 " Quicker movement between splits
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-l> <C-w>l
 nnoremap <leader><Tab> <C-W>p
 
 " Open new splits
@@ -257,7 +257,7 @@ Plugin 'airblade/vim-gitgutter'                   " Git gutter for vim
 
 " Layout
 Plugin 'qpkorr/vim-bufkill'                       " Allows for buffer closing without split closing
-Plugin 'christoomey/vim-tmux-navigator'           " Vim and tmux harmony
+" Plugin 'christoomey/vim-tmux-navigator'           " Vim and tmux harmony
 
 " Markdown
 " Plugin 'JamshedVesuna/vim-markdown-preview'       " Vim Markdown Generation
@@ -310,6 +310,16 @@ Plugin 'kshenoy/vim-signature'
 " Theme
 Plugin 'joshdick/onedark.vim'
 
+"lh-cpp dependencies
+Plugin 'LucHermitte/lh-vim-lib'
+Plugin 'LucHermitte/lh-style'
+Plugin 'LucHermitte/lh-brackets'
+Plugin 'LucHermitte/mu-template'
+Plugin 'LucHermitte/lh-dev'
+Plugin 'LucHermitte/alternate-lite'
+
+" C++ heterogenous helpers
+Plugin 'luchermitte/lh-cpp'
 call vundle#end()
 
 
@@ -390,9 +400,9 @@ map <Leader>f :NERDTreeToggle<CR>
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 if has('python3')
   " make YCM compatible with UltiSnips (using supertab)
-  " let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-  " let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-  " let g:ycm_key_list_accept_completion = ['<C-y>']
+  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+  let g:ycm_key_list_accept_completion = ['<C-y>']
   " let g:SuperTabDefaultCompletionType = '<C-n>'
   let g:ycm_add_preview_to_completeopt = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
@@ -534,6 +544,19 @@ let g:sh_fold_enabled= 7
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
 
+" ====================== MultiCursor config ==================================
+"
+let g:multi_cursor_use_default_mapping=0
+
+" Default mapping
+let g:multi_cursor_start_word_key      = '<C-n>'
+let g:multi_cursor_select_all_word_key = ''
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = ''
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
 " ====================== Prettier Config ==================
 
 "let g:prettier#exec_cmd_async = 1
