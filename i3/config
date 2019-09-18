@@ -38,6 +38,7 @@ bindsym $mod+Return exec termite
 #   - Setting the key pressed rate (250ms startup delay and 18 key per sec)
 exec --no-startup-id ~/bin/keyboard_setup
 focus_follows_mouse no
+bindsym --release Caps_Lock exec--no startup-id pkill -SIGRTMIN+11 i3blocks
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -224,7 +225,7 @@ bindsym $mod+Shift+p mode "$mode_system"
 
 # lock the computer
 bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
-exec --no-startup-id xautolock -notify -time 15 -locker '~/bin/locker' &
+exec --no-startup-id xautolock -notify -time 2 -locker '~/bin/locker' &
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -275,7 +276,7 @@ bar {
     separator_symbol        "·"
     workspace_buttons       yes
     strip_workspace_numbers yes
-
+    status_command i3blocks -c ~/my-config/i3blocks/config_bottom
     colors {
         background  #212121
             statusline  #dddddd
@@ -355,6 +356,20 @@ mode "$mode_audio" {
 
 set $mode_audio Audio Control: ToggleMute[m]  +[Up|k] -[Down|j] Play-Pause[Space] Next[l] Previous[h]
 bindsym $mod+a mode "$mode_audio"
+
+
+
+mode "$mode_keyboard" {
+    bindsym 1 exec --no-startup-id setxkbmap fr bepo && pkill -RTMIN+12 i3block, mode "default"
+    bindsym 2 exec --no-startup-id setxkbmap fr && pkill -RTMIN+12 i3block,  mode "default"
+    bindsym 1 exec --no-startup-id setxkbmap fr bepo && pkill -RTMIN+12 i3block, mode "default"
+    bindsym 2 exec --no-startup-id setxkbmap fr && pkill -RTMIN+12 i3block,  mode "default"
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+set $mode_keyboard Keyboard Layout: 1) bepo 2) fr
+bindsym $mod+$sup+Return mode "$mode_keyboard"
 
 
 

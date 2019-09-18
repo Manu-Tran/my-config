@@ -1,0 +1,16 @@
+command=~/my-config/i3blocks/exec/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+[keyindicator]
+#Allowed keys are CAPS and NUM
+interval=once
+signal=11
+#color_on=#00FF00
+#COLOR_OFF=#222222
+#BG_COLOR_ON=
+#BG_COLOR_OFF=
+
+[key_layout]
+signal=12
+interval=once

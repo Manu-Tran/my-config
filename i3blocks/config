@@ -96,7 +96,7 @@ align=center
 [iface]
 #instance=wlan0
 color=#39FF39
-interval=10
+interval=once
 separator=false
 
 [wifi]
