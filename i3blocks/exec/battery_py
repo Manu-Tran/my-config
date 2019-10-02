@@ -9,7 +9,7 @@ def onlyDigit(string) :
 
 rawOutput = os.popen(bash_command).read().split('\n')
 percent = dict()
-charging = False
+charging = 0
 #print(rawOutput)
 for line in rawOutput:
     if line != '':
@@ -18,9 +18,7 @@ for line in rawOutput:
         if line[2][:-1] == "Charging":
             charging = 1
         elif line[2][:-1] == "Discharging":
-            charging = 0
-        else :
-            charging = 0.5
+            charging = -1
 
 
 rawOutputCapacity = os.popen(bash_command_bis).read().split('\n')
@@ -40,7 +38,7 @@ for i in range(len(percent)):
     truePercentage += percent[str(i)]*modifier
 if ( charging ) == 1 :
     status = " CHR"
-elif ( charging ) == 0:
+elif ( charging ) == -1:
     status = " DIS"
 else :
     status = " ---"
@@ -48,7 +46,7 @@ else :
 print(str(int(truePercentage)) + "%" + status)
 print(str(int(truePercentage)) + "%" + status)
 
-if not(charging) :
+if charging == -1 :
     if (int(truePercentage) < 20) :
         print("#FF0000\n")
     elif (int(truePercentage) < 40) :
