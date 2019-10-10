@@ -1,0 +1,2 @@
+ACTION=="add", ATTRS{idVendor}=="1a2c", ATTRS{idProduct}=="b58f", RUN+="/home/manu/bin/keyboard_setup_udev", OWNER="manu"
+
