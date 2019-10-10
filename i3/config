@@ -38,7 +38,7 @@ bindsym $mod+Return exec termite
 #   - Setting the key pressed rate (250ms startup delay and 18 key per sec)
 exec --no-startup-id ~/bin/keyboard_setup
 focus_follows_mouse no
-bindsym --release Caps_Lock exec--no startup-id pkill -SIGRTMIN+11 i3blocks
+bindsym --release Caps_Lock exec --no startup-id pkill -RTMIN+11 i3blocks
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -382,6 +382,11 @@ bindsym $mod+$sup+Return mode "$mode_keyboard"
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 && pkill -RTMIN+11 i3block
 # decrease screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 && pkill -RTMIN+11 i3block
+
+# No-Disturb-Mode
+bindsym $sup+s exec --no-startup-id ~/bin/do_not_disturb on
+bindsym $sup+d exec --no-startup-id ~/bin/do_not_disturb off
+
 
 bindsym $sup+k exec --no-startup-id xdotool click 4
 bindsym $sup+j exec --no-startup-id xdotool click 5

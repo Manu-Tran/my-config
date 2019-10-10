@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+SAVE_FILE='/tmp/DoNotDisturbBlockletState'
+if [[ -e $SAVE_FILE  ]]; then
+  if [[ $(cat $SAVE_FILE) == "on" ]]; then
+    echo "🌜 Do Not Disturb Mode Activated"
+  else
+    echo ""
+  fi
+else
+  echo ""
+fi
+
+
+
+echo "#ffffff"
+echo "#ffffff"

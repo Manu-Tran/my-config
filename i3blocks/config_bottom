@@ -4,7 +4,7 @@ markup=none
 
 [keyindicator]
 #Allowed keys are CAPS and NUM
-interval=once
+interval=5
 signal=11
 #color_on=#00FF00
 #COLOR_OFF=#222222
@@ -13,4 +13,9 @@ signal=11
 
 [key_layout]
 signal=12
+interval=once
+
+
+[do_not_disturb_indicator]
+signal=11
 interval=once

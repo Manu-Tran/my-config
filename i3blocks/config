@@ -96,7 +96,7 @@ align=center
 [iface]
 #instance=wlan0
 color=#39FF39
-interval=once
+interval=60
 separator=false
 
 [wifi]
@@ -131,7 +131,7 @@ align=center
 #label=BAT
 label=⚡
 instance=1
-interval=5
+interval=60
 align=center
 
 # Date Time
