@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SAVE_FILE='/tmp/DoNotDisturbBlockletState'
+if [[ $# != 1 ]]; then
+  echo "Usage : $0 [on|off]"
+  exit 1
+fi
+if [[ -e $SAVE_FILE ]]; then
+  status=$(cat $SAVE_FILE)
+fi
+
+if [[ $1 == "on" ]]; then
+  notify-send "DUNST_COMMAND_PAUSE"
+  echo on > "$SAVE_FILE"
+  pkill -RTMIN+11 i3blocks
+else
+  notify-send "DUNST_COMMAND_RESUME"
+  if [[ $status == "on" ]]; then
+    notify-send "Notification Mode Activated"
+  fi
+  echo off > "$SAVE_FILE"
+  pkill -RTMIN+11 i3blocks
+fi

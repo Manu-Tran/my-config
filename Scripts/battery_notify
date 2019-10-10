@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DISPLAY=":0"
+HOME="/home/manu/"
+notify-send "Battery Charging..."
