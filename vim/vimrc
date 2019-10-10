@@ -298,7 +298,8 @@ Plugin 'google/vim-searchindex'
 " Plugin in test phase :
 "
 " Better Completion for external modules
-Plugin 'maralla/completor.vim'
+" Plugin 'maralla/completor.vim'
+" Simplify life
 Plugin 'tpope/vim-abolish'
 
 " Save State
@@ -311,15 +312,19 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'joshdick/onedark.vim'
 
 "lh-cpp dependencies
-Plugin 'LucHermitte/lh-vim-lib'
-Plugin 'LucHermitte/lh-style'
-Plugin 'LucHermitte/lh-brackets'
-Plugin 'LucHermitte/mu-template'
-Plugin 'LucHermitte/lh-dev'
-Plugin 'LucHermitte/alternate-lite'
+" Plugin 'LucHermitte/lh-vim-lib'
+" Plugin 'LucHermitte/lh-style'
+" Plugin 'LucHermitte/lh-brackets'
+" Plugin 'LucHermitte/mu-template'
+" Plugin 'LucHermitte/lh-dev'
+" Plugin 'LucHermitte/alternate-lite'
 
+" Notes taking
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 " C++ heterogenous helpers
-Plugin 'luchermitte/lh-cpp'
+" Plugin 'luchermitte/lh-cpp'
+
 call vundle#end()
 
 
@@ -406,7 +411,8 @@ if has('python3')
   " let g:SuperTabDefaultCompletionType = '<C-n>'
   let g:ycm_add_preview_to_completeopt = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
-
+  " let g:ycm_confirm_extra_conf = 1
+  " let g:ycm_extra_conf_globlist = ['~/CurrentProject/*']
   " better key bindings for UltiSnipsExpandTrigger
   "let g:UltiSnipsExpandTrigger="<c-i>"
   "let g:UltiSnipsJumpForwardTrigger="<c-f>"
@@ -424,6 +430,11 @@ endif
 
 " ====================== Completor Config ==================
 
+
+" ====================== Notes Taking Config ===================
+
+let g:notes_directories = ['~/Documents/Notes']
+let g:notes_suffix = '.txt'
 
 " ====================== FZF && Fugitive Config ==================
 
@@ -663,3 +674,6 @@ noremap * *<C-O>
 
 " Change Directory
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" Coq Interpreter Next
+nnoremap <leader>n :CoqNext<CR>
