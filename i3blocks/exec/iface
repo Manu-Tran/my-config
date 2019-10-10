@@ -17,6 +17,24 @@
 
 #------------------------------------------------------------------------
 
+SAVE_FILE='/tmp/ifaceBlockletState'
+
+if [[ ! -e $SAVE_FILE ]]; then
+    touch $SAVE_FILE
+    echo "private" > $SAVE_FILE
+fi
+
+BLOCK_STATE=$(cat $SAVE_FILE)
+
+case $BLOCK_BUTTON in
+    1) if [[ $BLOCK_STATE == "private" ]]; then
+        echo "public" > $SAVE_FILE
+    else
+        echo "private" > $SAVE_FILE
+        fi ;;
+esac
+
+
 # Use the provided interface, otherwise the device used for the default route.
 if [[ -n $BLOCK_INSTANCE ]]; then
   IF=$BLOCK_INSTANCE
@@ -48,14 +66,19 @@ case $1 in
     AF=inet6? ;;
 esac
 
-# if no interface is found, use the first device with a global scope
-IPADDR=$(ip addr show $IF | perl -n -e "/$AF ([^\/]+).* scope global/ && print \$1 and exit")
-
-case $BLOCK_BUTTON in
-  3) echo -n "$IPADDR" | xclip -q -se c ;;
-esac
+if [[ $BLOCK_STATE == "private" ]]; then
+    # if no interface is found, use the first device with a global scope
+    IPADDR=$(ip addr show $IF | perl -n -e "/$AF ([^\/]+).* scope global/ && print \$1 and exit")
+else
+    IPADDR=$(dig +short myip.opendns.com @resolver1.opendns.com)
+fi
 
 #------------------------------------------------------------------------
 
-echo "$IPADDR" # full text
-echo "$IPADDR" # short text
+if [[ -z $IPADDR ]]; then
+  echo down
+  echo down
+else
+  echo "$IPADDR" # full text
+  echo "$IPADDR" # short text
+fi
