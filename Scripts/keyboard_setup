@@ -4,8 +4,26 @@ DISPLAY=":0"
 HOME="/home/manu/"
 XAUTHORITY=$HOME/.Xauthority
 export DISPLAY XAUTHORITY
+LANG="fr"
+
+if [[  "$1" == "bepo" ]]; then
+  LANG="fr bepo"
+fi
+
+# Reset config
+setxkbmap -option
+killall xcape
 
 xset r rate 250 18
-setxkbmap fr
-setxkbmap -option caps:swapescape
-setxkbmap -option ctrl:menu_rctrl
+setxkbmap $LANG
+
+
+# setxkbmap -option caps:swapescape
+# setxkbmap -option ctrl:menu_rctrl
+
+
+
+# make short-pressed Ctrl behave like Escape:
+# Caps Lock mapped to control
+setxkbmap -option ctrl:nocaps
+/usr/bin/xcape -t 200
