@@ -364,10 +364,8 @@ bindsym $mod+a mode "$mode_audio"
 
 
 mode "$mode_keyboard" {
-    bindsym 1 exec --no-startup-id setxkbmap fr bepo && pkill -RTMIN+12 i3block, mode "default"
-    bindsym 2 exec --no-startup-id setxkbmap fr && pkill -RTMIN+12 i3block,  mode "default"
-    bindsym 1 exec --no-startup-id setxkbmap fr bepo && pkill -RTMIN+12 i3block, mode "default"
-    bindsym 2 exec --no-startup-id setxkbmap fr && pkill -RTMIN+12 i3block,  mode "default"
+    bindsym 1 exec --no-startup-id /home/manu/bin/keyboard_setup bepo && pkill -RTMIN+12 i3block, mode "default"
+    bindsym 2 exec --no-startup-id /home/manu/bin/keyboard_setup && pkill -RTMIN+12 i3block,  mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -428,7 +426,7 @@ mode "$mode_launcher" {
 }
 
 set $mode_launcher Launch: [m]ailspring [t]elegram [g]oogle-chrome [s]potify [c]ode s[l]ack [y]outube-music [w]hats-app [p]avucontrol
-bindsym $mod+Shift+Return mode "$mode_launcher"
+bindsym $mod+Shift+D mode "$mode_launcher"
 
 # i3-gaps feature
 gaps inner 10
