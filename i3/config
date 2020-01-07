@@ -32,6 +32,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec termite
+bindsym $mod+Shift+Return exec caja
 
 # Setting all the keyboard settings
 #   - Unbinding Cap Lock and bind it to Esc
@@ -116,8 +117,8 @@ bindsym $mod+o focus child
 focus_follows_mouse no
 
 # screenshot
-bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot_%Y_%m_%d_%H_%M_%S.png
-bindsym $sup+Shift+s exec --no-startup-id gnome-screenshot -a
+bindsym Print exec --no-startup-id gnome-screenshot -a -f ~/Pictures/Screenshots
+bindsym Shift+Print exec --no-startup-id gnome-screenshot -f ~/Pictures/Screenshots
 
 ##### WORKSPACES ### ##################################################
 
