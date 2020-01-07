@@ -234,7 +234,7 @@ exec --no-startup-id xss-lock -l ~/bin/locker
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r exec --no-startup-id pkill compton; restart;
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -297,8 +297,8 @@ bar {
 }
 
 bar {
-    colors {
-        background  #1a1a1a
+  colors {
+      background #272A33
     }
     position top
     workspace_buttons no
@@ -314,7 +314,7 @@ bar {
 exec --no-startup-id nm-applet                #Network Manager Widget
 exec --no-startup-id blueman-applet                #Bluetooth Manager Widget
 exec --no-startup-id redshift-gtk                #Bluetooth Manager Widget
-exec --no-startup-id compton                  #Transparency for terminal
+exec_always --no-startup-id compton                  #Transparency for terminal
 exec --no-startup-id source ~/.fehbg          #Set Background
 
 ##### AUDIO CONTROL ######################################################
