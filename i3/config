@@ -226,7 +226,10 @@ bindsym $mod+Shift+p mode "$mode_system"
 
 # lock the computer
 bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
-exec --no-startup-id xautolock -notify -time 2 -locker '~/bin/locker' &
+# lock after some time of inactivity
+exec --no-startup-id xautolock -detectsleep -time 3 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 15000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
+# lock after closing lid
+exec --no-startup-id xss-lock -l ~/bin/locker
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
