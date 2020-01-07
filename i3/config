@@ -380,9 +380,11 @@ bindsym $mod+$sup+Return mode "$mode_keyboard"
 # Sreen brightness controls
 
 # increase screen brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 && pkill -RTMIN+11 i3block
+# bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 && pkill -RTMIN+11 i3block
+bindsym XF86MonBrightnessUp exec --no-startup-id light -T 1.2 && pkill -RTMIN+11 i3block
 # decrease screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 && pkill -RTMIN+11 i3block
+# bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 && pkill -RTMIN+11 i3block
+bindsym XF86MonBrightnessDown exec --no-startup-id light -T 0.8 && pkill -RTMIN+11 i3block
 
 # No-Disturb-Mode
 bindsym $sup+s exec --no-startup-id ~/bin/do_not_disturb on
