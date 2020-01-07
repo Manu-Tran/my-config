@@ -70,7 +70,8 @@ plugins=(
 # Alisases
  alias 0="cd ~/CurrentProject"
  alias :q="exit"
- alias mimeo="mimeopen"
+ # alias mimeo="mimeopen"
+ alias mount-verbose="mount -v | grep \"^/\" | awk '{print \"\nPartition identifier: \" $1  \"\n Mountpoint: \"  $3}\'"
 
 #Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
