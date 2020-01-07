@@ -162,6 +162,9 @@ map ss <C-W>s
 
 " Close Splits
 map W  <C-W>q
+" Close preview
+" inoremap <CR> <c-O>:pc<CR><CR>
+" inoremap <C-[> <C-[>:pc<CR>
 
 " Open new split panes to right and bottom - feels more natural
 set splitbelow
@@ -235,14 +238,12 @@ Plugin 'scrooloose/nerdcommenter'                 " Commenting Shorcuts
 Plugin 'djoshea/vim-autoread'                     " Auto reload unchanged buffers on disk change
 Plugin 'luochen1990/rainbow'                      " Rainbow parentheses matching
 
-if has('python3')
-  " Snippets [Ultisnips]
-  Plugin 'SirVer/ultisnips'                         " Track the engine.
-  Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
+" Snippets [Ultisnips]
+Plugin 'SirVer/ultisnips'                         " Track the engine.
+Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
 
-  " AutoCompletion - Requires compiling
-  Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
-endif
+" AutoCompletion - Requires compiling
+Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
 
 " SupeTab - To make snippets and auto complete work nicely together
 " Plugin 'ervandew/supertab'                        " Use Tab for insert completion needs
@@ -250,6 +251,7 @@ endif
 " Themes
 Plugin 'vim-airline/vim-airline'                  " Bottom Airline Bar
 Plugin 'vim-airline/vim-airline-themes'           " Airline themes
+Plugin 'rakr/vim-one'
 
 " Git
 Plugin 'tpope/vim-fugitive'                       " Git Wrapper
@@ -267,14 +269,16 @@ Plugin 'slim-template/vim-slim.git'               " Syntax Highlighting for Slim
 Plugin 'chrisbra/Colorizer'                       " Color Hex codes and color names
 
 " Javascript
-Plugin 'pangloss/vim-javascript'                  " Better JS Syntax
-Plugin 'mxw/vim-jsx'                              " Better JSX syntax
-Plugin 'othree/javascript-libraries-syntax.vim'   " Syntax for JS Libraries
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'ternjs/tern_for_vim'                      " Async code analysis engine for js
+" Plugin 'pangloss/vim-javascript'                  " Better JS Syntax
+" Plugin 'mxw/vim-jsx'                              " Better JSX syntax
+" Plugin 'othree/javascript-libraries-syntax.vim'   " Syntax for JS Libraries
+" Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'ternjs/tern_for_vim'                      " Async code analysis engine for js
 
 " Liniting
-Plugin 'w0rp/ale'                                 " Async Linting tool
+" Plugin 'w0rp/ale'                                 " Async Linting tool
+Plugin 'dense-analysis/ale'
+Plugin 'pearofducks/ansible-vim'
 
 " Closing syntax
 Plugin 'tpope/vim-endwise'                        " Automatically add 'end' to things like loops
@@ -326,6 +330,8 @@ Plugin 'xolox/vim-notes'
 " Plugin 'luchermitte/lh-cpp'
 
 call vundle#end()
+" Debugger
+packadd termdebug
 
 
 " ====================== Theme Config ==================
@@ -339,8 +345,12 @@ set termguicolors
 
 "colorscheme onedark
 
-colorscheme onedark
-let g:airline_theme='onedark'
+" colorscheme onedark
+" let g:airline_theme='onedark'
+"
+colorscheme one
+set background=dark
+let g:airline_theme='one'
 
 
 
@@ -403,16 +413,19 @@ map <Leader>f :NERDTreeToggle<CR>
 
 " ============= AutoComplete & Snippets Config ===========
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
-if has('python3')
+
+noremap <leader>d :YcmCompleter GoToDeclaration
+" if has('python3')
   " make YCM compatible with UltiSnips (using supertab)
-  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-  let g:ycm_key_list_accept_completion = ['<C-y>']
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_key_list_accept_completion = ['<C-y>']
   " let g:SuperTabDefaultCompletionType = '<C-n>'
-  let g:ycm_add_preview_to_completeopt = 1
-  let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 0
   " let g:ycm_confirm_extra_conf = 1
-  " let g:ycm_extra_conf_globlist = ['~/CurrentProject/*']
+let g:ycm_extra_conf_globlist = ['~/CurrentProject/*']
   " better key bindings for UltiSnipsExpandTrigger
   "let g:UltiSnipsExpandTrigger="<c-i>"
   "let g:UltiSnipsJumpForwardTrigger="<c-f>"
@@ -423,10 +436,9 @@ if has('python3')
   " let g:UltiSnipsJumpBackwardTrigger = "<c-b>"
 
   " Auto CSS recommendations for YCM
-  let g:ycm_semantic_triggers = {
-        \   'css': [ 're!^\s{2}', 're!:\s+' ],
-        \ }
-endif
+let g:ycm_semantic_triggers = {
+      \   'css': [ 're!^\s{2}', 're!:\s+' ],
+      \ }
 
 " ====================== Completor Config ==================
 
