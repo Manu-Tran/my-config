@@ -61,18 +61,23 @@ elif ( charging ) == -1:
 else :
     status = " ---"
 
-print(str(int(truePercentage)) + "%" + status)
-print(str(int(truePercentage)) + "%" + status)
+print(" " + str(int(truePercentage)) + "%" + status)
+print(" " + str(int(truePercentage)) + "%" + status)
+# print(" " + str(int(truePercentage)) + "%" + status)
 
 if charging == -1 :
     if (int(truePercentage) < 20) :
-        print("#FF0000\n")
+        print("#8800FF")
+        # print("#FF0000")
     elif (int(truePercentage) < 40) :
-        print("#FFAE00\n")
+        print("#8800FF")
+        # print("#FFAE00")
     elif (int(truePercentage) < 60) :
-        print("#FFF600\n")
+        print("#8800FF")
+        # print("#FFF600")
     elif (int(truePercentage) < 99) :
-        print("#88FF00\n")
+        print("#8800FF")
+        # print("#88FF00")
 
     if (int(truePercentage) < 5) :
         if (old_status == "NotAlerted"):
@@ -84,4 +89,6 @@ else :
     if (old_status == "Alerted"):
         command = "echo NotAlerted > " + stateFilename
         os.popen(command)
-    print("#8800FF\n")
+    print("#8800FF")
+    # print("#8800FF")
+

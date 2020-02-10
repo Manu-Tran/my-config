@@ -19,5 +19,6 @@ if (BLOCK_INSTANCE) :
 #     system("playerctl $player_arg next");
 # }
 output = os.popen('playerctl metadata '+ player_arg+ ' --format "{{ status }} : {{ artist }} - {{ title }}"').read()
+# if (len(output))
 print(output)
 

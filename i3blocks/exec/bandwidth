@@ -33,7 +33,7 @@ then
 fi
 
 # path to store the old results in
-path="/dev/shm/$(basename $0)-${INTERFACE}"
+path="/tmp/blockletBandwidthState-${INTERFACE}"
 
 # grabbing data for each adapter.
 read rx < "/sys/class/net/${INTERFACE}/statistics/rx_bytes"
@@ -69,6 +69,7 @@ tx_rate=$(( $tx_diff / $time_diff ))
 # shift by 10 bytes to get KiB/s. If the value is larger than
 # 1024^2 = 1048576, then display MiB/s instead
 
+
 # incoming
 echo -n "🡻 "
 rx_kib=$(( $rx_rate >> 10 ))
@@ -88,3 +89,5 @@ if [[ "$tx_rate" -gt 1048576 ]]; then
 else
   echo -n "${tx_kib}K"
 fi
+echo ""
+

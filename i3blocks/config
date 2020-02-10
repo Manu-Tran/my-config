@@ -106,7 +106,7 @@ separator=false
 
 [bandwidth]
 #instance=eth0
-interval=1
+interval=2
 color=#2abafa
 #min_width=D 99K U 9K
 align=right
@@ -115,9 +115,9 @@ align=right
 # The script may be called with -w and -c switches to specify thresholds,
 # see the script for details.
 [cpu_usage]
-label=CPU
+# label=CPU
 interval=5
-min_width= CPU 99.9%
+min_width=99.9%
 align=center
 #separator=false
 
