@@ -30,9 +30,13 @@ font pango:Noto Mono for Powerline 9
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# Sort du mode fullscreen si un fenetre du meme type apparait
+popup_during_fullscreen smart
+
 # start a terminal
-bindsym $mod+Return exec termite
-bindsym $mod+Shift+Return exec caja
+bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
+# bindsym $mod+Shift+Return exec --no-startup-id caja
 
 # Setting all the keyboard settings
 #   - Unbinding Cap Lock and bind it to Esc
@@ -82,6 +86,8 @@ bindsym $mod+Control+l move workspace to output right
 
 # move to last workspace
 bindsym $mod+Tab workspace back_and_forth
+exec --no-startup-id "python ~/bin/event_listener.py"
+bindsym $sup+Tab exec "~/bin/swap_focus"
 
 # add to scrapboard
 bindsym $mod+shift+Escape move scratchpad
@@ -96,8 +102,10 @@ bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f focus parent; fullscreen toggle; focus child
 
 # change container layout (stacked, tabbed, toggle split)
+bindsym $mod+Shift+s split v; layout stacking
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -117,8 +125,8 @@ bindsym $mod+o focus child
 focus_follows_mouse no
 
 # screenshot
-bindsym Print exec --no-startup-id gnome-screenshot -a -f ~/Pictures/Screenshots
-bindsym Shift+Print exec --no-startup-id gnome-screenshot -f ~/Pictures/Screenshots
+bindsym Print exec --no-startup-id gnome-screenshot -a -f "Pictures/Screenshots/screenshot-$(date +%Y-%m-%d-%H:%M:%S).png"
+bindsym Shift+Print exec --no-startup-id gnome-screenshot -f "Pictures/Screenshots/fullscreenshot-$(date +%Y-%m-%d-%H:%M:%S).png" && notify-send -t 2000 "Screenshot taken" "Stored in ~/Pictures/Screenshots"
 
 ##### WORKSPACES ### ##################################################
 
@@ -136,6 +144,45 @@ set $ws9 "9:Aux-4"
 set $ws10 "10:Aux-5"
 set $ws11 "11:Monitoring"
 set $ws12 "12:Musique"
+
+# set $exec_i3_groups exec --no-startup-id i3-workspace-groups
+
+# # Switch active workspace group
+# bindsym $mod+g exec --no-startup-id i3-switch-active-workspace-group
+
+# # Assign workspace to a group
+# bindsym $mod+Shift+g exec --no-startup-id i3-assign-workspace-to-group
+
+# # Select workspace to focus on
+# bindsym $mod+z exec --no-startup-id i3-focus-on-workspace
+
+# # Move the focused container to another workspace
+# # bindsym $mod+Shift+w exec --no-startup-id i3-move-to-workspace
+
+# # Rename/renumber workspace. Uses Super+Alt+n
+# # bindsym Mod1+Mod4+n exec --no-startup-id i3-rename-workspace
+
+# bindsym $mod+1 $exec_i3_groups workspace-number 1
+# bindsym $mod+2 $exec_i3_groups workspace-number 2
+# bindsym $mod+3 $exec_i3_groups workspace-number 3
+# bindsym $mod+4 $exec_i3_groups workspace-number 4
+# bindsym $mod+5 $exec_i3_groups workspace-number 5
+# bindsym $mod+6 $exec_i3_groups workspace-number 6
+# bindsym $mod+7 $exec_i3_groups workspace-number 7
+# bindsym $mod+8 $exec_i3_groups workspace-number 8
+# bindsym $mod+9 $exec_i3_groups workspace-number 9
+# bindsym $mod+0 $exec_i3_groups workspace-number 10
+
+# bindsym $mod+Shift+1 $exec_i3_groups move-to-number 1
+# bindsym $mod+Shift+2 $exec_i3_groups move-to-number 2
+# bindsym $mod+Shift+3 $exec_i3_groups move-to-number 3
+# bindsym $mod+Shift+4 $exec_i3_groups move-to-number 4
+# bindsym $mod+Shift+5 $exec_i3_groups move-to-number 5
+# bindsym $mod+Shift+6 $exec_i3_groups move-to-number 6
+# bindsym $mod+Shift+7 $exec_i3_groups move-to-number 7
+# bindsym $mod+Shift+8 $exec_i3_groups move-to-number 8
+# bindsym $mod+Shift+9 $exec_i3_groups move-to-number 9
+# bindsym $mod+Shift+0 $exec_i3_groups move-to-number 10
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -170,6 +217,7 @@ bindsym $mod+Shift+twosuperior move container to workspace $ws12
 bindsym $mod+Shift+grave move container to workspace $ws12
 
 assign [class="Telegram"]   $ws4
+# assign [class="^Emacs$"]   $ws6
 assign [class="Riot"]       $ws4
 assign [class="slack"]      $ws4
 for_window [class="Slack"]  move to workspace $ws4
@@ -188,13 +236,13 @@ workspace $ws2 output eDP1
 workspace $ws3 output eDP1
 workspace $ws4 output eDP1
 workspace $ws5 output eDP1
-workspace $ws6 output HDMI2 HDMI1 eDP1
-workspace $ws7 output HDMI2 HDMI1 eDP1
-workspace $ws8 output HDMI2 HDMI1 eDP1
-workspace $ws9 output HDMI2 HDMI1 eDP1
-workspace $ws10 output HDMI2 HDMI1 eDP1
-workspace $ws11 output HDMI1 HDMI2 eDP1
-workspace $ws12 output HDMI1 eDP1 HDMI2
+workspace $ws6 output HDMI2 HDMI1 DP1 eDP1
+workspace $ws7 output HDMI2 HDMI1 DP1 eDP1
+workspace $ws8 output HDMI2 HDMI1 DP1 eDP1
+workspace $ws9 output HDMI2 HDMI1 DP1 eDP1
+workspace $ws10 output HDMI2 HDMI1 DP1 eDP1
+workspace $ws11 output HDMI1 HDMI2 DP1 eDP1
+workspace $ws12 output HDMI1 DP1 eDP1 HDMI2
 
 # add HDMI monitor when connected (Use autorandr instead !)
 # exec --no-startup-id xrandr --output HDMI2 --right-of eDP1
@@ -227,14 +275,14 @@ bindsym $mod+Shift+p mode "$mode_system"
 # lock the computer
 bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
 # lock after some time of inactivity
-exec --no-startup-id xautolock -detectsleep -time 3 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 15000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
+exec --no-startup-id xautolock -detectsleep -time 10 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 5000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
 # lock after closing lid
 exec --no-startup-id xss-lock -l ~/bin/locker
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r exec --no-startup-id pkill compton; restart;
+bindsym $mod+Shift+r exec --no-startup-id pkill picom; restart;
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -314,8 +362,9 @@ bar {
 exec --no-startup-id nm-applet                #Network Manager Widget
 exec --no-startup-id blueman-applet                #Bluetooth Manager Widget
 exec --no-startup-id redshift-gtk                #Bluetooth Manager Widget
-exec_always --no-startup-id compton                  #Transparency for terminal
+exec_always --no-startup-id picom                  #Transparency for terminal
 exec --no-startup-id source ~/.fehbg          #Set Background
+exec --no-startup-id mopidy          #Music server
 
 ##### AUDIO CONTROL ######################################################
 
@@ -333,7 +382,7 @@ exec --no-startup-id source ~/.fehbg          #Set Background
     # pause the player
     bindsym XF86AudioPause exec --no-startup-id player_control pause && pkill -RTMIN+10 i3block
     # previous track
-    bindsym XF86AudioPrev exec --no-startup-id player_control next && pkill -RTMIN+10 i3block
+    bindsym XF86AudioPrev exec --no-startup-id player_control prev && pkill -RTMIN+10 i3block
     # next track
     bindsym XF86AudioNext exec --no-startup-id player_control next && pkill -RTMIN+10 i3block
 
@@ -348,17 +397,19 @@ mode "$mode_audio" {
     bindsym j exec --no-startup-id "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
 
     bindsym l exec --no-startup-id "player_control next && pkill -RTMIN+10 i3block", mode "default"
-    bindsym h exec --no-startup-id "player_control previous && pkill -RTMIN+10 i3block", mode "default"
+    bindsym h exec --no-startup-id "player_control prev && pkill -RTMIN+10 i3block", mode "default"
     bindsym Shift+l exec --no-startup-id "player_control next && pkill -RTMIN+10 i3block"
-    bindsym Shift+h exec --no-startup-id "player_control previous && pkill -RTMIN+10 i3block"
-    bindsym space exec --no-startup-id "player_control playpause && pkill -RTMIN+10 i3block", mode "default"
-
+    bindsym Shift+h exec --no-startup-id "player_control prev && pkill -RTMIN+10 i3block"
+    bindsym space exec --no-startup-id "player_control toggle && pkill -RTMIN+10 i3block", mode "default"
+    bindsym r exec --no-startup-id "mpc random && pkill -RTMIN+10 i3block", mode "default"
+    bindsym s exec --no-startup-id "mpc single && pkill -RTMIN+10 i3block", mode "default"
+    bindsym p exec --no-startup-id "mpc repeat && pkill -RTMIN+10 i3block", mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 
-set $mode_audio Audio Control: ToggleMute[m]  +[Up|k] -[Down|j] Play-Pause[Space] Next[l] Previous[h]
+set $mode_audio Audio Control: Mute[m]  +[Up|k] -[Down|j] Play-Pause[Space] Next[l] Previous[h] Single[s] Repeat[r] Loop[p]
 bindsym $mod+a mode "$mode_audio"
 
 
@@ -382,7 +433,7 @@ bindsym $mod+$sup+Return mode "$mode_keyboard"
 
 # increase screen brightness
 # bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 && pkill -RTMIN+11 i3block
-bindsym XF86MonBrightnessUp exec --no-startup-id light -T 1.2 && pkill -RTMIN+11 i3block
+bindsym XF86MonBrightnessUp exec --no-startup-id light -T 1.25 && pkill -RTMIN+11 i3block
 # decrease screen brightness
 # bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 && pkill -RTMIN+11 i3block
 bindsym XF86MonBrightnessDown exec --no-startup-id light -T 0.8 && pkill -RTMIN+11 i3block
@@ -391,9 +442,20 @@ bindsym XF86MonBrightnessDown exec --no-startup-id light -T 0.8 && pkill -RTMIN+
 bindsym $sup+s exec --no-startup-id ~/bin/do_not_disturb on
 bindsym $sup+d exec --no-startup-id ~/bin/do_not_disturb off
 
-
+# bindsym $sup+k exec --no-startup-id xdotool key Page_Up
+# bindsym $sup+j exec --no-startup-id xdotool key Page_Down
 bindsym $sup+k exec --no-startup-id xdotool click 4
 bindsym $sup+j exec --no-startup-id xdotool click 5
+
+mode "$mode_scroll" {
+    bindsym k exec --no-startup-id xdotool key Page_Up
+    bindsym j exec --no-startup-id xdotool key Page_Down
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+set $mode_scroll j:down k:up
+bindsym $sup+w mode "$mode_scroll"
 
 ##### PROGRAMS LAUNCHERS ##################################################
 
@@ -442,4 +504,8 @@ client.unfocused        #212121 #212121 #86888c #292d2e   #5a5a5a
 client.urgent           #d64e4e #d64e4e #ffffff #d64e4e   #d64e4e
 client.placeholder      #212121 #0c0c0c #ffffff #212121   #262626
 client.background       #212121
+
+############################## Launch on startup ###############################
+
+# exec --no-startup-id i3-msg "workspace $ws2; exec /usr/bin/google-chrome"
 
