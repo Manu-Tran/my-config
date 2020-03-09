@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "swap_focus" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
