@@ -1,0 +1,6 @@
+set first-page-column 1
+map J scroll half-down
+map K scroll half-up
+set pages-per-row 2
+set selection-clipboard clipboard
+set scroll-page-aware true
