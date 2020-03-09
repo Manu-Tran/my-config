@@ -25,9 +25,6 @@ let mapleader=" "                             " Map leader to space bar
 
 set viminfo+=n~/.vim/viminfo
 
-" Enable Elite mode, No ARRRROWWS!!!!
-let g:elite_mode=1
-
 " This makes vim act like all other editors, buffers can exist in the
 " background without being in a window.
 " http://items.sjbach.com/319/configureing-vim-right
@@ -99,6 +96,7 @@ set hlsearch                                " Highlight searches by default
 set ignorecase                              " Ignore case when searching...
 set smartcase                               " ... Unless we type a capital
 
+
 " ===================== Indentation ==================
 set autoindent
 set smartindent
@@ -138,14 +136,16 @@ nmap <leader>l :bn<CR>
 nmap <leader>h :bp<CR>
 
 " Close current buffer but keep split (from vimBufkill)
-nmap <leader>w :BD<CR>
-nmap <leader>W :BD!<CR>
+nmap <leader>w :Bdelete<CR>
+nmap <leader>c :Bdelete<CR>
+nmap <leader>W :Bdelete!<CR>
 
 " To open a new empty buffer
 nmap <leader>t :enew<cr>
 
 " switch between the last two files
-nnoremap <leader><leader> <c-^>
+nnoremap <leader><leader> <C-W>p
+" nnoremap <leader><leader> <c-^>
 
 " ========================  Splits ====================
 
@@ -154,11 +154,17 @@ nnoremap <leader><leader> <c-^>
 " nnoremap <C-k> <C-w>k
 " nnoremap <C-h> <C-w>h
 " nnoremap <C-l> <C-w>l
-nnoremap <leader><Tab> <C-W>p
+
+" Back and forth
+nnoremap <leader><Tab> <C-^>
+
+" Work with tabs too
+nnoremap <leader>H :tabNext<CR>
+nnoremap <leader>L :tabprevious<CR>
 
 " Open new splits
 map vv <C-W>v
-map ss <C-W>s
+map bb <C-W>s
 
 " Close Splits
 map W  <C-W>q
@@ -182,7 +188,7 @@ autocmd VimResized * wincmd = " Automatically resize splits when resizing window
 " ====================== Save Settings ==================
 
 " Map save to leader s
-map <leader>s :w<CR>
+" map <leader>s :w<CR>
 nmap <Leader>r :redraw!<Enter>
 
 " Remove trailing whitespace on save
@@ -212,7 +218,9 @@ call vundle#begin()
 
 " NerdTree File Browser
 Plugin 'scrooloose/nerdtree'
+" Plugin 'derekwyatt/vim-fswitch'
 
+Plugin 'justinmk/vim-sneak'
 " fzf Fuzy Finder
 " super awesome fuzzy finder for all the things (Replaced ctrl P)
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
@@ -227,6 +235,8 @@ Plugin 'tpope/vim-eunuch'                         " Vim wrapper for most common 
 Plugin 'michaeljsmith/vim-indent-object'
 " Text Formatting
 Plugin 'tpope/vim-surround'                       " Easy way to swap & remove surrounding quotes or brackets
+Plugin 'tpope/vim-speeddating'
+
 Plugin 'tpope/vim-commentary'                     " Comment command
 Plugin 'vim-scripts/ReplaceWithRegister'          " Register management
 Plugin 'tpope/vim-repeat'                         " Repeat command for other plugin
@@ -239,8 +249,8 @@ Plugin 'djoshea/vim-autoread'                     " Auto reload unchanged buffer
 Plugin 'luochen1990/rainbow'                      " Rainbow parentheses matching
 
 " Snippets [Ultisnips]
-Plugin 'SirVer/ultisnips'                         " Track the engine.
-Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
+" Plugin 'SirVer/ultisnips'                         " Track the engine.
+" Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
 
 " AutoCompletion - Requires compiling
 Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
@@ -258,7 +268,8 @@ Plugin 'tpope/vim-fugitive'                       " Git Wrapper
 Plugin 'airblade/vim-gitgutter'                   " Git gutter for vim
 
 " Layout
-Plugin 'qpkorr/vim-bufkill'                       " Allows for buffer closing without split closing
+" Plugin 'qpkorr/vim-bufkill'                       " Allows for buffer closing without split closing
+Plugin 'moll/vim-bbye'
 " Plugin 'christoomey/vim-tmux-navigator'           " Vim and tmux harmony
 
 " Markdown
@@ -277,8 +288,8 @@ Plugin 'chrisbra/Colorizer'                       " Color Hex codes and color na
 
 " Liniting
 " Plugin 'w0rp/ale'                                 " Async Linting tool
-Plugin 'dense-analysis/ale'
-Plugin 'pearofducks/ansible-vim'
+" Plugin 'dense-analysis/ale'
+" Plugin 'pearofducks/ansible-vim'
 
 " Closing syntax
 Plugin 'tpope/vim-endwise'                        " Automatically add 'end' to things like loops
@@ -288,7 +299,8 @@ Plugin 'terryma/vim-smooth-scroll'
 
 " Folds
 Plugin 'konfekt/fastfold'
-Plugin 'jeetsukumaran/vim-buffergator'
+" Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'mihaifm/bufstop'
 
 " Clean Diff View
 Plugin 'chrisbra/vim-diff-enhanced'
@@ -312,6 +324,9 @@ Plugin 'zhimsel/vim-stay'
 " Show Marks
 Plugin 'kshenoy/vim-signature'
 
+" Doxygen
+Plugin 'vim-scripts/DoxygenToolkit.vim'
+
 " Theme
 Plugin 'joshdick/onedark.vim'
 
@@ -326,6 +341,11 @@ Plugin 'joshdick/onedark.vim'
 " Notes taking
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
+Plugin 'jceb/vim-orgmode'
+
+Plugin 'liuchengxu/vim-which-key'
+
+
 " C++ heterogenous helpers
 " Plugin 'luchermitte/lh-cpp'
 
@@ -383,26 +403,27 @@ let g:airline#extensions#tabline#fnamemod=':t'
 "   \ } | :AirlineRefresh
 
 " Set vertical bar as cursor in insert mode
-if exists('$TMUX')
-  let &t_SI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=1\x7\<esc>\\"
-  let &t_EI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=0\x7\<esc>\\"
-else
-  let &t_SI = "\<esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<esc>]50;CursorShape=0\x7"
-endif
+" if exists('$TMUX')
+"   let &t_SI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=1\x7\<esc>\\"
+"   let &t_EI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=0\x7\<esc>\\"
+" else
+"   let &t_SI = "\<esc>]50;CursorShape=1\x7"
+"   let &t_EI = "\<esc>]50;CursorShape=0\x7"
+" endif
 
 " Enable cursor line position tracking:
 :set cursorline
 
+:set lazyredraw
 " Only apply to focused window
-augroup CursorLine
-    au!
-    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    au WinLeave * setlocal nocursorline
-augroup END
+" augroup CursorLine
+"     au!
+"     au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+"     au WinLeave * setlocal nocursorline
+" augroup END
 
 " Remove the underline from enabling cursorline:
-:hi CursorLine cterm=NONE
+" :hi CursorLine cterm=NONE
 
 
 " ====================== NERDTree Config ==================
@@ -451,9 +472,14 @@ let g:notes_suffix = '.txt'
 " ====================== FZF && Fugitive Config ==================
 
 nnoremap <C-p> :Files<CR>
+nnoremap <leader>b :BufstopFast<CR>
+nnoremap <leader>t :Tags <C-R><C-W><CR>
+nnoremap <leader>n :Buffer<CR>
+nnoremap <C-x>b :Buffers<CR>
+nnoremap <C-x>t :Tags<CR>
+nnoremap <C-x>g :Ag<CR>
 
 nnoremap <C-g>t :Buffers<CR>
-nnoremap <C-g>g :Ag<CR>
 nnoremap <C-g>l :BLines<CR>
 nnoremap <C-g>c :BCommits<CR>
 nnoremap <C-g>b :Gblame<CR>
@@ -523,11 +549,11 @@ let g:jsx_ext_required = 0                     " Allow JSX in normal Javascript 
 
 " ====================== Emmet Config ==================
 
-let g:user_emmet_settings = {
-      \  'javascript.jsx' : {
-      \      'extends' : 'jsx',
-      \  },
-      \}
+" let g:user_emmet_settings = {
+"       \  'javascript.jsx' : {
+"       \      'extends' : 'jsx',
+"       \  },
+"       \}
 
 " ====================== Ale Config ==================
 
@@ -595,17 +621,6 @@ nnoremap <Leader>r :Move <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 
 let g:rainbow_active = 10
 
-" ====================== MacVim / GUI Changes ==========
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
-set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
-set linespace=2
-
-set statusline=%=&P\ %f\ %m
-set fillchars=vert:\ ,stl:\ ,stlnc:\
-set noshowmode
 " ==================== Custom Functions =================
 
 function! s:MkNonExDir(file, buf)
@@ -664,14 +679,22 @@ xnoremap <leader>? "gy:call <SID>goog(@g, 0)<cr>gv
 xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
 
 " Using arrow to resize
-if get(g:, 'elite_mode')
-	nnoremap <Up>    :resize +2<CR>
-	nnoremap <Down>  :resize -2<CR>
-	nnoremap <Left>  :vertical resize +2<CR>
-	nnoremap <Right> :vertical resize -2<CR>
-endif
+" if get(g:, 'elite_mode')
+" 	nnoremap <Up>    :resize +2<CR>
+" 	nnoremap <Down>  :resize -2<CR>
+" 	nnoremap <Left>  :vertical resize +2<CR>
+" 	nnoremap <Right> :vertical resize -2<CR>
+" endif
 
 " ======================= Utilities  ====================
+
+let g:BufstopKeys = "qsfcvazerwxtyuiopbnm"
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=3000
+
+" Doxygen
+noremap <leader>d :Dox<CR>
+
 
 " Ctrl-C Clipboard
 noremap <Leader>y "+y
@@ -686,6 +709,7 @@ noremap * *<C-O>
 
 " Change Directory
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+let g:sneak#label = 1
+map s <Plug>Sneak_s
+map S <Plug>Sneak_S
 
-" Coq Interpreter Next
-nnoremap <leader>n :CoqNext<CR>
