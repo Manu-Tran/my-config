@@ -393,8 +393,8 @@ mode "$mode_audio" {
 
     bindsym Up exec --no-startup-id "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
     bindsym Down exec --no-startup-id "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
-    bindsym k exec --no-startup-id "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
-    bindsym j exec --no-startup-id "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
+    bindsym k exec --no-startup-id "amixer sset Master 2%+ && pkill -RTMIN+10 i3block"
+    bindsym j exec --no-startup-id "amixer sset Master 2%- && pkill -RTMIN+10 i3block"
 
     bindsym l exec --no-startup-id "player_control next && pkill -RTMIN+10 i3block", mode "default"
     bindsym h exec --no-startup-id "player_control prev && pkill -RTMIN+10 i3block", mode "default"
@@ -405,6 +405,7 @@ mode "$mode_audio" {
     bindsym s exec --no-startup-id "mpc single && pkill -RTMIN+10 i3block", mode "default"
     bindsym p exec --no-startup-id "mpc repeat && pkill -RTMIN+10 i3block", mode "default"
 
+    bindsym q      mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
