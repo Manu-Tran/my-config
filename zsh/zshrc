@@ -55,7 +55,7 @@ plugins=(
   copyfile
   cp
   git
-  sudo
+  # sudo
   systemd
   wd
   web-search
@@ -70,6 +70,7 @@ plugins=(
 # Alisases
  alias 0="cd ~/CurrentProject"
  alias :q="exit"
+ alias duda="du -ahd 1"
  # alias mimeo="mimeopen"
  alias mount-verbose="mount -v | grep \"^/\" | awk '{print \"\nPartition identifier: \" $1  \"\n Mountpoint: \"  $3}\'"
 
@@ -79,7 +80,7 @@ if [[ -n $SSH_CONNECTION ]]; then
   export ZSH_THEME="robbyrussell"
 else
   export EDITOR='vim'
-  export ZSH_THEME="powerlevel9k/powerlevel9k"
+  export ZSH_THEME="powerlevel10k/powerlevel10k"
 fi
 source $ZSH/oh-my-zsh.sh
 
@@ -154,18 +155,39 @@ zle -N down-line-or-beginning-search
 [[ -n "$key[Left]"   ]] && bindkey -- "$key[Left]" backward-word
 [[ -n "$key[Right]" ]] && bindkey -- "$key[Right]" forward-word
 
-bindkey "^K" up-line-or-beginning-search
-bindkey "^J" down-line-or-beginning-search
-bindkey "^H" backward-char
-bindkey "^L" forward-char
-bindkey "^N" clear-screen
-bindkey "^D" backward-delete-char
+bindkey "^P" up-line-or-beginning-search
+bindkey "^N" down-line-or-beginning-search
+bindkey -r "^K"
+bindkey -r "^J"
+bindkey "^G" insert-last-word
+bindkey "^H" backward-word
+# bindkey "^K" up-line-or-beginning-search
+# bindkey "^J" down-line-or-beginning-search
+# bindkey "^H" backward-char
+# bindkey "^D" backward-delete-char
+# bindkey "^L" forward-char
+# bindkey "^N" clear-screen
 
 ####################### Custom autocompletion ######################
 
 compctl -/ -W ~/CurrentProject uvim
+function swap()
+{
+  local TMPFILE=tmp.$$
+  mv "$1" $TMPFILE && mv "$2" "$1" && mv $TMPFILE "$2"
+}
 
 ######################## Unaliases #################################
 
 unalias fd
+
+# opam configuration
+test -r /home/manu/.opam/opam-init/init.zsh && . /home/manu/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source ~/.local/bin/virtualenvwrapper.sh
 
