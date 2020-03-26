@@ -1,3 +1,13 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+autoload bashcompinit
+bashcompinit
+
 # You may need to manually set your language environment
 #export LANG=fr_FR.UTF-8
 # export LC_ALL=""
@@ -189,5 +199,4 @@ test -r /home/manu/.opam/opam-init/init.zsh && . /home/manu/.opam/opam-init/init
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-source ~/.local/bin/virtualenvwrapper.sh
-
+# source ~/.local/bin/virtualenvwrapper.sh
