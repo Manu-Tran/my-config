@@ -445,8 +445,8 @@ bindsym $sup+d exec --no-startup-id ~/bin/do_not_disturb off
 
 # bindsym $sup+k exec --no-startup-id xdotool key Page_Up
 # bindsym $sup+j exec --no-startup-id xdotool key Page_Down
-bindsym $sup+k exec --no-startup-id xdotool click 4
-bindsym $sup+j exec --no-startup-id xdotool click 5
+# bindsym $sup+k exec --no-startup-id xdotool click 4
+# bindsym $sup+j exec --no-startup-id xdotool click 5
 
 mode "$mode_scroll" {
     bindsym k exec --no-startup-id xdotool key Page_Up
