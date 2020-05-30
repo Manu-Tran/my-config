@@ -18,13 +18,49 @@ else
 fi
 echo "Done"
 
+#==============================================================================
+# Plugins
+
+# Completion initialization
+if [ -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]; then
+    echo -n "zsh-syntax-highlighting found. Pulling... "
+    git -C "$ZSH/custom/plugins/zsh-syntax-highlighting" pull
+else
+    echo -n "Cloning zsh-syntax-highlighting repository... "
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH/custom/plugins/zsh-syntax-highlighting"
+fi
+echo "Done"
+
+# Completion initialization
+if [ -d "$ZSH/custom/plugins/zsh-autosuggestions" ]; then
+  echo -n "zsh-autosuggestions found. Pulling... "
+  git -C "$ZSH/custom/plugins/zsh-autosuggestions" pull
+else
+  echo -n "Cloning zsh-autosuggestions repository... "
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH/custom/plugins/zsh-autosuggestions"
+fi
+echo "Done"
+
+# Completion initialization
+if [ -d "$ZSH/custom/plugins/zsh-completions" ]; then
+  echo -n "zsh-completions found. Pulling... "
+  git -C "$ZSH/custom/plugins/zsh-completions" pull
+else
+  echo -n "Cloning zsh-completions repository... "
+  git clone https://github.com/zsh-users/zsh-completions.git "$ZSH/custom/plugins/zsh-completions"
+fi
+echo "Done"
+
+#==============================================================================
+# Themes
+
 # Powerlevel9k initialization
 if [ -d "$ZSH/custom/themes/powerlevel9k" ]; then
-    echo -n "Powerlevel9k found. Pulling... "
-    git -C "$ZSH/custom/themes/powerlevel9k" pull
+  echo -n "Powerlevel9k found. Pulling... "
+  git -C "$ZSH/custom/themes/powerlevel9k" pull
 else
-    echo -n "Cloning Powerlevel9k repository... "
-    git clone https://github.com/bhilburn/powerlevel9k.git "$ZSH/custom/themes/powerlevel9k"
+  echo -n "Cloning Powerlevel9k repository... "
+  git clone https://github.com/bhilburn/powerlevel9k.git "$ZSH/custom/themes/powerlevel9k"
 fi
 echo "Done"
 
