@@ -69,6 +69,9 @@ plugins=(
   systemd
   wd
   web-search
+  zsh-autosuggestions
+  zsh-completions
+  zsh-syntax-highlighting
   z
 )
 
@@ -81,6 +84,7 @@ plugins=(
  alias 0="cd ~/CurrentProject"
  alias :q="exit"
  alias duda="du -ahd 1"
+ alias duhs="du -hs * | sort -h"
  # alias mimeo="mimeopen"
  alias mount-verbose="mount -v | grep \"^/\" | awk '{print \"\nPartition identifier: \" $1  \"\n Mountpoint: \"  $3}\'"
 
