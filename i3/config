@@ -31,7 +31,7 @@ font pango:Noto Mono for Powerline 9
 floating_modifier $mod
 
 # Sort du mode fullscreen si un fenetre du meme type apparait
-popup_during_fullscreen smart
+popup_during_fullscreen ignore
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
@@ -275,7 +275,7 @@ bindsym $mod+Shift+p mode "$mode_system"
 # lock the computer
 bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
 # lock after some time of inactivity
-exec --no-startup-id xautolock -detectsleep -time 10 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 5000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
+# exec --no-startup-id xautolock -detectsleep -time 10 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 5000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
 # lock after closing lid
 exec --no-startup-id xss-lock -l ~/bin/locker
 
@@ -316,44 +316,44 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 
-bar {
-#status_command sh -c 'i3status | ~/i3status-netusage --interface=wlp2s0'
-    #colors {
-    #    background #222222
-    #    statusline #ffffff
-    #}
-    font pango:Noto Mono for Powerline 12
-    position                bottom
-    tray_output             primary
-    separator_symbol        "·"
-    workspace_buttons       yes
-    strip_workspace_numbers yes
-    status_command i3blocks -c ~/my-config/i3blocks/config_bottom
-    colors {
-        background  #212121
-            statusline  #dddddd
-# class             border  backgr. text
-            focused_workspace   #2b83a6 #2b83a6 #ffffff
-            active_workspace    #212121 #212121 #ffffff
-            inactive_workspace  #212121 #212121 #86888c
-            urgent_workspace    #d64e4e #d64e4e #ffffff
-            binding_mode        #229c56 #229c56 #ffffff
-    }
+#bar {
+##status_command sh -c 'i3status | ~/i3status-netusage --interface=wlp2s0'
+#    #colors {
+#    #    background #222222
+#    #    statusline #ffffff
+#    #}
+#    font pango:Noto Mono for Powerline 12
+#    position                bottom
+#    tray_output             primary
+#    separator_symbol        "·"
+#    workspace_buttons       yes
+#    strip_workspace_numbers yes
+#    status_command i3blocks -c ~/my-config/i3blocks/config_bottom
+#    colors {
+#        background  #212121
+#            statusline  #dddddd
+## class             border  backgr. text
+#            focused_workspace   #2b83a6 #2b83a6 #ffffff
+#            active_workspace    #212121 #212121 #ffffff
+#            inactive_workspace  #212121 #212121 #86888c
+#            urgent_workspace    #d64e4e #d64e4e #ffffff
+#            binding_mode        #229c56 #229c56 #ffffff
+#    }
 
-    bindsym button4 nop # Disabling the mouse scroll for changing workspace
-    bindsym button5 nop
-}
+#    bindsym button4 nop # Disabling the mouse scroll for changing workspace
+#    bindsym button5 nop
+#}
 
-bar {
-  colors {
-      background #272A33
-    }
-    position top
-    workspace_buttons no
-    status_command i3blocks
-    font pango:Noto Mono for Powerline 11
-    binding_mode_indicator no
-}
+#bar {
+#  colors {
+#      background #272A33
+#    }
+#    position top
+#    workspace_buttons no
+#    status_command i3blocks
+#    font pango:Noto Mono for Powerline 11
+#    binding_mode_indicator no
+#}
 
 ###### EXEC ON STARTUP ###################################################
 
@@ -365,6 +365,8 @@ exec --no-startup-id redshift-gtk                #Bluetooth Manager Widget
 exec_always --no-startup-id picom                  #Transparency for terminal
 exec --no-startup-id source ~/.fehbg          #Set Background
 exec --no-startup-id mopidy          #Music server
+exec --no-startup-id ~/.config/polybar/launch.sh #Polybar
+exec --no-startup-id ~/.config/polybar/scripts/launch_listener.sh #Polybar spotify
 
 ##### AUDIO CONTROL ######################################################
 
@@ -441,7 +443,10 @@ bindsym XF86MonBrightnessDown exec --no-startup-id light -T 0.8 && pkill -RTMIN+
 
 # No-Disturb-Mode
 bindsym $sup+s exec --no-startup-id ~/bin/do_not_disturb on
-bindsym $sup+d exec --no-startup-id ~/bin/do_not_disturb off
+bindsym $sup+Shift+s exec --no-startup-id ~/bin/do_not_disturb off
+
+# Mic toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
 
 # bindsym $sup+k exec --no-startup-id xdotool key Page_Up
 # bindsym $sup+j exec --no-startup-id xdotool key Page_Down
@@ -449,8 +454,8 @@ bindsym $sup+d exec --no-startup-id ~/bin/do_not_disturb off
 # bindsym $sup+j exec --no-startup-id xdotool click 5
 
 mode "$mode_scroll" {
-    bindsym k exec --no-startup-id xdotool key Page_Up
-    bindsym j exec --no-startup-id xdotool key Page_Down
+    bindsym --release k exec --no-startup-id xdotool key Page_Up
+    bindsym --release j exec --no-startup-id xdotool key Page_Down
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -462,7 +467,8 @@ bindsym $sup+w mode "$mode_scroll"
 
 
 # start dmenu2 (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run -fn Inconsolata
+bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans Mono" -dim 0.3 -o 0.8 -h 35 -nb "#2E3440" -i -t -sb "#4881C1"
+bindsym $sup+d exec --no-startup-id dmenu_run -fn "Noto Sans Mono" -dim 0.3 -o 0.8 -h 35 -nb "#2E3440" -i -t -sb "#4881C1"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -472,24 +478,33 @@ bindsym $mod+d exec --no-startup-id dmenu_run -fn Inconsolata
 # Press $mod+Shift+Enter to enter launch mode
 mode "$mode_launcher" {
 
-    bindsym c exec "code"
-    bindsym f exec "firefox"
-    bindsym g exec "google-chrome"
-    bindsym l exec "slack"
-    bindsym m exec "mailspring"
-    bindsym p exec "pavucontrol"
-    bindsym s exec "spotify"
-    bindsym t exec "telegram-desktop"
-    bindsym w exec "whatsapp"
-    bindsym y exec "youtube-music"
+    # bindsym g exec "google-chrome"
+    # bindsym m exec "mailspring",
+    bindsym t exec --no-startup-id "telegram-desktop", mode "default"
+    bindsym c exec --no-startup-id "chromium", mode "default"
+    bindsym s exec --no-startup-id "spotify", mode "default"
+    bindsym p exec --no-startup-id "pavucontrol", mode "default"
+    bindsym b exec --no-startup-id "blueman-manager", mode "default"
+    bindsym w exec --no-startup-id "whatsapp", mode "default"
+    bindsym e exec --no-startup-id "emacs", mode "default"
+    bindsym Shift+e exec --no-startup-id "emacsclient -c", mode "default"
+    bindsym g exec --no-startup-id "wavebox", mode "default"
+    bindsym y exec --no-startup-id "youtube-music", mode "default"
+    bindsym m exec --no-startup-id "sms", mode "default"
+    bindsym f exec --no-startup-id "messenger", mode "default"
+    bindsym l exec --no-startup-id "lutris", mode "default"
+    bindsym a exec --no-startup-id "agenda", mode "default"
+    bindsym k exec --no-startup-id "keepassxc", mode "default"
+    bindsym h exec --no-startup-id zenity --window-icon="" --info --timeout=5 --no-wrap --text=\
+" [t] Telegram\n [c] Chromium\n [s] Spotify\n [p] Pavucontrol\n [b] Blueman Manager\n [w] Whatsapp\n [e] Emacs\n [shift+e] Emacs Client\n [g] Gmail\n [y] Youtube-Music\n [d] Discord\n [s] SMS\n [f] Messenger\n [l] Lutris\n [a] Agenda\n [k] KeepassXC [h] Help"
 
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 
-set $mode_launcher Launch: [m]ailspring [t]elegram [g]oogle-chrome [s]potify [c]ode s[l]ack [y]outube-music [w]hats-app [p]avucontrol
-bindsym $mod+Shift+D mode "$mode_launcher"
+set $mode_launcher Mode Launcher : [h] Help
+bindsym $mod+d mode "$mode_launcher"
 
 # i3-gaps feature
 gaps inner 10
@@ -499,9 +514,15 @@ for_window [class="^.*"] border pixel 5
 new_window 1pixel
 #COLOR
 # class                 border  backgr. text    indicator child_border
-client.focused          #2b83a6 #2b83a6 #ffffff #dddddd   #2b83a6
-client.focused_inactive #212121 #212121 #86888c #292d2e   #5a5a5a
-client.unfocused        #212121 #212121 #86888c #292d2e   #5a5a5a
+## changing appearance
+font pango:Hack 10
+client.focused          #4c7899 #81A1C1 #2E3440 #2e9ef4   #81A1C1
+client.focused_inactive #333333 #5d6678 #ffffff #484e50   #5f676a
+client.unfocused        #333333 #2E3440 #888888 #292d2e   #2E3440
+
+# client.focused          #2b83a6 #2b83a6 #ffffff #dddddd   #2b83a6
+# client.focused_inactive #212121 #212121 #86888c #292d2e   #5a5a5a
+# client.unfocused        #212121 #212121 #86888c #292d2e   #5a5a5a
 client.urgent           #d64e4e #d64e4e #ffffff #d64e4e   #d64e4e
 client.placeholder      #212121 #0c0c0c #ffffff #212121   #262626
 client.background       #212121

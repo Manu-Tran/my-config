@@ -6,7 +6,7 @@
 CMD="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player"
 
 case "$1" in
-  "playpause" )
+  "toggle" )
     ${CMD}.PlayPause
     exit $?
   ;;
@@ -14,7 +14,7 @@ case "$1" in
     ${CMD}.Next
     exit $?
   ;;
-  "previous" )
+  "prev" )
     ${CMD}.Previous
     exit $?
   ;;
@@ -31,7 +31,7 @@ case "$1" in
     ;;
   *)
     echo "Usage: $0 [command]"
-    echo "  commands are: playpause, next, previous, stop, play, pause"
+    echo "  commands are: toggle, next, prev, stop, play, pause"
     exit 1
   ;;
 esac

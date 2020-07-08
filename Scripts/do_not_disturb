@@ -12,12 +12,14 @@ fi
 if [[ $1 == "on" ]]; then
   notify-send "DUNST_COMMAND_PAUSE"
   echo on > "$SAVE_FILE"
+  polybar-msg hook notification-switch 2
   pkill -RTMIN+11 i3blocks
 else
   notify-send "DUNST_COMMAND_RESUME"
   if [[ $status == "on" ]]; then
     notify-send "Notification Mode Activated"
   fi
+  polybar-msg hook notification-switch 1
   echo off > "$SAVE_FILE"
   pkill -RTMIN+11 i3blocks
 fi
