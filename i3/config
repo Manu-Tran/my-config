@@ -34,7 +34,7 @@ floating_modifier $mod
 popup_during_fullscreen ignore
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Return exec --no-startup-id gnome-terminal
 bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
 # bindsym $mod+Shift+Return exec --no-startup-id caja
 
@@ -277,7 +277,7 @@ bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
 # lock after some time of inactivity
 # exec --no-startup-id xautolock -detectsleep -time 10 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 5000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
 # lock after closing lid
-exec --no-startup-id xss-lock -l ~/bin/locker
+# exec --no-startup-id xss-lock -l ~/bin/locker
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -362,7 +362,7 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id nm-applet                #Network Manager Widget
 exec --no-startup-id blueman-applet                #Bluetooth Manager Widget
 exec --no-startup-id redshift-gtk                #Bluetooth Manager Widget
-exec_always --no-startup-id picom                  #Transparency for terminal
+# exec_always --no-startup-id picom                  #Transparency for terminal
 exec --no-startup-id source ~/.fehbg          #Set Background
 exec --no-startup-id mopidy          #Music server
 exec --no-startup-id ~/.config/polybar/launch.sh #Polybar
@@ -393,8 +393,8 @@ exec --no-startup-id ~/.config/polybar/scripts/launch_listener.sh #Polybar spoti
 mode "$mode_audio" {
     bindsym m exec --no-startup-id "amixer sset Master toggle && pkill -RTMIN+10 i3block"
 
-    bindsym Up exec --no-startup-id "amixer sset Master 5%+ && pkill -RTMIN+10 i3block"
-    bindsym Down exec --no-startup-id "amixer sset Master 5%- && pkill -RTMIN+10 i3block"
+    bindsym Up exec --no-startup-id "amixer sset Master 2%+ && pkill -RTMIN+10 i3block"
+    bindsym Down exec --no-startup-id "amixer sset Master 2%- && pkill -RTMIN+10 i3block"
     bindsym k exec --no-startup-id "amixer sset Master 2%+ && pkill -RTMIN+10 i3block"
     bindsym j exec --no-startup-id "amixer sset Master 2%- && pkill -RTMIN+10 i3block"
 
@@ -507,11 +507,11 @@ set $mode_launcher Mode Launcher : [h] Help
 bindsym $mod+d mode "$mode_launcher"
 
 # i3-gaps feature
-gaps inner 10
-gaps outer 0
-smart_gaps on
-for_window [class="^.*"] border pixel 5
-new_window 1pixel
+#gaps inner 10
+#gaps outer 0
+#smart_gaps on
+#for_window [class="^.*"] border pixel 5
+#new_window 1pixel
 #COLOR
 # class                 border  backgr. text    indicator child_border
 ## changing appearance

@@ -1,6 +1,6 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -67,6 +67,7 @@ plugins=(
   git
   # sudo
   systemd
+  # vi-mode
   wd
   web-search
   zsh-autosuggestions
@@ -135,8 +136,6 @@ POWERLEVEL9K_ANACONDA_BACKGROUND='045'
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='045'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 
-eval $(thefuck --alias)
-
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 # run. Ensure this block is only run once if .bashrc gets sourced multiple times
 # by checking whether __init_nvm is a function.
@@ -166,8 +165,8 @@ zle -N down-line-or-beginning-search
 
 [[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-history
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-history
-[[ -n "$key[Left]"   ]] && bindkey -- "$key[Left]" backward-word
-[[ -n "$key[Right]" ]] && bindkey -- "$key[Right]" forward-word
+# [[ -n "$key[Left]"   ]] && bindkey -- "$key[Left]" backward-word
+# [[ -n "$key[Right]" ]] && bindkey -- "$key[Right]" forward-word
 
 bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
@@ -195,12 +194,10 @@ function swap()
 
 unalias fd
 
-# opam configuration
-test -r /home/manu/.opam/opam-init/init.zsh && . /home/manu/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 # source ~/.local/bin/virtualenvwrapper.sh
+POWERLEVEL9K_DISABLE_GITSTATUS=true

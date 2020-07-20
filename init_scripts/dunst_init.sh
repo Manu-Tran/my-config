@@ -14,6 +14,7 @@ if [[ -e $HOME/.config/dunst ]]; then
       fi
     fi
 fi
+mkdir -p "$HOME/.config/dunst/dunstrc"
 ln -rsf "$HOME/my-config/dunst/dunstrc" ~/.config/dunst/dunstrc
 
 echo "Done"
