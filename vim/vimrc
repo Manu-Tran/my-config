@@ -164,7 +164,7 @@ nnoremap <leader>L :tabprevious<CR>
 
 " Open new splits
 map vv <C-W>v
-map bb <C-W>s
+map vb <C-W>s
 
 " Close Splits
 map W  <C-W>q
@@ -709,7 +709,7 @@ noremap * *<C-O>
 
 " Change Directory
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-let g:sneak#label = 1
-map s <Plug>Sneak_s
-map S <Plug>Sneak_S
+" let g:sneak#label = 1
+" map s <Plug>Sneak_s
+" map S <Plug>Sneak_S
 
