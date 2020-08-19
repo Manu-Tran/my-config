@@ -164,7 +164,7 @@ nnoremap <leader>L :tabprevious<CR>
 
 " Open new splits
 map vv <C-W>v
-map bb <C-W>s
+map vb <C-W>s
 
 " Close Splits
 map W  <C-W>q
