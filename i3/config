@@ -367,6 +367,7 @@ exec --no-startup-id source ~/.fehbg          #Set Background
 exec --no-startup-id mopidy          #Music server
 exec --no-startup-id ~/.config/polybar/launch.sh #Polybar
 exec --no-startup-id ~/.config/polybar/scripts/launch_listener.sh #Polybar spotify
+exec --no-startup-id nohup ~/bin/watchKeepass.sh > ~/.keepassSync.log
 
 ##### AUDIO CONTROL ######################################################
 
@@ -406,7 +407,6 @@ mode "$mode_audio" {
     bindsym r exec --no-startup-id "mpc random && pkill -RTMIN+10 i3block", mode "default"
     bindsym s exec --no-startup-id "mpc single && pkill -RTMIN+10 i3block", mode "default"
     bindsym p exec --no-startup-id "mpc repeat && pkill -RTMIN+10 i3block", mode "default"
-
     bindsym q      mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -480,23 +480,27 @@ mode "$mode_launcher" {
 
     # bindsym g exec "google-chrome"
     # bindsym m exec "mailspring",
-    bindsym t exec --no-startup-id "telegram-desktop", mode "default"
+    bindsym t exec --no-startup-id i3-msg workspace $ws4; exec "telegram-desktop", mode "default"
     bindsym c exec --no-startup-id "chromium", mode "default"
     bindsym s exec --no-startup-id "spotify", mode "default"
     bindsym p exec --no-startup-id "pavucontrol", mode "default"
     bindsym b exec --no-startup-id "blueman-manager", mode "default"
+
+    bindsym v exec --no-startup-id "bluetoothctl connect E4:22:A5:BE:67:38", mode "default"
+    bindsym Shift+v exec --no-startup-id "bluetoothctl disconnect E4:22:A5:BE:67:38", mode "default"
     bindsym w exec --no-startup-id "whatsapp", mode "default"
     bindsym e exec --no-startup-id "emacs", mode "default"
     bindsym Shift+e exec --no-startup-id "emacsclient -c", mode "default"
-    bindsym g exec --no-startup-id "wavebox", mode "default"
+    bindsym g exec --no-startup-id i3-msg workspace $ws5; exec "gmail", mode "default"
+    # bindsym g exec --no-startup-id "wavebox", mode "default"
     bindsym y exec --no-startup-id "youtube-music", mode "default"
     bindsym m exec --no-startup-id "sms", mode "default"
     bindsym f exec --no-startup-id "messenger", mode "default"
     bindsym l exec --no-startup-id "lutris", mode "default"
     bindsym a exec --no-startup-id "agenda", mode "default"
-    bindsym k exec --no-startup-id "keepassxc", mode "default"
+    bindsym k exec --no-startup-id i3-msg workspace $ws9; exec "keepassxc", mode "default"
     bindsym h exec --no-startup-id zenity --window-icon="" --info --timeout=5 --no-wrap --text=\
-" [t] Telegram\n [c] Chromium\n [s] Spotify\n [p] Pavucontrol\n [b] Blueman Manager\n [w] Whatsapp\n [e] Emacs\n [shift+e] Emacs Client\n [g] Gmail\n [y] Youtube-Music\n [d] Discord\n [s] SMS\n [f] Messenger\n [l] Lutris\n [a] Agenda\n [k] KeepassXC [h] Help"
+" [t] Telegram\n [c] Chromium\n [s] Spotify\n [p] Pavucontrol\n [b] Blueman Manager\n [(shift)+v] Bluetooth Headset\n [w] Whatsapp\n [e] Emacs\n [shift+e] Emacs Client\n [g] Gmail\n [y] Youtube-Music\n [d] Discord\n [s] SMS\n [f] Messenger\n [l] Lutris\n [a] Agenda\n [k] KeepassXC\n [h] Help"
 
 
     bindsym Escape mode "default"
