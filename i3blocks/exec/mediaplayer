@@ -4,7 +4,7 @@ import os
 from time import sleep
 
 sleep(0.1)
-BLOCK_INSTANCE = os.getenv("BLOCK_INSTANCE", "spotify")
+BLOCK_INSTANCE = os.getenv("BLOCK_INSTANCE", "mopidy")
 
 metadata = []
 player_arg=""
@@ -20,5 +20,7 @@ if (BLOCK_INSTANCE) :
 # }
 output = os.popen('playerctl metadata '+ player_arg+ ' --format "{{ status }} : {{ artist }} - {{ title }}"').read()
 # if (len(output))
+output = output[:-1]
+print(output)
 print(output)
 
