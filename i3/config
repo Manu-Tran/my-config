@@ -12,9 +12,6 @@
 set $mod Mod1
 set $sup Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Noto Mono for Powerline 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -34,7 +31,7 @@ floating_modifier $mod
 popup_during_fullscreen ignore
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id gnome-terminal
+bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
 # bindsym $mod+Shift+Return exec --no-startup-id caja
 
@@ -277,7 +274,7 @@ bindsym $mod+Shift+w exec --no-startup-id ~/bin/locker
 # lock after some time of inactivity
 # exec --no-startup-id xautolock -detectsleep -time 10 -corners +-0- -cornerdelay 3 -cornerredelay 20 -locker "~/bin/locker" -notify 20 -notifier "notify-send -u critical -t 5000 -- 'Auto Locking' 'The screen will be locked in 20 seconds'" &
 # lock after closing lid
-# exec --no-startup-id xss-lock -l ~/bin/locker
+exec --no-startup-id xss-lock -l ~/bin/locker
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -362,12 +359,13 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id nm-applet                #Network Manager Widget
 exec --no-startup-id blueman-applet                #Bluetooth Manager Widget
 exec --no-startup-id redshift-gtk                #Bluetooth Manager Widget
-# exec_always --no-startup-id picom                  #Transparency for terminal
+exec_always --no-startup-id picom                  #Transparency for terminal
 exec --no-startup-id source ~/.fehbg          #Set Background
 exec --no-startup-id mopidy          #Music server
 exec --no-startup-id ~/.config/polybar/launch.sh #Polybar
 exec --no-startup-id ~/.config/polybar/scripts/launch_listener.sh #Polybar spotify
 exec --no-startup-id nohup ~/bin/watchKeepass.sh > ~/.keepassSync.log
+exec --no-startup-id syncthing -no-browser
 
 ##### AUDIO CONTROL ######################################################
 
@@ -498,9 +496,10 @@ mode "$mode_launcher" {
     bindsym f exec --no-startup-id "messenger", mode "default"
     bindsym l exec --no-startup-id "lutris", mode "default"
     bindsym a exec --no-startup-id "agenda", mode "default"
+    bindsym j exec --no-startup-id "caja", mode "default"
     bindsym k exec --no-startup-id i3-msg workspace $ws9; exec "keepassxc", mode "default"
     bindsym h exec --no-startup-id zenity --window-icon="" --info --timeout=5 --no-wrap --text=\
-" [t] Telegram\n [c] Chromium\n [s] Spotify\n [p] Pavucontrol\n [b] Blueman Manager\n [(shift)+v] Bluetooth Headset\n [w] Whatsapp\n [e] Emacs\n [shift+e] Emacs Client\n [g] Gmail\n [y] Youtube-Music\n [d] Discord\n [s] SMS\n [f] Messenger\n [l] Lutris\n [a] Agenda\n [k] KeepassXC\n [h] Help"
+" [t] Telegram\n [c] Chromium\n [s] Spotify\n [p] Pavucontrol\n [b] Blueman Manager\n [(shift)+v] Bluetooth Headset\n [w] Whatsapp\n [e] Emacs\n [shift+e] Emacs Client\n [g] Gmail\n [y] Youtube-Music\n [d] Discord\n [s] SMS\n [f] Messenger\n [l] Lutris\n [a] Agenda\n [k] KeepassXC\n [j] Caja\n [h] Help"
 
 
     bindsym Escape mode "default"
@@ -514,12 +513,16 @@ bindsym $mod+d mode "$mode_launcher"
 #gaps inner 10
 #gaps outer 0
 #smart_gaps on
-#for_window [class="^.*"] border pixel 5
-#new_window 1pixel
+for_window [class="^.*"] border pixel 1
+new_window 1pixel
 #COLOR
 # class                 border  backgr. text    indicator child_border
 ## changing appearance
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# font pango:Noto Mono for Powerline 9
 font pango:Hack 10
+focus_on_window_activation smart
 client.focused          #4c7899 #81A1C1 #2E3440 #2e9ef4   #81A1C1
 client.focused_inactive #333333 #5d6678 #ffffff #484e50   #5f676a
 client.unfocused        #333333 #2E3440 #888888 #292d2e   #2E3440

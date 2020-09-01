@@ -201,3 +201,11 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 # source ~/.local/bin/virtualenvwrapper.sh
 POWERLEVEL9K_DISABLE_GITSTATUS=true
+
+######################## ZSH Autopair ##############################
+if [[ ! -d ~/.zsh-autopair ]]; then
+  git clone https://github.com/hlissner/zsh-autopair ~/.zsh-autopair
+fi
+
+source ~/.zsh-autopair/autopair.zsh
+autopair-init

@@ -81,7 +81,7 @@ endif
 
 " ==================== Moving Lines ====================
 nmap - :m -2<CR>
-nmap = :m +1<CR>
+nmap + :m +1<CR>
 
 " ===================== Scrolling =====================
 
@@ -253,7 +253,7 @@ Plugin 'luochen1990/rainbow'                      " Rainbow parentheses matching
 " Plugin 'honza/vim-snippets'                       " Snippets are separated from the engine.
 
 " AutoCompletion - Requires compiling
-" Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
+Plugin 'Valloric/YouCompleteMe'                   " Auto Suggestions
 
 " SupeTab - To make snippets and auto complete work nicely together
 " Plugin 'ervandew/supertab'                        " Use Tab for insert completion needs
@@ -709,6 +709,8 @@ noremap * *<C-O>
 
 " Change Directory
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>W :w!<CR>
 " let g:sneak#label = 1
 " map s <Plug>Sneak_s
 " map S <Plug>Sneak_S

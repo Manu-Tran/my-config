@@ -9,9 +9,9 @@ strip-wsnumbers = true
 
 index-sort = true
 enable-click = true
-enable-scroll = true
-wrapping-scroll = true
-reverse-scroll = true
+enable-scroll = false
+; wrapping-scroll = true
+; reverse-scroll = true
 
 fuzzy-match = false
 
@@ -40,8 +40,8 @@ label-unfocused-foreground = ${colors.nord9}
 label-unfocused-padding = 2
 
 label-urgent = %name%
-label-urgent-foreground = ${colors.urgent}
-label-urgent-background = ${colors.foreground}
+label-urgent-foreground = ${colors.buffer}
+label-urgent-background = ${colors.nord7}
 label-urgent-padding = 2
 
 ; seperator

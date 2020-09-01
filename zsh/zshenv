@@ -6,7 +6,7 @@ export PATH=/snap/bin:$HOME/Scripts:$HOME/snap:$PATH
 export GOPATH=$HOME/Programmation/go
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/etran/.oh-my-zsh"
+export ZSH="/home/manu/.oh-my-zsh"
 
 ################### FZF #####################################
 
