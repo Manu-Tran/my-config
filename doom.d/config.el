@@ -22,8 +22,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 
-(setq doom-font (font-spec :family "monospace" :size 14))
-; (setq doom-font (font-spec :family "JetBrains Mono Medium" :size 14))
+(setq doom-font (font-spec :family "JetBrains Mono Medium" :size 14))
 ;; (setq doom-font (font-spec :family "Fira Code" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -37,17 +36,42 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
+;; (setq display-line-numbers-type 'relative)
+;; (setq display-line-numbers-type 'nil)
+(setq display-line-numbers 'relative)
 (setq display-line-numbers-type 'relative)
+(setq display-line-numbers-current-absolute t)
 
-;; This asks a confirmation before evaluating a source block
-(setq org-confirm-babel-evaluate t)
+;; Delay for completion
+(setq company-idle-delay 0.2
+      company-minimum-prefix-length 1)
 
 ;; Language of the grammar checking
 (setq langtool-default-language "fr-FR")
 
+; (let ((langs '("american" "francais")))
+;       (setq lang-ring (make-ring (length langs)))
+;       (dolist (elem langs) (ring-insert lang-ring elem)))
+
+; (defun cycle-ispell-languages ()
+;   (interactive)
+;   (let ((lang (ring-ref lang-ring -1)))
+;     (ring-insert lang-ring lang)
+;     (ispell-change-dictionary lang)))
+
 ;; (setq projectile-project-search-path '~/Programmation/)
 
 (setq which-key-idle-delay 0.4)
+
+;; Calendar stuff
+
+(load! "calendar.el")
+
+;; Evil stuff
+(require 'evil-replace-with-register)
+(setq evil-replace-with-register-key (kbd "gr"))
+(evil-replace-with-register-install)
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -65,18 +89,12 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+;; (use-package nlinum-relative
+;;   :config
+;;   (nlinum-relative-setup-evil)
+;;   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+;; )
 
-(use-package! org-trello
-  ;; if you omit :defer, :hook, :commands, or :after, then the package is loaded
-  ;; immediately. By using :hook here, the `hl-todo` package won't be loaded
-  ;; until prog-mode-hook is triggered (by activating a major mode derived from
-  ;; it, e.g. python-mode)
-  ;; :hook (prog-mode . hl-todo-mode)
-  :init
-  ;; code here will run immediately
-  :config
-  ;; code here will run after the package is loaded
-  )
 
 ; (use-package! org-dropbox
 ;   :init

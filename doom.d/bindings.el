@@ -3,7 +3,7 @@
       ;;; <leader> TAB --- workspace
       (:when (featurep! :ui workspaces)
         (:prefix-map ("TAB" . "workspace")
-          ; :desc "Display tab bar"           "TAB" #'+workspace/display
+          :desc "Display tab bar"           "SPC" #'+workspace/display
           ; :desc "Switch workspace"          "."   #'+workspace/switch-to
           ; :desc "Switch to last workspace"  "`"   #'+workspace/other
           ; :desc "New workspace"             "n"   #'+workspace/new
@@ -13,6 +13,7 @@
           ; :desc "Delete this workspace"     "d"   #'+workspace/delete
           ; :desc "Rename workspace"          "r"   #'+workspace/rename
           ; :desc "Restore last session"      "R"   #'+workspace/restore-last-session
+          :desc "Switch to last workspace"     "0" #'+workspace/switch-to-last
           :desc "Next workspace"            "j"   #'+workspace/switch-right
           :desc "Previous workspace"        "k"   #'+workspace/switch-left
           :desc "Switch to 1st workspace"   "&"   #'+workspace/switch-to-0
@@ -26,7 +27,7 @@
           :desc "Switch to 9th workspace"   "ç"   #'+workspace/switch-to-8
           :desc "Switch to final workspace" "à"   #'+workspace/switch-to-final))
 
-      ;;; <leader> w --- workspaces/windows
+      ;;; <leader> z --- workspaces/windows
       :desc "window"                "z"    evil-window-map
       )
 
@@ -44,6 +45,16 @@
                           :desc "Switch to 8th workspace"   "8"   nil
                           :desc "Switch to 9th workspace"   "9"   nil
                           :desc "Switch to final workspace" "0"   nil)))
+
+(map! :leader
+      (:prefix-map ("c" . "code")
+      :desc "Quickrun code" "q" #'quickrun)
+      )
+
+(map! :leader :desc "Switch to last buffer" "²" #'evil-switch-to-windows-last-buffer)
+(map! :leader :desc "Save file" "w"  #'save-buffer)
+(map! :desc "Scroll down other window" "s-j" (lambda () (interactive)(scroll-other-window 20)))
+(map! :desc "Scroll up other window"   "s-k" (lambda () (interactive)(scroll-other-window -20)))
 
 ; #################### START OF THE DEFAULT CONFIG ##################
 

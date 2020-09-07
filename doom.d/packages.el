@@ -49,14 +49,19 @@
 ;; This is required for some packages whose default branch isn't 'master' (which
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
-
-(package! org-trello)
-(package! org-noter)
-(package! clang-format)
-(package! spotify)
+;
 ;; (package! irony :disable t)
 ;; ;; Install it directly from a github repository. For this to work, the package
 ;; must have an appropriate PACKAGENAME.el file which must contain at least a
 ;; Package-Version or Version line in its header.
 ;; (package! example
 ;;   :recipe (:host github :repo "username/my-example-fork"))
+
+; (package! org-trello)
+(package! org-noter)
+;; (package! org-super-agenda)
+(package! clang-format)
+(package! spotify)
+(package! org-super-agenda)
+(package! walkman)
+(package! evil-replace-with-register)
