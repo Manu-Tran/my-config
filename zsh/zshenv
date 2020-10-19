@@ -2,7 +2,6 @@
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 
 # Added Path
-export PATH=/snap/bin:$HOME/Scripts:$HOME/snap:$PATH
 export PATH=/snap/bin:$HOME/Scripts:$HOME/snap:$HOME/bin:$PATH
 export GOPATH=$HOME/Programmation/go
 
