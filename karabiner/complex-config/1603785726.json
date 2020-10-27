@@ -1,0 +1,90 @@
+{
+  "title": "Changing remaping for i3 like in french mac keyboard",
+  "rules": [
+    {
+        "description": "Changing remaping for i3 like in french mac keyboard",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "2",
+            "modifiers": {
+              "mandatory": ["left_option"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "7",
+              "modifiers": ["option"]
+            }
+          ],
+          "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": "5",
+                "modifiers": {
+                    "mandatory": ["left_option"],
+                    "optional": ["any"]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "8",
+                    "modifiers": ["option"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": "6",
+                "modifiers": {
+                    "mandatory": ["right_command"],
+                    "optional": ["any"]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "6",
+                    "modifiers": ["right_option"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": "l",
+                "modifiers": {
+                    "mandatory": ["right_option"],
+                    "optional": ["any"]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "6",
+                    "modifiers": ["right_option"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": "n",
+                "modifiers": {
+                    "mandatory": ["right_option"],
+                    "optional": ["any"]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "2",
+                    "modifiers": ["right_option"]
+                }
+            ],
+            "type": "basic"
+        }
+      ]
+    }
+  ]
+}
