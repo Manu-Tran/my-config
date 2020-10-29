@@ -69,10 +69,10 @@
       :desc "Quickrun code" "q" #'quickrun)
       )
 
-(map! :after org
-      :map org-mode-map
-      :desc "Move previous block" "J" #'org-previous-block
-      :desc "Move next block" "K" #'org-next-block
+;; (map! :after org
+;;       :map org-mode-map
+;;       :desc "Move previous block" "J" #'org-previous-block
+;;       :desc "Move next block" "K" #'org-next-block
       ;; :desc "Move up window" "<up>" #'evil-window-up
       ;; :desc "Move down window" "<down>" #'evil-window-down
       ;; :desc "Move left window" "<left>" #'evil-window-left
@@ -90,9 +90,9 @@
       ;; :prefix ("l" . "+links")
       ;; "o" #'org-open-at-point
       ;; "g" #'eos/org-add-ids-to-headlines-in-file
-      )
+      ;; )
 
-(map! :leader :desc "Switch to last buffer" "@" #'evil-switch-to-windows-last-buffer)
+(map! :leader :desc "Switch to last buffer" "²" #'evil-switch-to-windows-last-buffer)
 (map! :leader :desc "Save file" "w"  #'save-buffer)
 (map! :desc "Scroll down other window" "s-j" (lambda () (interactive)(scroll-other-window 20)))
 (map! :desc "Scroll up other window"   "s-k" (lambda () (interactive)(scroll-other-window -20)))
