@@ -1,4 +1,22 @@
 ;;; ~/.doom.d/bindings.el -*- lexical-binding: t; -*-
+
+(setq doom-localleader-key ",")
+;; (map!  :localleader
+;;          (:prefix ("j" . "jupyter")
+;;           :desc "Run REPL"      "o" #'jupyter-run-repl
+;;           :desc "Eval funciton"      "f" #'jupyter-eval-defun
+;;           :desc "Eval buffer"      "b" #'jupyter-eval-buffer
+;;           :desc "Eval region"      "r" #'jupyter-eval-region
+;;           :desc "Restart REPL"      "R" #'jupyter-repl-restart-kernel
+;;           :desc "Interrupt REPL"      "i" #'jupyter-repl-interrupt-kernel
+;;           :desc "Scratch buffer"      "s" #'jupyter-repl-scratch-buffer
+;;           :desc "Remove overlays"      "O" #'jupyter-eval-remove-overlays
+;;           :desc "Eval string"      "w" #'jupyter-eval-string-command
+;;           :desc "Inspect at point"      "d" #'jupyter-inspect-at-point
+;;           :desc "Associate buffer REPL"      "B" #'jupyter-repl-associate-buffer
+;;           )
+;;          )
+
 (map! :leader
       ;;; <leader> TAB --- workspace
       (:when (featurep! :ui workspaces)
@@ -51,7 +69,30 @@
       :desc "Quickrun code" "q" #'quickrun)
       )
 
-(map! :leader :desc "Switch to last buffer" "²" #'evil-switch-to-windows-last-buffer)
+(map! :after org
+      :map org-mode-map
+      :desc "Move previous block" "J" #'org-previous-block
+      :desc "Move next block" "K" #'org-next-block
+      ;; :desc "Move up window" "<up>" #'evil-window-up
+      ;; :desc "Move down window" "<down>" #'evil-window-down
+      ;; :desc "Move left window" "<left>" #'evil-window-left
+      ;; :desc "Move right window" "<right>" #'evil-window-right
+      ;; :desc "Toggle Narrowing" "!" #'org-toggle-narrow-to-subtree
+      ;; :desc "Find and Narrow" "^" #'+org-find-headline-narrow
+      ;; :desc "Rifle Project Files" "P" #'helm-org-rifle-project-files
+      ;; :prefix ("s" . "+search")
+      ;; :desc "Counsel Narrow" "n" #'counsel-narrow
+      ;; :desc "Ripgrep Directory" "d" #'counsel-rg
+      ;; :desc "Rifle Buffer" "b" #'helm-org-rifle-current-buffer
+      ;; :desc "Rifle Agenda Files" "a" #'helm-org-rifle-agenda-files
+      ;; :desc "Rifle Project Files" "#" #'helm-org-rifle-project-files
+      ;; :desc "Rifle Other Project(s)" "$" #'helm-org-rifle-other-files
+      ;; :prefix ("l" . "+links")
+      ;; "o" #'org-open-at-point
+      ;; "g" #'eos/org-add-ids-to-headlines-in-file
+      )
+
+(map! :leader :desc "Switch to last buffer" "@" #'evil-switch-to-windows-last-buffer)
 (map! :leader :desc "Save file" "w"  #'save-buffer)
 (map! :desc "Scroll down other window" "s-j" (lambda () (interactive)(scroll-other-window 20)))
 (map! :desc "Scroll up other window"   "s-k" (lambda () (interactive)(scroll-other-window -20)))

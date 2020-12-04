@@ -55,12 +55,12 @@ echo "Done"
 # Themes
 
 # Powerlevel9k initialization
-if [ -d "$ZSH/custom/themes/powerlevel9k" ]; then
-  echo -n "Powerlevel9k found. Pulling... "
-  git -C "$ZSH/custom/themes/powerlevel9k" pull
+if [ -d "$ZSH/custom/themes/powerlevel10k" ]; then
+  echo -n "Powerlevel10k found. Pulling... "
+  git -C "$ZSH/custom/themes/powerlevel10k" pull
 else
-  echo -n "Cloning Powerlevel9k repository... "
-  git clone https://github.com/bhilburn/powerlevel9k.git "$ZSH/custom/themes/powerlevel9k"
+  echo -n "Cloning Powerlevel10k repository... "
+  git clone https://github.com/romkatv/powerlevel10k "$ZSH/custom/themes/powerlevel10k"
 fi
 echo "Done"
 

@@ -65,3 +65,8 @@
 (package! org-super-agenda)
 (package! walkman)
 (package! evil-replace-with-register)
+(package! company-lsp)
+(package! fill-column-indicator)
+(package! jupyter)
+(package! ob-async)
+(package! ob-ipython)

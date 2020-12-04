@@ -197,6 +197,10 @@ unalias fd
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+unalias ls
+
+alias ls="ls --color=auto"
+alias ag='\ag --pager="less -XFR"'
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 # source ~/.local/bin/virtualenvwrapper.sh
