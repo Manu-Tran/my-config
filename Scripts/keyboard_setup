@@ -17,6 +17,8 @@ killall xcape
 xset r rate 250 18
 setxkbmap $LANG
 
+# Set mouse sensitivity
+xinput set-prop 'SynPS/2 Synaptics TouchPad' 170 1.5 0 0 0 1.5 0 0 0 1
 
 # setxkbmap -option caps:swapescape
 # setxkbmap -option ctrl:menu_rctrl
