@@ -31,12 +31,12 @@
           ; :desc "Delete this workspace"     "d"   #'+workspace/delete
           ; :desc "Rename workspace"          "r"   #'+workspace/rename
           ; :desc "Restore last session"      "R"   #'+workspace/restore-last-session
-          :desc "Switch to last workspace"     "0" #'+workspace/switch-to-last
-          :desc "Next workspace"            "j"   #'+workspace/switch-right
-          :desc "Previous workspace"        "k"   #'+workspace/switch-left
+          :desc "Switch to last workspace"  "0"   #'+workspace/switch-to-last
+          :desc "Previous workspace"        "j"   #'+workspace/switch-left
+          :desc "Next workspace"            "k"   #'+workspace/switch-right
           :desc "Switch to 1st workspace"   "&"   #'+workspace/switch-to-0
           :desc "Switch to 2nd workspace"   "é"   #'+workspace/switch-to-1
-          :desc "Switch to 3rd workspace"   "\""   #'+workspace/switch-to-2
+          :desc "Switch to 3rd workspace"   "\""  #'+workspace/switch-to-2
           :desc "Switch to 4th workspace"   "'"   #'+workspace/switch-to-3
           :desc "Switch to 5th workspace"   "("   #'+workspace/switch-to-4
           :desc "Switch to 6th workspace"   "-"   #'+workspace/switch-to-5
@@ -69,6 +69,10 @@
       :desc "Quickrun code" "q" #'quickrun)
       )
 
+
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "Column indicator" "c" #'display-fill-column-indicator-mode))
 ;; (map! :after org
 ;;       :map org-mode-map
 ;;       :desc "Move previous block" "J" #'org-previous-block
@@ -93,6 +97,8 @@
       ;; )
 
 (map! :leader :desc "Switch to last buffer" "²" #'evil-switch-to-windows-last-buffer)
+(map! :leader :desc "Org Roam Capture" "C" #'org-roam-capture)
+(map! :desc "Switch to other window" "²" #'evil-window-next)
 (map! :leader :desc "Save file" "w"  #'save-buffer)
 (map! :desc "Scroll down other window" "s-j" (lambda () (interactive)(scroll-other-window 20)))
 (map! :desc "Scroll up other window"   "s-k" (lambda () (interactive)(scroll-other-window -20)))

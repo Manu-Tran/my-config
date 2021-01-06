@@ -1,8 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 (load! "bindings")
-(server-force-delete)
-(server-start)
+(setq auth-sources '("~/.authinfo.gpg"))
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -34,10 +33,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq doom-modeline-window-width-limit fill-column)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -50,14 +46,21 @@
 ;; Completion Stuff =============================================================
 
 ;; Delay for completion
-(setq company-idle-delay 0.3
-      company-minimum-prefix-length 1)
+(setq company-idle-delay 0.5
+      company-minimum-prefix-length 3)
+;;
+(setq lsp-java-format-settings-url "file://Users/emmanuel.tran/dd/eclipse-java-google-style-format.xml")
+(setq lsp-java-format-settings-profile "GoogleStyle")
+(setq lsp-ui-sideline-delay 0.7)
+(setq lsp-ui-doc-delay 0.5)
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-idle-delay 0.500)
+
+
 
 ;; Language of the grammar checking
 (setq langtool-default-language "fr-FR")
-
-(require 'company-lsp)
-(push 'company-lsp company-backends)
 
 ;; Fill Column At 80th character
 (require 'fill-column-indicator)
@@ -100,6 +103,7 @@
                                        ()
                                        (flycheck-add-next-checker 'lsp 'python-flake8)))
 (add-hook 'python-mode-hook 'conda-env-autoactivate-mode)
+;; (conda-env-activate 'base)
 
 
 ; (let ((langs '("american" "francais")))
@@ -131,7 +135,7 @@
 (prefer-coding-system 'utf-8)
 
 ;; Run Prettier on save
-(add-hook 'before-save-hook 'prettier-before-save)
+;; (add-hook 'before-save-hook 'prettier-before-save)
 
 ;; Configure Prettier to match the CLI settings
 (setq prettier-js-args '(
@@ -172,6 +176,14 @@
 (define-key evil-normal-state-map (kbd "gk") 'evil-previous-line)
 
 ;; Org stuff ====================================================================
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+
+;; Workflow configuration
+(load! "orgconfig")
+
 (require 'ob-ipython)
 
 ;;; display/update images in the buffer after I evaluate
@@ -187,6 +199,15 @@
    (jupyter . t)))
 (setq ob-async-no-async-languages-alist '("ipython"))
 
+(defvar hexcolour-keywords
+   '(("#[abcdef[:digit:]]\\{6\\}"
+      (0 (put-text-property (match-beginning 0)
+                            (match-end 0)
+                            'face (list :background
+                                        (match-string-no-properties 0)))))))
+(defun hexcolour-add-to-font-lock ()
+  (font-lock-add-keywords nil hexcolour-keywords))
+
 ;; Select window between frames
 (after! ace-window
   (setq aw-scope 'global))
@@ -200,6 +221,7 @@
   :init
   (setq conda-anaconda-home (expand-file-name "~/opt/miniconda3"))
   (setq conda-env-home-directory (expand-file-name "~/opt/miniconda3")))
+
 
 (load! "~/Programmation/emacs-jupyter/jupyter-client.el")
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -232,3 +254,5 @@
 ;   (setq org-dropbox-datetree-file "~/org/sync/reference.org")
 ;   )
 
+(server-force-delete)
+(server-start)
