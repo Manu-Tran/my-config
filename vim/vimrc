@@ -368,9 +368,9 @@ set termguicolors
 " colorscheme onedark
 " let g:airline_theme='onedark'
 "
-colorscheme one
-set background=dark
-let g:airline_theme='one'
+" colorscheme one
+" set background=dark
+" let g:airline_theme='one'
 
 
 

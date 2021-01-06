@@ -1,5 +1,14 @@
+:: default : echo -n "white" | nc -4u -w0 localhost 1738
+ #osascript -e 'display notification "Default mode" with title "skhd Daemon"'
+:: focus : echo -n "black" | nc -4u -w0 localhost 1738
+#osascript -e 'display notification "Focus mode" with title "skhd Daemon"'
+:: launch_mode @ : echo -n "blue" | nc -4u -w0 localhost 1738
+#osascript -e 'display notification "Launch mode" with title "skhd Daemon"'
+:: media_mode @ : echo -n "red" | nc -4u -w0 localhost 1738
+ #osascript -e 'display notification "Media mode" with title "skhd Daemon"'
+
 # open terminal
-cmd - return : osascript -e 'if application "iTerm" is running then' \
+default, focus < cmd - return : osascript -e 'if application "iTerm" is running then' \
     -e 'tell application "iTerm"' \
     -e 'create window with default profile' \
     -e 'end tell' \
@@ -8,61 +17,43 @@ cmd - return : osascript -e 'if application "iTerm" is running then' \
     -e 'end if'
 
 # focus window
-lalt - h : yabai -m window --focus west
-lalt - j : yabai -m window --focus south
-lalt - k : yabai -m window --focus north
-lalt - l : yabai -m window --focus east
+default, focus < lalt - h : yabai -m window --focus west
+default, focus < lalt - j : yabai -m window --focus south
+default, focus < lalt - k : yabai -m window --focus north
+default, focus < lalt - l : yabai -m window --focus east
 
-lcmd - h : yabai -m window --focus west
+focus < lcmd - 0x15 : sleep 1
+focus < lcmd - 0x17 : sleep 1
+
+default, focus < lcmd - h : yabai -m window --focus west
 #lcmd - j : yabai -m window --focus south
 #lcmd - k : yabai -m window --focus north
-lcmd - l : yabai -m window --focus east
+default, focus < lcmd - l : yabai -m window --focus east
 
 # swap window
-shift + lcmd - h : yabai -m window --warp west
-shift + lcmd - j : yabai -m window --warp south
-shift + lcmd - k : yabai -m window --warp north
-shift + lcmd - l : yabai -m window --warp east
-
-# move window
-# shift + cmd - h : yabai -m window --warp west
-# shift + cmd - j : yabai -m window --warp south
-# shift + cmd - k : yabai -m window --warp north
-# shift + cmd - l : yabai -m window --warp east
+default, focus < shift + lcmd - h : yabai -m window --warp west
+default, focus < shift + lcmd - j : yabai -m window --warp south
+default, focus < shift + lcmd - k : yabai -m window --warp north
+default, focus < shift + lcmd - l : yabai -m window --warp east
 
 # balance size of windows
 lalt - space : yabai -m space --balance
 
-# make floating window fill screen
-shift + lalt - up     : yabai -m window --grid 1:1:0:0:1:1
-
-# make floating window fill left-half of screen
-shift + lalt - left   : yabai -m window --grid 1:2:0:0:1:1
-
-# make floating window fill right-half of screen
-shift + lalt - right  : yabai -m window --grid 1:2:1:0:1:1
-
-# destroy desktop
-# cmd + alt - w : yabai -m space --destroy
-
-# send window to desktop and follow focus
-# shift + cmd - z : yabai -m window --space prev; yabai -m space --focus prev
-# shift + cmd - c : yabai -m window --space next; yabai -m space --focus next
 # alt - tab : yabai -m space --focus recent
-shift + lcmd - 0x12 : yabai -m window --space  1;
-shift + lcmd - 0x13 : yabai -m window --space  2;
-shift + lcmd - 0x14 : yabai -m window --space  3;
-shift + lcmd - 0x15 : yabai -m window --space  4;
-shift + lcmd - 0x17 : yabai -m window --space  5;
-shift + lcmd - 0x0A : yabai -m window --space  6;
-shift + lcmd - 0x32 : yabai -m window --space  6;
-shift + lalt - 0x12 : yabai -m window --space  7;
-shift + lalt - 0x13 : yabai -m window --space  8;
-shift + lalt - 0x14 : yabai -m window --space  9;
-shift + lalt - 0x15 : yabai -m window --space  10;
-shift + lalt - 0x17 : yabai -m window --space  12;
-shift + lalt - 0x0A : yabai -m window --space  11;
-shift + lalt - 0x32 : yabai -m window --space  11;
+shift + lcmd - 0x12 : yabai -m window --space  5; #cmd 1
+shift + lcmd - 0x13 : yabai -m window --space  7; #cmd 2
+shift + lcmd - 0x14 : yabai -m window --space  9; #cmd 3
+shift + lcmd - 0x15 : yabai -m window --space  4; #cmd 4
+shift + lcmd - 0x17 : yabai -m window --space  12; #cmd 5
+shift + lcmd - 0x0A : yabai -m window --space  2; #cmd spec
+shift + lcmd - 0x32 : yabai -m window --space  2; #cmd spec
+shift + lalt - 0x12 : yabai -m window --space  6; #opt 1
+shift + lalt + ctrl - 0x13 : yabai -m window --space  8; #opt 2
+shift + lalt + ctrl - 0x14 : yabai -m window --space  10; #opt 3
+shift + lalt + ctrl - 0x15 : yabai -m window --space  14; #opt 4
+shift + lalt + ctrl - 0x17 : yabai -m window --space  11; #opt 5
+shift + lalt - 0x0A : yabai -m window --space  3; #opt spec
+shift + lalt - 0x32 : yabai -m window --space  3; #opt spec
 
 # focus monitor
 # alt - tab  : yabai -m display --focus recent
@@ -73,6 +64,15 @@ ctrl + lcmd - 0x12  : yabai -m display --focus 1
 ctrl + lcmd - 0x13  : yabai -m display --focus 2
 ctrl + lcmd - 0x14  : yabai -m display --focus 3
 lalt - tab  : yabai -m display --focus recent
+
+
+# toggle window fullscreen zoom
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+# toggle window native fullscreen
+shift + alt - f : yabai -m window --toggle native-fullscreen
+ctrl + cmd - z : ~/bin/focusZoom.sh
+ctrl + cmd - s : ~/bin/focusSpotify.sh
 
 # send window to monitor and follow focus
 # ctrl + cmd - x  : yabai -m window --display recent; yabai -m display --focus recent
@@ -89,10 +89,10 @@ lalt - tab  : yabai -m display --focus recent
 # shift + ctrl - d : yabai -m window --move rel:20:0
 
 # increase window size
-shift + alt - q : yabai -m window --resize left:-20:0
-shift + alt - s : yabai -m window --resize bottom:0:20
-shift + alt - z : yabai -m window --resize top:0:-20
-shift + alt - d : yabai -m window --resize right:20:0
+# shift + alt - q : yabai -m window --resize left:-20:0
+# shift + alt - s : yabai -m window --resize bottom:0:20
+# shift + alt - z : yabai -m window --resize top:0:-20
+# shift + alt - d : yabai -m window --resize right:20:0
 
 # decrease window size
 # shift + cmd - q : yabai -m window --resize left:20:0
@@ -101,93 +101,43 @@ shift + alt - d : yabai -m window --resize right:20:0
 # shift + cmd - d : yabai -m window --resize right:-20:0
 
 # set insertion point in focused container
-ctrl + alt - h : yabai -m window --insert west
-ctrl + alt - j : yabai -m window --insert south
-ctrl + alt - k : yabai -m window --insert north
-ctrl + alt - l : yabai -m window --insert east
+# ctrl + alt - h : yabai -m window --insert west
+# ctrl + alt - j : yabai -m window --insert south
+# ctrl + alt - k : yabai -m window --insert north
+# ctrl + alt - l : yabai -m window --insert east
 
-# rotate tree
-alt - r : yabai -m space --rotate 90
-
-# mirror tree y-axis
-alt - y : yabai -m space --mirror y-axis
-
-# mirror tree x-axis
-alt - x : yabai -m space --mirror x-axis
-
-# toggle desktop offset
-# alt - a : yabai -m space --toggle padding; yabai -m space --toggle gap
-
-# toggle window parent zoom
-# alt - d : yabai -m window --toggle zoom-parent
-
-# toggle window fullscreen zoom
-alt - f : yabai -m window --toggle zoom-fullscreen
-
-# toggle window native fullscreen
-shift + alt - f : yabai -m window --toggle native-fullscreen
-
-# toggle window border
-shift + alt - b : yabai -m window --toggle border
-
-# toggle window split type
-alt - e : yabai -m window --toggle split
-
-# float / unfloat window and center on screen
-alt - t : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:1:2:2
-
-# toggle sticky (show on all spaces)
-alt - s : yabai -m window --toggle sticky
-
-# toggle topmost (keep above other windows)
-alt - o : yabai -m window --toggle topmost
-
-# toggle sticky, topmost and resize to picture-in-picture size
-alt - p : yabai -m window --toggle sticky;\
-          yabai -m window --toggle topmost;\
-          yabai -m window --grid 5:5:4:0:1:1
-
-# change layout of desktop
-ctrl + alt - a : yabai -m space --layout bsp
-ctrl + alt - d : yabai -m space --layout float
-
-ctrl + cmd - z : ~/bin/focusZoom.sh
-
-
-:: default : osascript -e 'display notification "Default mode" with title "skhd Daemon"'
-:: launch_mode @ : osascript -e 'display notification "Launch mode" with title "skhd Daemon"'
-:: media_mode @ : osascript -e 'display notification "Media mode" with title "skhd Daemon"'
-
-ctrl + cmd - d ; launch_mode
-alt - d ; launch_mode
-launch_mode < c : osascript -e 'tell application "Google Chrome" to make new window'; osascript -e 'tell application "System Events" to keystroke key code 53'
+shift + lcmd - f ; focus
+focus < shift + cmd - f ; default
+shift + cmd - d ; launch_mode
+launch_mode < c : osascript -e 'tell application "Google Chrome" to make new window' &; osascript -e 'tell application "System Events" to keystroke key code 53'
 # launch_mode < t : open -a iTerm
-launch_mode < g : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://mail.google.com/"; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < a : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://calendar.google.com/calendar/r"; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < t : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://trello.com/"; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="http://localhost:8888/"; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < e : /usr/local/Cellar/emacs-mac/emacs-27.1-mac-8.0/Emacs.app/Contents/MacOS/Emacs; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < shift - e : /usr/local/Cellar/emacs-mac/emacs-27.1-mac-8.0/bin/emacsclient -c -n -a ""; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode <  s : /Applications/Slack.app/Contents/MacOS/Slack; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < shift - s : /Applications/Spotify.app/Contents/MacOS/Spotify; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < g : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://mail.google.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < a : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://calendar.google.com/calendar/r" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < t : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://trello.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="http://localhost:8888/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < e : /usr/local/Cellar/emacs-mac/emacs-27.1-mac-8.1/Emacs.app/Contents/MacOS/Emacs &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < shift - e : /usr/local/Cellar/emacs-mac/emacs-27.1-mac-8.1/bin/emacsclient -c -n -a "" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode <  s : /Applications/Slack.app/Contents/MacOS/Slack &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < shift - s : /Applications/Spotify.app/Contents/MacOS/Spotify &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < escape ; default
 launch_mode < shift - escape ; default
 
+ctrl + cmd - c : ~/.emacs.d/bin/org-capture
+ctrl + shift - c : ~/.emacs.d/bin/org-capture
 ctrl + cmd - a ; media_mode
 alt - a ; media_mode
 # media_mode < l : osascript -e 'tell application "spotify" to next track'; osascript -e 'tell application "System Events" to keystroke key code 53'
 # media_mode < h : osascript -e 'tell application "spotify" to previous track'; osascript -e 'tell application "System Events" to keystroke key code 53'
 # media_mode < shift - l : osascript -e 'tell application "spotify" to next track'
 # media_mode < shift - h : osascript -e 'tell application "spotify" to previous track'
-# media_mode < space : osascript -e 'tell application "spotify" to playpause'; osascript -e 'tell application "System Events" to keystroke key code 53'
-media_mode < h : ~/bin/media_control.py previous; osascript -e 'tell application "System Events" to keystroke key code 53'
-media_mode < l : ~/bin/media_control.py next; osascript -e 'tell application "System Events" to keystroke key code 53'
+# media_mode
+media_mode < h : ~/bin/media_control.py previous &; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < l : ~/bin/media_control.py next &; osascript -e 'tell application "System Events" to keystroke key code 53'
 media_mode < shift - l : ~/bin/media_control.py next
 media_mode < shift - h : ~/bin/media_control.py previous
-media_mode < j : ~/bin/media_control.py down; osascript -e 'tell application "System Events" to keystroke key code 53'
-media_mode < k : ~/bin/media_control.py up; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < j : ~/bin/media_control.py down &; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < k : ~/bin/media_control.py up &; osascript -e 'tell application "System Events" to keystroke key code 53'
 media_mode < shift - j : ~/bin/media_control.py down
 media_mode < shift - k : ~/bin/media_control.py up
-media_mode < space : ~/bin/media_control.py playpause; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < space : ~/bin/media_control.py playpause &; osascript -e 'tell application "System Events" to keystroke key code 53'
 media_mode < escape ; default

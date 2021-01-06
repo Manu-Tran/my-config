@@ -1,16 +1,26 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
+export DATADOG_ROOT="${HOME?}/dd"
+export LOGS_OPS=/Users/emmanuel.tran/.virtualenvs/scripts-8WCZEcip
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/dd/devtools/bin:"$DATADOG_ROOT/devtools/pex":$PATH
+export PATH="/Users/emmanuel.tran/miniconda3/bin:$HOME/.emacs.d/bin:$PATH"
+export PATH=$PATH:$LOGS_OPS/bin
+export MOUNT_ALL_GO_SRC=1
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS=--require-sha
+export PATH="/usr/local/opt/awscli@1/bin:$PATH"
 
 # Added Path
-export PATH=/snap/bin:$HOME/Scripts:$HOME/snap:$PATH
-export GOPATH=$HOME/Programmation/go
+export GOPATH=$HOME/go
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/manu/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+export GITLAB_TOKEN='4QYWtuVknb1bUxVrJvjs'
 
 ################### FZF #####################################
 
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file .gitignore --exclude .git"
 export FZF_DEFAULT_OPTS="--layout=reverse --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' --bind ctrl-h:preview-up,ctrl-l:preview-down --color fg:252,hl:67,fg+:252,hl+:81"
 export TERM="xterm-256color"
+export DEVENV_MODE=BACKEND
 # export COLORTERM=truecolor

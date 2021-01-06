@@ -51,10 +51,20 @@ yabai -m config layout                       bsp
 # float system preferences
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^AppGate" manage=off
+yabai -m rule --add title="^doom-capture" manage=off layer=above sticky=on
 # yabai -m config top_padding                  0
 # yabai -m config bottom_padding               0
 # yabai -m config left_padding                 0
 # yabai -m config right_padding                0
 # yabai -m config window_gap                   0
+
+# If no window on the current space is focused after a window is destroyed or
+# minimized, or an application is hidden, focus the window under the cursor.
+yabai -m signal --add event=window_destroyed \
+  action="~/bin/focusRecent.sh"
+yabai -m signal --add event=window_minimized \
+  action="~/bin/focusRecent.sh"
+yabai -m signal --add event=application_hidden \
+  action="~/bin/focusRecent.sh"
 
 echo "yabai configuration loaded.."
