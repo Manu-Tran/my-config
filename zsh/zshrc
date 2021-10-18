@@ -48,6 +48,9 @@ POWERLEVEL9K_MODE="awesome-fontconfig"
 # You can set one of the optional three formats:
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="dd.mm.yyyy"
+export HISTSIZE=100000
+export HISTFILE="$HOME/.history"
+export SAVEHIST=$HISTSIZE
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -65,8 +68,11 @@ plugins=(
   copyfile
   cp
   git
+  kubectl
+  per-directory-history
   # sudo
   systemd
+  tmux
   # vi-mode
   wd
   web-search
@@ -89,6 +95,8 @@ plugins=(
  # alias mimeo="mimeopen"
  alias mount-verbose="mount -v | grep \"^/\" | awk '{print \"\nPartition identifier: \" $1  \"\n Mountpoint: \"  $3}\'"
  alias google-java-format="java ~/Repositories/google-java-format/core/target/google-java-format-1.10-SNAPSHOT-all-deps.jar"
+ alias tmuxr="tmux -u new-session -t 0"
+ alias J="| jq"
 
 #Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -109,7 +117,7 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Go to https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png for color code
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs anaconda time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
 POWERLEVEL9K_ANACONDA_LEFT_DELIMITER=''
 POWERLEVEL9K_ANACONDA_RIGHT_DELIMITER=''
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -173,6 +181,7 @@ bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
 bindkey -r "^K"
 bindkey -r "^J"
+bindkey "^T" per-directory-history-toggle-history
 bindkey "^G" insert-last-word
 bindkey "^H" backward-word
 # bindkey "^K" up-line-or-beginning-search
