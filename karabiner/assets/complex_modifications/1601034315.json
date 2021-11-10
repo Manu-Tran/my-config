@@ -141,6 +141,32 @@
       ]
     },
     {
+        "description": "Change left_command to enter if pressed alone.",
+        "manipulators": [
+            {
+                "type": "basic",
+                "from": {
+                    "key_code": "left_command",
+                    "modifiers": {
+                        "optional": [
+                            "any"
+                        ]
+                    }
+                },
+                "to": [
+                    {
+                        "key_code": "left_command"
+                    }
+                ],
+                "to_if_alone": [
+                    {
+                        "key_code": "return_or_enter"
+                    }
+                ]
+            }
+        ]
+    },
+    {
       "description": "Change caps_lock to control if pressed with other keys, to escape if pressed alone.",
       "manipulators": [
         {
