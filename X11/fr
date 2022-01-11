@@ -39,10 +39,10 @@ xkb_symbols "basic" {
   include "level3(ralt_switch)"
     //hjkl
     //AltGr + hjkl
-    key <AC06> {        [         h, H, Left            ]       };
-  key <AC07> {        [         j, J, Down            ]       };
-  key <AC08> {        [         k, K, Up              ]       };
-  key <AC09> {        [         l, L, Right           ]       };
+  key <AC06> { type="THREE_LEVEL", [         h, H, Left            ]       };
+  key <AC07> { type="THREE_LEVEL", [         j, J, Down            ]       };
+  key <AC08> { type="THREE_LEVEL", [         k, K, Up              ]       };
+  key <AC09> { type="THREE_LEVEL", [         l, L, Right           ]       };
 };
 
 partial alphanumeric_keys
