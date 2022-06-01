@@ -27,19 +27,25 @@ focus < lcmd - 0x17 : sleep 1
 
 # cycle forward
 default, focus < lcmd - l : yabai -m window --focus next \
-    || yabai -m window --focus "$( \
-        (yabai -m query --spaces --display next || yabai -m query --spaces --display first) \
-            | jq -re '.[] | select(.visible == 1)."first-window"')" \
+    || yabai -m display --focus 3 \
     || yabai -m display --focus next \
     || yabai -m display --focus first
 
+# default, focus < lcmd + ctrl - l : yabai -m window --focus next \
+    # || yabai -m window --focus "$( \
+    #     (yabai -m query --spaces --display next || yabai -m query --spaces --display first) \
+    #         | jq -re '.[] | select(.visible == 1)."first-window"')" \
+    # || yabai -m display --focus 3
+# default, focus < lcmd + ctrl - l : yabai -m display --focus 3
+
 # cycle backwards
 default, focus < lcmd - h : yabai -m window --focus prev \
-    || yabai -m window --focus "$( \
-        (yabai -m query --spaces --display prev || yabai -m query --spaces --display last) \
-            | jq -re '.[] | select(.visible == 1)."last-window"')" \
+    || yabai -m display --focus 2 \
     || yabai -m display --focus prev \
     || yabai -m display --focus last
+
+default, focus < lcmd - j : yabai -m display --focus 1
+# default, focus < lcmd - k : yabai -m display --focus 3
 
 # default, focus < lcmd - h : yabai -m window --focus west
 #lcmd - j : yabai -m window --focus south
@@ -87,6 +93,21 @@ shift + lalt + ctrl - 0x17 : yabai -m window --space  12; #opt 5
 shift + lalt - 0x0A : yabai -m window --space  3; #opt spec
 shift + lalt - 0x32 : yabai -m window --space  3; #opt spec
 
+lcmd - 0x12 -> : yabai -m display --focus 2; #cmd 1
+lcmd - 0x13 -> : yabai -m display --focus 3; #cmd 2
+lcmd - 0x14 -> : yabai -m display --focus 3; #cmd 3
+lcmd - 0x15 -> : yabai -m display --focus 1; #cmd 4
+lcmd - 0x17 -> : yabai -m display --focus 3; #cmd 5
+lcmd - 0x0A -> : yabai -m display --focus 1; #cmd spec
+lcmd - 0x32 -> : yabai -m display --focus 1; #cmd spec
+lalt - 0x12 -> : yabai -m display --focus 3; #opt 1
+lalt + ctrl - 0x13 -> : yabai -m display --focus 3; #opt 2
+lalt + ctrl - 0x14 -> : yabai -m display --focus 2; #opt 3
+lalt + ctrl - 0x15 -> : yabai -m display --focus 1; #opt 4
+lalt + ctrl - 0x17 -> : yabai -m display --focus 3; #opt 5
+lalt - 0x0A -> : yabai -m display --focus 1; #opt spec
+lalt - 0x32 -> : yabai -m display --focus 1; #opt spec
+
 # focus monitor
 # alt - tab  : yabai -m display --focus recent
 #alt - tab  : yabai -m window --focus recent
@@ -95,6 +116,17 @@ ctrl + lcmd - x  : yabai -m display --focus next
 ctrl + lcmd - 0x12  : yabai -m display --focus 1
 ctrl + lcmd - 0x13  : yabai -m display --focus 2
 ctrl + lcmd - 0x14  : yabai -m display --focus 3
+
+# ctrl + lcmd - j  : yabai -m display --focus 1
+# ctrl + lcmd - h  : yabai -m display --focus 2
+# ctrl + lcmd - l  : yabai -m display --focus 3
+# ctrl + lcmd - k  : yabai -m display --focus 3
+
+# lcmd - j  : yabai -m display --focus 1
+# lcmd - h  : yabai -m display --focus 2
+# lcmd - l  : yabai -m display --focus 3
+# lcmd - k  : yabai -m display --focus 3
+
 lalt - tab  : yabai -m display --focus recent
 
 
@@ -149,8 +181,8 @@ launch_mode < a : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 launch_mode < t : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://trello.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
 # launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="http://localhost:8888/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://datadoghq.atlassian.net/jira/software/projects/RUMB/boards/103" &; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < e : /usr/local/Cellar/emacs-mac/emacs-27.2-mac-8.2/Emacs.app/Contents/MacOS/Emacs &; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < shift - e : /usr/local/Cellar/emacs-mac/emacs-27.2-mac-8.2/bin/emacsclient -c -n -a "" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < e : /usr/local/Cellar/emacs-mac/emacs-28.1-mac-9.0/Emacs.app/Contents/MacOS/Emacs &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < shift - e : /usr/local/Cellar/emacs-mac/emacs-28/1-mac-9.0/bin/emacsclient -c -n -a "" &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode <  s : /Applications/Slack.app/Contents/MacOS/Slack &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < shift - s : /Applications/Spotify.app/Contents/MacOS/Spotify &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < escape ; default

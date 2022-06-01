@@ -1,5 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+;;; Keybinds
 (load! "bindings")
 (setq auth-sources '("~/.authinfo.gpg"))
 
@@ -23,9 +24,9 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 
-;; (setq doom-font (font-spec :family "monospace" :size 12))
+; (setq doom-font (font-spec :family "monospace" :size 12))
 (setq doom-font (font-spec :family "JetBrains Mono" :size 11))
-;; (setq doom-font (font-spec :family "Fira Code" :size 14))
+;;(setq doom-font (font-spec :family "Fira Code" :size 14))
 
 (menu-bar-mode t)
 
@@ -43,19 +44,36 @@
 (setq display-line-numbers-type 'relative)
 (setq display-line-numbers-current-absolute t)
 
+;; Keeps the cursor within x lines from the top/bottom
+(setq scroll-margin 7)
+
 ;; Completion Stuff =============================================================
 
 ;; Delay for completion
-(setq company-idle-delay 0.5
+(setq company-idle-delay 10
       company-minimum-prefix-length 3)
 ;;
-(setq lsp-java-format-settings-url "file://Users/emmanuel.tran/dd/eclipse-java-google-style-format.xml")
-(setq lsp-java-format-settings-profile "GoogleStyle")
-(setq lsp-ui-sideline-delay 0.7)
-(setq lsp-ui-doc-delay 0.5)
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
-(setq lsp-idle-delay 0.500)
+;; (setq lsp-java-format-settings-url "file://Users/emmanuel.tran/dd/eclipse-java-google-style-format.xml")
+;; (setq lsp-java-format-settings-profile "GoogleStyle")
+(setq lsp-ui-sideline-delay 10.0)
+(setq lsp-ui-doc-delay 1.5)
+;; (setq gc-cons-threshold 100000000)
+;; (setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-idle-delay 3.0)
+(setq lsp-on-idle-hook nil)
+(setq lsp-java-vmargs '("-noverify" "-XX:+UseParallelGC" "-XX:+UseStringDeduplication" "-XX:MaxMetaspaceSize=256m" "-Xms2048m" "-Xmx2048m"))
+(setq lsp-java-completion-max-results 20)
+(setq lsp-inhibit-message t)
+
+;; Always open in an already open window
+(setq display-buffer-base-action '(display-buffer-use-some-window))
+
+
+(setq lsp-enable-file-watchers nil)
+
+;; (setq lsp-java-vmargs '("-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication"))
+;; (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
+;; (setq debug-on-error t)
 
 
 
@@ -88,10 +106,10 @@
     (turn-on-fci-mode)))
 
 
-(add-hook! 'prog-mode 'fci-mode)
-(add-hook! 'python-mode-local-vars-hook #'fci-mode)
-(defun my-flycheck-python-setup ()
-  (flycheck-add-next-checker 'lsp 'python-flake8))
+;; (add-hook! 'prog-mode 'fci-mode)
+;; (add-hook! 'python-mode-local-vars-hook #'fci-mode)
+;; (defun my-flycheck-python-setup ()
+;;   (flycheck-add-next-checker 'lsp 'python-flake8))
 
 ;; These MODE-local-vars-hook hooks are a Doom thing. They're executed after
 ;; MODE-hook, on hack-local-variables-hook. Although `lsp!` is attached to
@@ -99,10 +117,10 @@
 ;; this way:
 ;;
 ;; Hook Stuff ==================================================================
-(add-hook 'lsp-after-initialize-hook (lambda
-                                       ()
-                                       (flycheck-add-next-checker 'lsp 'python-flake8)))
-(add-hook 'python-mode-hook 'conda-env-autoactivate-mode)
+;; (add-hook 'lsp-after-initialize-hook (lambda
+;;                                        ()
+;;                                        (flycheck-add-next-checker 'lsp 'python-flake8)))
+;; (add-hook 'python-mode-hook 'conda-env-autoactivate-mode)
 ;; (conda-env-activate 'base)
 
 
@@ -116,8 +134,8 @@
 ;     (ring-insert lang-ring lang)
 ;     (ispell-change-dictionary lang)))
 
-;; (setq projectile-project-search-path '~/Programmation/)
-
+(setq projectile-project-search-path '("~/Programmation" "~/dd"))
+(setq +workspaces-switch-project-function 'magit-status)
 ;; Datadog Linting =============================================================
 
 ;; Remove trailing whitespace on save
@@ -162,10 +180,6 @@
 (evil-replace-with-register-install)
 (evil-ex-define-cmd "q[uit]" 'kill-current-buffer)
 (evil-ex-define-cmd "wq" 'doom/save-and-kill-buffer)
-;; (defun my-evil-quit (old-fun &rest args)
-;;   (if (eq major-mode 'lisp-interaction-mode)
-;;     (message "hi!")
-;;     (apply old-fun args)))
 
 ;; (advice-add #'evil-quit :around #'my-evil-quit)
 
@@ -184,7 +198,7 @@
 ;; Workflow configuration
 (load! "orgconfig")
 
-(require 'ob-ipython)
+;; (require 'ob-ipython)
 
 ;;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -197,7 +211,7 @@
    (python . t)
    (ipython . t)
    (jupyter . t)))
-(setq ob-async-no-async-languages-alist '("ipython"))
+;; (setq ob-async-no-async-languages-alist '("ipython"))
 
 (defvar hexcolour-keywords
    '(("#[abcdef[:digit:]]\\{6\\}"
@@ -212,18 +226,61 @@
 (after! ace-window
   (setq aw-scope 'global))
 
-;;;
-;;; Keybinds
+;; Language specific config
 
-(use-package jupyter)
-(use-package ob-async)
-(use-package conda
-  :init
-  (setq conda-anaconda-home (expand-file-name "~/opt/miniconda3"))
-  (setq conda-env-home-directory (expand-file-name "~/opt/miniconda3")))
+(use-package! mvn
+  :config
+  (defun re-seq (regexp string)
+    "Get a list of all regexp matches in a string"
+    (save-match-data
+      (let ((pos 0)
+            matches)
+        (while (string-match regexp string pos)
+          (push (match-string 1 string) matches)
+          (setq pos (match-end 0)))
+        matches)))
+
+  (defun extract-project-list ()
+    (interactive)
+    (with-temp-buffer
+      (insert-file-contents (concat (lsp--suggest-project-root) "pom.xml"))
+      (keep-lines "\\(<module>\\|<name>\\)" (point-min) (point-max))
+      (setq java-modules-list (re-seq "<module>\\(.*\\)<\/module>" (buffer-string)))
+      (if (null java-modules-list)
+          (re-seq "<name>logs-backend-\\(.*\\)<\/name>" (buffer-string))
+        java-modules-list)
+      )
+    )
+
+  (defun mvn-spotless ()
+    (interactive)
+    (mvn (concat "spotless:apply -pl "
+                 (completing-read "Enter project name:" (extract-project-list) nil t))))
+  )
+
+;; (use-package! kubernetes
+;;   :ensure t
+;;   :commands (kubernetes-overview)
+;;   :init
+;;   (map! :leader :desc "Kubernetes" "k" #'kubernetes-overview))
 
 
-(load! "~/Programmation/emacs-jupyter/jupyter-client.el")
+;; ;; If you want to pull in the Evil compatibility package.
+;; (use-package! kubernetes-evil
+;;   :ensure t
+;;   :after kubernetes)
+
+;; (use-package! jupyter
+;;   :defer)
+;; (use-package! ob-async
+;;   :defer)
+;; (use-package! conda
+;;   :defer
+;;   :init
+;;   (setq conda-anaconda-home (expand-file-name "~/opt/miniconda3"))
+;;   (setq conda-env-home-directory (expand-file-name "~/opt/miniconda3")))
+;; (load! "~/Programmation/emacs-jupyter/jupyter-client.el")
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one

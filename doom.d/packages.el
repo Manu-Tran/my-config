@@ -61,12 +61,24 @@
 (package! org-noter)
 ;; (package! org-super-agenda)
 (package! clang-format)
-(package! spotify)
+;; (package! spotify)
 (package! org-super-agenda)
-(package! walkman)
+;; (package! walkman)
 (package! evil-replace-with-register)
 (package! company-lsp)
 (package! fill-column-indicator)
-(package! jupyter)
-(package! ob-async)
-(package! ob-ipython)
+;; (package! jupyter)
+;; (package! ob-async)
+;; (package! ob-ipython)
+(package! mvn)
+(package! bazel)
+(package! kubernetes)
+(package! kubernetes-evil)
+(package! dired-sidebar)
+
+(package! gitconfig-mode
+	  :recipe (:host github :repo "magit/git-modes"
+			 :files ("gitconfig-mode.el")))
+(package! gitignore-mode
+	  :recipe (:host github :repo "magit/git-modes"
+			 :files ("gitignore-mode.el")))

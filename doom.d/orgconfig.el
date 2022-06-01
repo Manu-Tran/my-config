@@ -1,53 +1,72 @@
-
 ;;; orgconfig.el -*- lexical-binding: t; -*-
 
 (use-package! org-super-agenda
-  :after org-agenda
-  :init
-  (setq org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator nil
-      org-agenda-compact-blocks t
-      org-agenda-start-day nil ;; i.e. today
-      org-agenda-span 1
-      org-agenda-start-on-weekday nil)
-  (setq org-agenda-custom-commands
-        '(("c" "Super view"
-           ((agenda "" ((org-agenda-overriding-header "")
-                        (org-super-agenda-groups
-                         '(
-                           (:name "Today"  ; Optionally specify section name
-                            :time-grid t  ; Items that appear on the time grid
-                            :todo "TODO")  ; Items that have this TODO keyword
-                           (:name "Important"
-                            ;; Single arguments given alone
-                            :tag "vie"
-                            )
-                           (:name "Work"
-                            :tag "work"
-                            :todo "TODO"
-                            )
-                           ;; Groups supply their own section names when none are given
-                           (:todo "RVWD" :order 8)  ; Set order of this section
-                           (:todo "MYBE"
-                            :order 9)
-                           (:priority<= "B"
-                            :order 1)
-                           ))))))))
-  :config
+  :commands (org-super-agenda-mode))
+(after! org-agenda
   (org-super-agenda-mode))
-(use-package! org-super-agenda
-  :after org-agenda
-  :init
-  :config
-  (org-super-agenda-mode))
+
 (setq org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-include-deadlines t
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
+
+(setq org-agenda-custom-commands
+      '(("o" "Overview"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Today"
+                                :time-grid t
+                                :date today
+                                :todo "TODAY"
+                                :scheduled today
+                                :order 1)))))
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "Work"
+                                 :tag "work"
+                                 :children t
+                                 :order 1)
+                          (:name "Important"
+                                 :tag "Important"
+                                 :priority "A"
+                                 :order 6)
+                          (:name "Due Today"
+                                 :deadline today
+                                 :order 2)
+                          (:name "Due Soon"
+                                 :deadline future
+                                 :order 8)
+                          (:name "Overdue"
+                                 :deadline past
+                                 :face error
+                                 :order 7)
+                          (:name "Issues"
+                                 :tag "Issue"
+                                 :order 12)
+                          (:name "Emacs"
+                                 :tag "Emacs"
+                                 :order 13)
+                          (:name "Projects"
+                                 :tag "Project"
+                                 :order 14)
+                          (:name "Research"
+                                 :tag "Research"
+                                 :order 15)
+                          (:name "To read"
+                                 :tag "Read"
+                                 :order 30)
+                          (:name "Waiting"
+                                 :todo "WAITING"
+                                 :order 20)
+                          (:name "Trivial"
+                                 :priority<= "E"
+                                 :tag ("Trivial" "Unimportant")
+                                 :todo ("SOMEDAY" )
+                                 :order 90)
+                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+
 
 
 
@@ -63,7 +82,7 @@
            (file+headline +org-capture-file "Inbox")
            "* TODO %?\n%i\n%a" :prepend t)
           ("n" "Personal notes" entry
-           (file+headline +org-capture-notes-file "Inbox")
+           (file+headline +org-capture-notes-file "")
            "* %u %?\n%i\n%a" :prepend t)
           ("w" "Work todo" entry
            (file+headline +org-todo-work-file "Inbox")

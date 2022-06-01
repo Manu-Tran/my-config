@@ -61,12 +61,12 @@ export SAVEHIST=$HISTSIZE
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  archlinux
+  # archlinux
   common-aliases
-  command-not-found
-  copydir
-  copyfile
-  cp
+  # command-not-found
+  # copypath
+  # copyfile
+  # cp
   git
   kubectl
   per-directory-history
@@ -183,7 +183,8 @@ bindkey -r "^K"
 bindkey -r "^J"
 bindkey "^T" per-directory-history-toggle-history
 bindkey "^G" insert-last-word
-bindkey "^H" backward-word
+bindkey "^B" backward-word
+bindkey "^F" forward-word
 # bindkey "^K" up-line-or-beginning-search
 # bindkey "^J" down-line-or-beginning-search
 # bindkey "^H" backward-char
@@ -241,7 +242,33 @@ export AWS_VAULT_KEYCHAIN_NAME=login
 # tweak session times so you dont have to re-enter passwords every 5min
 export AWS_SESSION_TTL=24h
 export AWS_ASSUME_ROLE_TTL=1h
-export JAVA_HOME=$(/usr/libexec/java_home -v 14)
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+#export JAVA_HOME=$(/usr/libexec/java_home -v 14)
+
+function mongo-toolbox() {
+    chart_name="mongo-toolbox-low-privilege"
+    if [[ -z "$1" ]]; then
+        toolbox=$(kubectl get pod -o name | grep "$chart_name" | cut -d'-'  -f5- | rev | cut -d'-' -f3-  | rev)
+        if [[ -n "$toolbox" ]]; then
+            echo "$(tput setaf 2)$toolbox"
+        else
+            echo "$(tput setaf 1)No mongo toolbox in the current namespace"
+        fi        
+    else
+        pod=$(kubectl get pod -l app="$chart_name-$1" -o name)
+        command=${2:-"/bin/bash"}
+        if [[ -n "$pod" ]]; then
+            kubectl exec -it $pod $command
+        else
+            echo "$(tput setaf 1)No toolbox $1"
+        fi
+    fi
+}
+
+#export PATH="$HOME/.jenv/bin:$PATH"
+#eval "$(jenv init -)"
+
+source ~/.cloudops-cli.completion
+export PATH="/usr/local/opt/lsof/bin:$PATH"
+export PATH="/usr/local/Cellar/emacs-mac/emacs-27.2-mac-8.2/bin:$PATH"
+ulimit -n 32768
+export DEVENV_MODE=BACKEND

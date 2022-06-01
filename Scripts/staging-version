@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [[ $1 == "-h" || $1 == "--help" ]]; then
+    printf "Usage : \n\t 1) \"staging-version\" : get the latest datacenter config version for eu1.staging.dog \n\t 2) \"staging-version \$WORKLOAD_NAME\" : get the latest image version of a workload for eu1.staging.dog \n\t 3) \"staging-version \$WORKLOAD_NAME --\" : same as 2) but bypass the check on \"logs-\" prefix for workload name (useful for eventquery)"
+    exit 0;
+fi
+
+if [[ ! -z $1 ]]; then
+    if echo $1 | grep -q "logs-"; then
+        VERSION=$(latest-image staging "$1")
+    else
+        if [[ -z $2 ]]; then
+            VERSION=$(latest-image staging "logs-$1")
+        else
+            VERSION=$(latest-image staging "$1")
+        fi
+    fi
+    if [[ -z $VERSION ]]; then
+        echo "No $1 version found !"
+        exit 1
+    fi
+    echo "$VERSION" | pbcopy
+    echo "Workload $1 : \"$VERSION\" copied to clipboard !"
+    exit 0
+else
+    VERSION=$(gsutil cp gs://datadog-config-europe-west3-staging/versioned/LATEST - | sed 's/.*-\(v.*\).tgz/\1/')
+    # VERSION=$(aws-vault exec staging-engineering -- aws s3 cp --region us-east-1 s3://datadog-config-us-east-1-staging/versioned/LATEST - | sed 's/.*-\(v.*\).tgz/\1/')
+    if [[ -z $VERSION ]]; then
+        echo "No config version found !"
+        exit 1
+    fi
+    echo "$VERSION" | pbcopy
+    echo "Config : \"$VERSION\" copied to clipboard !"
+    exit 0
+fi
+

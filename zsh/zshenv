@@ -11,6 +11,7 @@ export HOMEBREW_CASK_OPTS=--require-sha
 export PATH="/usr/local/opt/awscli@1/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export SAVEHIST=100000
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.jdk/Contents/Home"
 
 # Added Path
 export GOPATH=$HOME/go
@@ -25,4 +26,6 @@ export FZF_DEFAULT_OPTS="--layout=reverse --preview '(bat --style=numbers --colo
 export TERM="xterm-256color"
 export DEVENV_MODE=FRONTEND
 export ZSH_TMUX_UNICODE=true
+source "$HOME/.zshsecrets"
 # export COLORTERM=truecolor
+. "$HOME/.cargo/env"

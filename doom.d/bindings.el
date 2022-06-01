@@ -20,7 +20,7 @@
 (map! :leader
       ;;; <leader> TAB --- workspace
       (:when (featurep! :ui workspaces)
-        (:prefix-map ("TAB" . "workspace")
+        (:prefix ("TAB" . "workspace")
           :desc "Display tab bar"           "SPC" #'+workspace/display
           ; :desc "Switch workspace"          "."   #'+workspace/switch-to
           ; :desc "Switch to last workspace"  "`"   #'+workspace/other
@@ -52,7 +52,7 @@
 (map! :leader
       ;;; <leader> TAB --- workspace
       (:when (featurep! :ui workspaces)
-             (:prefix-map ("TAB" . "workspace")
+             (:prefix ("TAB" . "workspace")
                           :desc "Switch to 1st workspace"   "1"   nil
                           :desc "Switch to 2nd workspace"   "2"   nil
                           :desc "Switch to 3rd workspace"   "3"   nil
@@ -65,13 +65,25 @@
                           :desc "Switch to final workspace" "0"   nil)))
 
 (map! :leader
-      (:prefix-map ("c" . "code")
-      :desc "Quickrun code" "q" #'quickrun)
+      (:prefix ("c" . "code")
+      :desc "quickrun code" "q" #'quickrun)
       )
 
+(map! :leader
+      (:prefix ("s" . "search")
+      :desc "Search in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir)))
+      :desc "Search file in root project" "f" (lambda () (interactive)(projectile-find-file-in-directory (vc-root-dir)))
+      )
+)
+
+;; (map! :leader
+;;       (:prefix-map ("p" . "project")
+;;       :desc "Find file in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir)))
+;;       )
+;; )
 
 (map! :leader
-      (:prefix-map ("t" . "toggle")
+      (:prefix ("t" . "toggle")
        :desc "Column indicator" "c" #'display-fill-column-indicator-mode))
 ;; (map! :after org
 ;;       :map org-mode-map
@@ -97,9 +109,11 @@
       ;; )
 
 (map! :leader :desc "Switch to last buffer" "²" #'evil-switch-to-windows-last-buffer)
+;; (map! :desc "Switch to other frame" "C-²" #'other-frame)
 (map! :leader :desc "Org Roam Capture" "C" #'org-roam-capture)
 (map! :desc "Switch to other window" "²" #'evil-window-next)
 (map! :leader :desc "Save file" "w"  #'save-buffer)
+;; (map! :leader :desc "Save file" "H"  #'save-buffer)
 (map! :desc "Scroll down other window" "s-j" (lambda () (interactive)(scroll-other-window 20)))
 (map! :desc "Scroll up other window"   "s-k" (lambda () (interactive)(scroll-other-window -20)))
 

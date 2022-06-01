@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -x 
+
+kubectx chinook.us1.staging.dog; 
+k port-forward $(k get pods -n logs-general -l app=logs-admin G "logs-admin" H -n 1 | awk '{print $1}') 9091 -n logs-general

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+STAGED_PROJECT=$(git diff --staged --name-only --cached | grep ".*\.java" | sed 's/\([^/]*\)\/.*/\1/' | tr '\n' ',')
+if [[ -n $STAGED_PROJECT ]]; then
+    STAGED_FILES=$(git diff --staged --name-only --cached | grep ".*\.java" | tr '\n' ' ')
+    mvn spotless:apply -pl $STAGED_PROJECT
+    echo "Staging :"
+    echo "$(git diff --staged --name-only --cached)"
+    git add $STAGED_FILES
+else
+    echo "No file staged !"
+    exit 0;
+fi
