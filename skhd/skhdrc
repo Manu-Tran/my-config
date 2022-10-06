@@ -127,7 +127,7 @@ ctrl + lcmd - 0x14  : yabai -m display --focus 3
 # lcmd - l  : yabai -m display --focus 3
 # lcmd - k  : yabai -m display --focus 3
 
-lalt - tab  : yabai -m display --focus recent
+# lalt - tab  : yabai -m display --focus recent
 
 
 # toggle window fullscreen zoom

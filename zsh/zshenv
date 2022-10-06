@@ -10,8 +10,9 @@ export HOMEBREW_NO_INSECURE_REDIRECT=1
 export HOMEBREW_CASK_OPTS=--require-sha
 export PATH="/usr/local/opt/awscli@1/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 export SAVEHIST=100000
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.jdk/Contents/Home"
+export JAVA_HOME="/usr/local/opt/openjdk@17"
 
 # Added Path
 export GOPATH=$HOME/go

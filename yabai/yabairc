@@ -50,7 +50,7 @@ yabai -m config mouse_action2                resize
 yabai -m config layout                       bsp
 # float system preferences
 yabai -m rule --add app="^System Preferences$" manage=off
-yabai -m rule --add app="^AppGate" manage=off
+yabai -m rule --add app="^Appgate" manage=off
 yabai -m rule --add title="^doom-capture" manage=off layer=above sticky=on
 # yabai -m config top_padding                  0
 # yabai -m config bottom_padding               0

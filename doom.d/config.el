@@ -25,6 +25,7 @@
 ;; font string. You generally only need these two:
 
 ; (setq doom-font (font-spec :family "monospace" :size 12))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12))
 (setq doom-font (font-spec :family "JetBrains Mono" :size 11))
 ;;(setq doom-font (font-spec :family "Fira Code" :size 14))
 
@@ -197,6 +198,9 @@
 
 ;; Workflow configuration
 (load! "orgconfig")
+
+;; Protobuf mode
+(require 'protobuf-mode)
 
 ;; (require 'ob-ipython)
 
