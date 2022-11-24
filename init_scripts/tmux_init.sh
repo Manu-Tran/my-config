@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # tmux initialization
-ln -rsf "tmux/tmux.conf" ~/.tmux.conf
+ln -sf "~/my-config/tmux/tmux.conf" ~/.tmux.conf
 TMUX_FOLDER="~/.tmux"
 
 # tpm initialization

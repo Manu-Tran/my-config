@@ -97,6 +97,7 @@ plugins=(
  alias google-java-format="java ~/Repositories/google-java-format/core/target/google-java-format-1.10-SNAPSHOT-all-deps.jar"
  alias tmuxr="tmux -u new-session -t 0"
  alias J="| jq"
+ alias gcocs="gco $(current-staging)"
 
 #Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -252,7 +253,7 @@ function mongo-toolbox() {
             echo "$(tput setaf 2)$toolbox"
         else
             echo "$(tput setaf 1)No mongo toolbox in the current namespace"
-        fi        
+        fi
     else
         pod=$(kubectl get pod -l app="$chart_name-$1" -o name)
         command=${2:-"/bin/bash"}
@@ -274,4 +275,69 @@ ulimit -n 32768
 export DEVENV_MODE=BACKEND
 export PATH="/usr/local/opt/openjdk@17/bin:$PATH"
 
-ssh-add --apple-load-keychain ~/.ssh/id_rsa
+# google-cloud-sdk brew caveat
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
+# BEGIN ANSIBLE MANAGED BLOCK
+# Add homebrew binaries to the path.
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH?}"
+
+# Force certain more-secure behaviours from homebrew
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS=--require-sha
+export HOMEBREW_DIR=/opt/homebrew
+export HOMEBREW_BIN=/opt/homebrew/bin
+
+# Load python shims
+eval "$(pyenv init -)"
+
+# Load ruby shims
+eval "$(rbenv init -)"
+
+# Prefer GNU binaries to Macintosh binaries.
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
+
+# Add AWS CLI to PATH
+export PATH="/opt/homebrew/opt/awscli@1/bin:$PATH"
+
+# Add datadog devtools binaries to the PATH
+export PATH="${HOME?}/dd/devtools/bin:${PATH?}"
+
+# Point GOPATH to our go sources
+export GOPATH="${HOME?}/go"
+
+# Add binaries that are go install-ed to PATH
+export PATH="${GOPATH?}/bin:${PATH?}"
+
+# Point DATADOG_ROOT to ~/dd symlink
+export DATADOG_ROOT="${HOME?}/dd"
+
+# Tell the devenv vm to mount $GOPATH/src rather than just dd-go
+export MOUNT_ALL_GO_SRC=1
+
+# store key in the login keychain instead of aws-vault managing a hidden keychain
+export AWS_VAULT_KEYCHAIN_NAME=login
+
+# tweak session times so you don't have to re-enter passwords every 5min
+export AWS_SESSION_TTL=24h
+export AWS_ASSUME_ROLE_TTL=1h
+
+# Helm switch from storing objects in kubernetes configmaps to
+# secrets by default, but we still use the old default.
+export HELM_DRIVER=configmap
+
+# Go 1.16+ sets GO111MODULE to off by default with the intention to
+# remove it in Go 1.18, which breaks projects using the dep tool.
+# https://blog.golang.org/go116-module-changes
+export GO111MODULE=auto
+export GOPRIVATE=github.com/DataDog
+# END ANSIBLE MANAGED BLOCK
+export WORKSPACE="$(echo $USER | sed s/\\.//g)"
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+source <(kubectl completion zsh)
+
+alias python="/usr/bin/python3"
+alias ls="ls --color=tty"
+
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"

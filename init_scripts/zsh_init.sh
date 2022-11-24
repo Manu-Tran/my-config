@@ -1,12 +1,11 @@
 #!/bin/bash
 
-set -e
+set -ex
+ZSH=~/.oh-my-zsh
 
 # Zshrc initialization
-ln -rsf "zsh/zshrc" ~/.zshrc
-ln -rsf "zsh/zshenv" ~/.zshenv
-
-source ~/.zshenv
+ln -sf "zsh/zshrc" ~/.zshrc
+ln -sf "zsh/zshenv" ~/.zshenv
 
 # OhMyZsh initialization
 if [ -f "$ZSH/oh-my-zsh.sh" ]; then

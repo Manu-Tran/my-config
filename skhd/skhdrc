@@ -6,6 +6,8 @@
 #osascript -e 'display notification "Launch mode" with title "skhd Daemon"'
 :: media_mode @ : echo -n "red" | nc -4u -w0 localhost 1738
  #osascript -e 'display notification "Media mode" with title "skhd Daemon"'
+:: url_mode @ : echo -n "yellow" | nc -4u -w0 localhost 1738
+#osascript -e 'display notification "URL mode" with title "skhd Daemon"'
 
 # open terminal
 default, focus < cmd - return : osascript -e 'if application "iTerm" is running then' \
@@ -88,13 +90,13 @@ shift + lcmd - 0x32 : yabai -m window --space  2; #cmd spec
 shift + lalt - 0x12 : yabai -m window --space  8; #opt 1
 shift + lalt + ctrl - 0x13 : yabai -m window --space  10; #opt 2
 shift + lalt + ctrl - 0x14 : yabai -m window --space  7; #opt 3
-shift + lalt + ctrl - 0x15 : yabai -m window --space  14; #opt 4
+shift + lalt + ctrl - 0x15 : yabai -m window --space  5; #opt 4
 shift + lalt + ctrl - 0x17 : yabai -m window --space  12; #opt 5
 shift + lalt - 0x0A : yabai -m window --space  3; #opt spec
 shift + lalt - 0x32 : yabai -m window --space  3; #opt spec
 
 lcmd - 0x12 -> : yabai -m display --focus 2; #cmd 1
-lcmd - 0x13 -> : yabai -m display --focus 3; #cmd 2
+#lcmd - 0x13 -> : yabai -m display --focus 3; #cmd 2
 lcmd - 0x14 -> : yabai -m display --focus 3; #cmd 3
 lcmd - 0x15 -> : yabai -m display --focus 1; #cmd 4
 lcmd - 0x17 -> : yabai -m display --focus 3; #cmd 5
@@ -181,8 +183,8 @@ launch_mode < a : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 launch_mode < t : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://trello.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
 # launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="http://localhost:8888/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://datadoghq.atlassian.net/jira/software/projects/RUMB/boards/103" &; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < e : /usr/local/Cellar/emacs-mac/emacs-28.1-mac-9.0/Emacs.app/Contents/MacOS/Emacs &; osascript -e 'tell application "System Events" to keystroke key code 53'
-launch_mode < shift - e : /usr/local/Cellar/emacs-mac/emacs-28/1-mac-9.0/bin/emacsclient -c -n -a "" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < e : /opt/homebrew/Cellar/emacs-mac/emacs-28.2-mac-9.1/Emacs.app/Contents/MacOS/Emacs &; osascript -e 'tell application "System Events" to keystroke key code 53'
+launch_mode < shift - e : /opt/homebrew/Cellar/emacs-mac/emacs-28.2-mac-9.1/bin/emacsclient -c -n -a "" &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode <  s : /Applications/Slack.app/Contents/MacOS/Slack &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < shift - s : /Applications/Spotify.app/Contents/MacOS/Spotify &; osascript -e 'tell application "System Events" to keystroke key code 53'
 launch_mode < escape ; default
@@ -194,6 +196,7 @@ ctrl + cmd - a ; media_mode
 alt - a ; media_mode
 
 ctrl + alt - k : /Applications/KeePassXC.app/Contents/MacOS/KeePassXC
+ctrl + cmd - g : ~/bin/restoreWorkspaces.sh
 
 # media_mode < l : osascript -e 'tell application "spotify" to next track'; osascript -e 'tell application "System Events" to keystroke key code 53'
 # media_mode < h : osascript -e 'tell application "spotify" to previous track'; osascript -e 'tell application "System Events" to keystroke key code 53'
@@ -209,4 +212,20 @@ media_mode < k : ~/bin/media_control.py up &; osascript -e 'tell application "Sy
 media_mode < shift - j : ~/bin/media_control.py down
 media_mode < shift - k : ~/bin/media_control.py up
 media_mode < space : ~/bin/media_control.py playpause &; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < 0x12 : SwitchAudioSource -s "MacBook Pro Speakers"; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < 0x13 : SwitchAudioSource -s "Arctis 5 Game"; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < 0x14 : SwitchAudioSource -s "ManuCasque"; osascript -e 'tell application "System Events" to keystroke key code 53'
+media_mode < 0x15 : SwitchAudioSource -s "BlackHole 64ch"; osascript -e 'tell application "System Events" to keystroke key code 53'
 media_mode < escape ; default
+
+
+alt - u ; url_mode
+url_mode < c : open "https://datadoghq.atlassian.net/wiki/home" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < d : open "https://app.datadoghq.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < shift - d : open "https://dd.datad0g.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < ctrl - d : open "https://ddstaging.datadoghq.com/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < s : open "https://sdp.ddbuild.io/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < g : open "https://github.com/pulls" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < shift - g : open "https://cs.github.com/DataDog/" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < ctrl - g : open "https://github.com/DataDog/logs-backend" &; osascript -e 'tell application "System Events" to keystroke key code 53'
+url_mode < escape ; default

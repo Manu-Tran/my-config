@@ -4,6 +4,26 @@
     {
         "description": "Changing remaping for i3 like in french mac keyboard",
       "manipulators": [
+    {
+        "from": {
+            "key_code": "t",
+            "modifiers": {
+                "mandatory": [
+                    "right_command"
+                ],
+                "optional": [
+                    "any"
+                ]
+            }
+        },
+        "to": [
+            {
+                "key_code": "backslash",
+                "modifiers": ["left_shift"]
+            }
+        ],
+        "type": "basic"
+    },
         {
           "from": {
             "key_code": "2",

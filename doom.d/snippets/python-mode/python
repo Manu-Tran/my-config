@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: python
+# key: recfun
+# --
+
+def ${1:func_name}(${2:args_rec}, ${3:global_args}):
+    @lru_cache
+    def rec($2):
+        ${4:pass}
+    return rec($2)

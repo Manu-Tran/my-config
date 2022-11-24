@@ -11,7 +11,7 @@ if [[ -e $HOME/.vimrc ]]; then
         fi
     fi
 fi
-ln -rsf "$HOME/my-config/vim/vimrc" ~/.vimrc
+ln -sf "$HOME/my-config/vim/vimrc" ~/.vimrc
 
 
 # Vundle download
