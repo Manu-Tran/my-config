@@ -7,8 +7,8 @@
 (defvar aoc-current-problem-day nil)
 (defvar aoc-current-problem-year nil)
 (defvar aoc-mode-map (make-sparse-keymap))
-(defvar aocd-dir "/Users/emmanueltran/.config/aocd/google.Manu T..1522435")
-(defvar aoc-inflight-timers '())
+(defvar aocd-dir "/Users/emmanueltran/.config/aocd/manu")
+(defvar aoc/timers-retry 0)
 
 (defvar aoc-mode-hook nil)
 
@@ -71,11 +71,14 @@
   (interactive)
   (shell-command "aocd-token > ~/.config/aocd/token"))
 
+(defun aoc/pad_day_number_if_needed()
+  (if (>= 9 (length aoc-current-problem-day)) "0" ""))
+
 (defun aoc/open-wrong-answers()
   (interactive)
   (find-file (concat aocd-dir "/" aoc-current-problem-year "_"
           ;; Pad the day number
-          (if (>= 9 (length aoc-current-problem-day)) "0")
+          (aoc/pad_day_number_if_needed)
           aoc-current-problem-day
           ;; Convert the part
           (if (string-equal aoc-current-problem-part "2") "b" "a")
@@ -101,11 +104,11 @@
   (split-string
    (print (ignore-errors (shell-command-to-string (concat "cat \"" aocd-dir "/" aoc-current-problem-year "_"
           ;; Pad the day number
-          (if (>= 9 (length aoc-current-problem-day)) "0")
+          (aoc/pad_day_number_if_needed)
           aoc-current-problem-day
           ;; Convert the part
           (if (string-equal aoc-current-problem-day "2") "b" "a")
-          "_bad_answers.txt\" | sed -E 's/(\d*) .*/\1/' | tr '\\n' ' '")
+          "_bad_answers.txt\" 2&>1 | sed -E 's/(\d*) .*/\1/' | tr '\\n' ' '")
   )))))
 
 (defun aoc/submit-action(solution)
@@ -133,16 +136,16 @@
   "Submit a solution for the current problem using aocd"
   (interactive)
   (shell-command-to-string (concat "echo -n \"...\" > " (aoc/get-day-file "last_output")))
-  (aoc/run-on-input)
-  (setq aoc/timers_retry 10)
-  (add-to-list aoc-inflight-timers (run-with-timer 1 nil #'aoc/on-exec-timers)))
+  (aoc/run-on-input t)
+  (setq aoc/timers-retry 10)
+  (run-with-timer 1 nil #'aoc/on-exec-timers))
 
 (defun aoc/run-on-test()
   "Run current code on test input file by passing the file in env"
   (interactive)
-  (python-shell-send-string "import os; os.environ[\"AOC_INPUT\"] = \"test.txt\"")
+  (python-shell-send-string "import os; os.environ[\"AOC_INPUT\"] = \"test.txt\"; os.environ[\"RUN_MODE\"] = \"DRY_RUN\"")
   (python-shell-send-buffer)
-  (aoc/switch-console))
+  (aoc/test-phase))
 
 (defun aoc/run-on-test-file()
   "Run current code on test input file by passing the file in env"
@@ -151,30 +154,31 @@
             (directory-files (concat (aoc/get-day-file)) nil "test*")
             :sort t
             :action (lambda (file)
-                      (python-shell-send-string (concat "import os; os.environ[\"AOC_INPUT\"] = \"" file "\""))
+                      (python-shell-send-string (concat "import os; os.environ[\"AOC_INPUT\"] = \"" file "\"; os.environ[\"RUN_MODE\"] = \"DRY_RUN\""))
                       (python-shell-send-buffer)
-                      (aoc/switch-console))))
+                      (aoc/test-phase))))
 
 (defun aoc/on-exec-timers()
   "Wait for python to finish computing by scheduling timers"
-  (setq aoc-inflight-timers (butlast aoc-inflight-timers))
-  (setq aoc/timers_max_retry (1- aoc/timers_retry))
-  (when (not (eq 0 aoc/timers_retry)) (setq aoc_res (shell-command-to-string (concat "cat " (aoc/get-day-file "last_output"))))
+  (setq aoc/timers-retry (1- aoc/timers-retry))
+  (if (eq 0 aoc/timers-retry) (message "Timeout exceeded..."))
+  (when (not (eq 0 aoc/timers-retry)) (setq aoc_res (shell-command-to-string (concat "cat " (aoc/get-day-file "last_output"))))
   (if (or (not aoc_res) (string-equal aoc_res "..."))
-      (add-to-list aoc-inflight-timers (run-with-timer 1 nil #'aoc/on-exec-timers))
+      (run-with-timer 1 nil #'aoc/on-exec-timers)
     (progn
       (message (concat "Sending " aoc_res " as a solution..."))
       (aoc/submit-action aoc_res)))))
 
-(defun aoc/run-on-input()
+(defun aoc/run-on-input(&optional submit)
   "Run current code on true input file by passing the file in env"
   (interactive)
-  (python-shell-send-string "import os; os.environ[\"AOC_INPUT\"] = \"input.txt\"")
+  (python-shell-send-string (concat "import os; os.environ[\"AOC_INPUT\"] = \"input.txt\"; os.environ[\"RUN_MODE\"] = " (if submit "\"SUBMIT\"" "\"DRY_RUN\"")))
   (python-shell-send-buffer)
   (aoc/switch-console))
 
 (defun aoc/switch-to-second-part(&optional force)
   "Switch the workspace to the second part of the problem"
+  (interactive)
   (when (or force (not (file-exists-p (aoc/get-day-file "p2.py"))))
     (copy-file
      (aoc/get-day-file "p1.py") (aoc/get-day-file "p2.py")))
@@ -182,11 +186,15 @@
   (aoc/dev-phase)
   )
 
+(defun aoc/format-current-day()
+  (string-clean-whitespace (format-time-string "%e")))
+
+
 (defun aoc/today()
   "Setup today's advent of code problem"
   (interactive)
   (setq aoc-current-problem-year (format-time-string "%Y"))
-  (setq aoc-current-problem-day (format-time-string "%d"))
+  (setq aoc-current-problem-day (aoc/format-current-day))
   (setq aoc-current-problem-part "1")
   (aoc/setup-workspace))
 
@@ -203,7 +211,7 @@
             (cl-map 'list #'number-to-string (number-sequence 1 25))
             :sort t
             :action (lambda (day) (setq aoc-current-problem-day
-                                        (if day day (format-time-string "%d"))))
+                                        (if day day (aoc/format-current-day))))
             )
   (aoc/setup-workspace))
 
@@ -213,6 +221,7 @@
   (ignore-errors (evil-window-right 1))
   (ignore-errors (evil-window-down 1))
   (switch-to-buffer "*Python*")
+  (doom-mark-buffer-as-real-h)
   (evil-window-left 1)
   )
 
@@ -229,23 +238,8 @@
               (cl-map 'list #'number-to-string (number-sequence 1 25))
               :sort t
               :action (lambda (day) (setq aoc-current-problem-day
-                                          (if day day (format-time-string "%d")))))
+                                          (if day day (aoc/format-current-day)))))
     (aoc/setup-workspace))
-
-;; (defun aoc/setup-windows()
-;;   (delete-other-windows)
-;;   ;; right pane
-;;   (find-file (aoc/get-day-file (concat "p" aoc-current-problem-part ".py")))
-;;   (+evil/window-vsplit-and-follow)
-;;   ;; up left pane
-;;   (find-file (aoc/get-day-file "test.txt"))
-;;   (find-file (aoc/get-day-file "input.txt"))
-;;   (+evil/window-split-and-follow)
-;;   ;; down left pane
-;;   (find-file (aoc/get-day-file "README.md"))
-;;   (switch-to-buffer "*Python*")
-;;   (evil-window-left 1)
-;;   )
 
 (defun aoc/open-webpage()
   (interactive)
@@ -254,7 +248,9 @@
 (defun aoc/setup-workspace()
   ;; Init
   (message "Setting up workspace...")
+  ;; Run Python and mark the buffer as part of the project
   (run-python)
+  (doom-mark-buffer-as-real-h)
   (aoc/reload-token)
 
   ;; Setup
@@ -300,7 +296,8 @@
   (evil-window-left 1)
   )
 
-(add-to-list inferior-python-mode-hook #'aoc-mode)
+(after! inferior-python-mode
+  (add-to-list inferior-python-mode-hook #'aoc-mode))
 
 (run-hooks 'aoc-mode-hook)
 

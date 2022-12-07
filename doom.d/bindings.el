@@ -19,7 +19,7 @@
 
 (map! :leader
       ;;; <leader> TAB --- workspace
-      (:when (featurep! :ui workspaces)
+      (:when (modulep! :ui workspaces)
         (:prefix ("TAB" . "workspace")
           :desc "Display tab bar"           "SPC" #'+workspace/display
           ; :desc "Switch workspace"          "."   #'+workspace/switch-to
@@ -51,7 +51,7 @@
 
 (map! :leader
       ;;; <leader> TAB --- workspace
-      (:when (featurep! :ui workspaces)
+      (:when (modulep! :ui workspaces)
              (:prefix ("TAB" . "workspace")
                           :desc "Switch to 1st workspace"   "1"   nil
                           :desc "Switch to 2nd workspace"   "2"   nil
@@ -71,8 +71,15 @@
 
 (map! :leader
       (:prefix ("s" . "search")
-      :desc "Search in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir)))
+      ;; :desc "Search in root project" "SPC" (lambda () (interactive)(+vertico/project-search :in (vc-root-dir)))
+      :desc "Find file in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir)))
       :desc "Search file in root project" "f" (lambda () (interactive)(projectile-find-file-in-directory (vc-root-dir)))
+      )
+)
+
+(map! :leader
+      (:prefix ("n" . "notes")
+      :desc "Go to work file" "w" (lambda () (interactive)(org-open-file "~/org/work.org"))
       )
 )
 
@@ -116,10 +123,18 @@
 ;; (map! :leader :desc "Save file" "H"  #'save-buffer)
 (map! :desc "Scroll down other window" "s-j" (lambda () (interactive)(scroll-other-window 20)))
 (map! :desc "Scroll up other window"   "s-k" (lambda () (interactive)(scroll-other-window -20)))
+(map! :desc "Scroll down other window" "Ï" (lambda () (interactive)(scroll-other-window 20)))
+(map! :desc "Scroll up other window"   "È" (lambda () (interactive)(scroll-other-window -20)))
+
+;; Close fold at method level in java
+(map! :n "zs" (lambda () (interactive)(let ((line (evil-ex-current-line))) (progn (evil-goto-first-line) (+fold/close-all 3) (evil-goto-line line)))))
+(map! :n "zo" (lambda () (interactive)(hs-show-block)))
+(map! :n "zO" (lambda () (interactive)(hs-show-all)))
+(map! :n "zr" (lambda () (interactive)(hs-show-all)))
 
 ; #################### START OF THE DEFAULT CONFIG ##################
 
-;(when (featurep! :editor evil +everywhere)
+;(when (modulep! :editor evil +everywhere)
 ;  ;; NOTE SPC u replaces C-u as the universal argument.
 
 ;  ;; Minibuffer

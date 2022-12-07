@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit keychain-environment js2-mode eglot web-mode vue-mode jupyter))
+   '(protobuf-mode lsp-java magit keychain-environment js2-mode eglot web-mode vue-mode jupyter))
  '(scroll-margin 5)
  '(warning-suppress-types '((lsp-on-idle-hook))))
 (custom-set-faces

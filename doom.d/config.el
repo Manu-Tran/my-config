@@ -26,7 +26,7 @@
 
 ; (setq doom-font (font-spec :family "monospace" :size 12))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 11))
+;(setq doom-font (font-spec :family "JetBrains Mono" :size 11))
 ;;(setq doom-font (font-spec :family "Fira Code" :size 14))
 
 (menu-bar-mode t)
@@ -56,21 +56,41 @@
 ;;
 ;; (setq lsp-java-format-settings-url "file://Users/emmanuel.tran/dd/eclipse-java-google-style-format.xml")
 ;; (setq lsp-java-format-settings-profile "GoogleStyle")
-(setq lsp-ui-sideline-delay 10.0)
-(setq lsp-ui-doc-delay 1.5)
-;; (setq gc-cons-threshold 100000000)
-;; (setq read-process-output-max (* 1024 1024)) ;; 1mb
+;; (setq lsp-ui-sideline-delay 10.0)
+;; (setq lsp-ui-doc-delay 1.5)
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq lsp-idle-delay 3.0)
 (setq lsp-on-idle-hook nil)
-(setq lsp-java-vmargs '("-noverify" "-XX:+UseParallelGC" "-XX:+UseStringDeduplication" "-XX:MaxMetaspaceSize=256m" "-Xms2048m" "-Xmx2048m"))
+(setq lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:+UseStringDeduplication" "-XX:MaxMetaspaceSize=256m" "-Xms2048m" "-Xmx2048m" "-Dlog.level=ERROR"))
+ ;;"-cp \"~/dd/logs-backend-2/target/*\""
 (setq lsp-java-completion-max-results 20)
 (setq lsp-inhibit-message t)
+(setq lsp-after-apply-edits-hook nil)
+(setq lsp-before-save-edits nil)
+(setq lsp-log-io t)
+(setq lsp-io-messages-max 10)
+(setq lsp-java-autobuild-enabled nil)
+(setq lsp-java-max-concurrent-builds 64)
+(setq lsp-use-workspace-root-for-server-default-directory t)
+(setq lsp-ui-doc-show-with-mouse nil)
+(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-show-code-actions nil)
+(setq lsp-ui-sideline-show-hover nil)
+
 
 ;; Always open in an already open window
 (setq display-buffer-base-action '(display-buffer-use-some-window))
 
+(after! projectile-mode
+  (setq projectile-project-root-files-bottom-up (cons "pom.xml" projectile-project-root-files-bottom-up)))
 
 (setq lsp-enable-file-watchers nil)
+
+(add-hook 'code-review-mode-hook
+          (lambda ()
+            ;; include *Code-Review* buffer into current workspace
+            (persp-add-buffer (current-buffer))))
 
 ;; (setq lsp-java-vmargs '("-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication"))
 ;; (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
@@ -79,32 +99,32 @@
 
 
 ;; Language of the grammar checking
-(setq langtool-default-language "fr-FR")
+;; (setq langtool-default-language "fr-FR")
 
 ;; Fill Column At 80th character
-(require 'fill-column-indicator)
+;;(require 'fill-column-indicator)
 
 (setq fci-rule-width 3)
 ;; (setq fci-rule-color "darkblue")
 
-(defun sanityinc/fci-enabled-p () (symbol-value 'fci-mode))
+;; (defun sanityinc/fci-enabled-p () (symbol-value 'fci-mode))
 
-(defvar sanityinc/fci-mode-suppressed nil)
-(make-variable-buffer-local 'sanityinc/fci-mode-suppressed)
+;; (defvar sanityinc/fci-mode-suppressed nil)
+;; (make-variable-buffer-local 'sanityinc/fci-mode-suppressed)
 
-(defadvice popup-create (before suppress-fci-mode activate)
-  "Suspend fci-mode while popups are visible"
-  (let ((fci-enabled (sanityinc/fci-enabled-p)))
-    (when fci-enabled
-      (setq sanityinc/fci-mode-suppressed fci-enabled)
-      (turn-off-fci-mode))))
+;; (defadvice popup-create (before suppress-fci-mode activate)
+;;  "Suspend fci-mode while popups are visible"
+;;  (let ((fci-enabled (sanityinc/fci-enabled-p)))
+;;    (when fci-enabled
+;;      (setq sanityinc/fci-mode-suppressed fci-enabled)
+;;      (turn-off-fci-mode))))
 
-(defadvice popup-delete (after restore-fci-mode activate)
-  "Restore fci-mode when all popups have closed"
-  (when (and sanityinc/fci-mode-suppressed
-             (null popup-instances))
-    (setq sanityinc/fci-mode-suppressed nil)
-    (turn-on-fci-mode)))
+;;(defadvice popup-delete (after restore-fci-mode activate)
+  ;;"Restore fci-mode when all popups have closed"
+  ;;(when (and sanityinc/fci-mode-suppressed
+             ;;(null popup-instances))
+    ;;(setq sanityinc/fci-mode-suppressed nil)
+   ;; (turn-on-fci-mode)))
 
 
 ;; (add-hook! 'prog-mode 'fci-mode)
@@ -121,6 +141,38 @@
 ;; (add-hook 'lsp-after-initialize-hook (lambda
 ;;                                        ()
 ;;                                        (flycheck-add-next-checker 'lsp 'python-flake8)))
+;;                                        (eval-after-load 'eglot-java
+;;
+;; (eval-after-load 'eglot-java
+;;   (progn
+;;     (require 'eglot-java)
+;;     '(eglot-java-init)))
+
+(setq lsp-ui-sideline-enable t)
+(setq lsp-ui-doc-enable nil)
+(setq lsp-ui-sideline-show-code-actions nil)
+(setq lsp-ui-sideline-show-symbol nil)
+(setq lsp-ui-sideline-show-hover nil)
+(setq lsp-ui-sideline-show-diagnostics t)
+(setq lsp-ui-sideline-delay 0.5)
+(setq lsp-prefer-flymake nil)
+(setq lsp-ui-peek-enable nil)
+(setq lsp-enable-file-watchers nil)
+(setq lsp-log-max nil)
+(setq lsp-enable-links nil)
+(setq lsp-eldoc-enable-hover nil)
+(setq lsp-enable-symbol-highlighting nil)
+(after! dap-mode
+        (dap-register-debug-template
+        "Java Attach"
+        (list :name "Java Attach"
+                :type "java"
+                :request "attach"
+                :hostName "localhost"
+                :port 5005)))
+
+(setq python-shell-exec-path '("/Users/emmanueltran/.pyenv/shims/"))
+
 ;; (add-hook 'python-mode-hook 'conda-env-autoactivate-mode)
 ;; (conda-env-activate 'base)
 
@@ -174,6 +226,7 @@
 ;; Calendar stuff ==============================================================
 
 (load! "calendar.el")
+(load! "advent-of-code.el")
 
 ;; Evil stuff ==================================================================
 (require 'evil-replace-with-register)
@@ -197,7 +250,7 @@
 (setq org-directory "~/org/")
 
 ;; Workflow configuration
-(load! "orgconfig")
+;; (load! "orgconfig")
 
 ;; Protobuf mode
 (require 'protobuf-mode)
@@ -207,14 +260,22 @@
 ;;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 (setq yas-snippet-dirs (append yas-snippet-dirs '("~/.doom.d/my-snippets")))
+(setq magit-todos-keywords-list '("TODO(manut)" "FIXME(manut)" "REVIEW(manut)" "HACK(manut)" "DEPRECATED(manut)" "BUG(manut)" "XXX(manut)"))
+(defun tkj/org-file-of-the-day()
+  (interactive)
+  (let ((daily-name (format-time-string "%Y/%Y-%m-%d")))
+    (find-file
+     (expand-file-name
+      (concat "~/org/daily/" daily-name ".org")))))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (julia . t)
-   (python . t)
-   (ipython . t)
-   (jupyter . t)))
+
+;;(org-babel-do-load-languages
+;; 'org-babel-load-languages
+;; '((emacs-lisp . t)
+;;   (julia . t)
+;;   (python . t)
+;;   (ipython . t)
+;;   (jupyter . t)))
 ;; (setq ob-async-no-async-languages-alist '("ipython"))
 
 (defvar hexcolour-keywords
@@ -230,37 +291,44 @@
 (after! ace-window
   (setq aw-scope 'global))
 
+;; Allow for python to count _ as part of a word
+(add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+(after! python-mode
+  (setq flycheck-python-pycompile-executable "/Users/emmanueltran/.pyenv/shims/python3"))
+
+
+
 ;; Language specific config
 
-(use-package! mvn
-  :config
-  (defun re-seq (regexp string)
-    "Get a list of all regexp matches in a string"
-    (save-match-data
-      (let ((pos 0)
-            matches)
-        (while (string-match regexp string pos)
-          (push (match-string 1 string) matches)
-          (setq pos (match-end 0)))
-        matches)))
-
-  (defun extract-project-list ()
-    (interactive)
-    (with-temp-buffer
-      (insert-file-contents (concat (lsp--suggest-project-root) "pom.xml"))
-      (keep-lines "\\(<module>\\|<name>\\)" (point-min) (point-max))
-      (setq java-modules-list (re-seq "<module>\\(.*\\)<\/module>" (buffer-string)))
-      (if (null java-modules-list)
-          (re-seq "<name>logs-backend-\\(.*\\)<\/name>" (buffer-string))
-        java-modules-list)
-      )
-    )
-
-  (defun mvn-spotless ()
-    (interactive)
-    (mvn (concat "spotless:apply -pl "
-                 (completing-read "Enter project name:" (extract-project-list) nil t))))
-  )
+;;(use-package! mvn
+;;  :config
+;;  (defun re-seq (regexp string)
+;;    "Get a list of all regexp matches in a string"
+;;    (save-match-data
+;;      (let ((pos 0)
+;;            matches)
+;;        (while (string-match regexp string pos)
+;;          (push (match-string 1 string) matches)
+;;          (setq pos (match-end 0)))
+;;        matches)))
+;;
+;;  (defun extract-project-list ()
+;;    (interactive)
+;;    (with-temp-buffer
+;;      (insert-file-contents (concat (lsp--suggest-project-root) "pom.xml"))
+;;      (keep-lines "\\(<module>\\|<name>\\)" (point-min) (point-max))
+;;      (setq java-modules-list (re-seq "<module>\\(.*\\)<\/module>" (buffer-string)))
+;;      (if (null java-modules-list)
+;;          (re-seq "<name>logs-backend-\\(.*\\)<\/name>" (buffer-string))
+;;        java-modules-list)
+;;      )
+;;    )
+;;
+;;  (defun mvn-spotless ()
+;;    (interactive)
+;;    (mvn (concat "spotless:apply -pl "
+;;                 (completing-read "Enter project name:" (extract-project-list) nil t))))
+;;  )
 
 ;; (use-package! kubernetes
 ;;   :ensure t
@@ -314,6 +382,3 @@
 ;   (setq org-dropbox-note-dir "~/org/sync")
 ;   (setq org-dropbox-datetree-file "~/org/sync/reference.org")
 ;   )
-
-(server-force-delete)
-(server-start)
