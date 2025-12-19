@@ -1,0 +1,246 @@
+;; edn spec https://github.com/edn-format/edn
+{;;;; define things
+ ;; define devices
+ :devices {
+           :hhkb-1 [{:vendor_id 6700 :product_id 46479}]
+           :hhkb-2 [{:vendor_id 1452 :product_id 635}]
+           :moonlander [{:vendor_id 12951 :product_id 6505}]
+           :hhkb-4 [{:vendor_id 1452 :product_id 615}]
+           :hhkb-5 [{:vendor_id 76 :product_id 615}]
+           :lily58 [{:vendor_id 1240 :product_id 60205}]
+           :builtin [{:vendor_id 1452 :product_id 834}]
+           :varmilo [{:vendor_id 1241 :product_id 41169}]
+           }
+
+ ;; define application identifiers
+ ;; :applications {:chrome ["^com\\.google\\.Chrome$"]
+ ;;                :chrome-canary [ "^com\\.google\\.Chrome\\.canary$"]
+ ;;                :chromes ["^com\\.google\\.Chrome$" "^com\\.google\\.Chrome\\.canary$"]}
+
+ ;; :input-sources {:squirrel {:input_mode_id "com.googlecode.rimeime.inputmethod.Squirrel"
+ ;;                            :input_source_id "com.googlecode.rimeime.inputmethod.Squirrel.Rime"
+ ;;                            :language "zh-Hans"}
+ ;;                 :us {:input_mode_id ""
+ ;;                      :input_source_id "com.apple.keylayout.US"
+ ;;                      :language "en"}}
+
+ ;; :templates {:launch "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch%s\" in workflow \"yqrashawn.workflow.launcher\" with argument \"\"'"}
+ ;;
+    ;; !  | means mandatory
+    ;; #  | means optional
+    ;; C  | left_command
+    ;; T  | left_control
+    ;; O  | left_option
+    ;; S  | left_shift
+    ;; F  | fn
+    ;; Q  | right_command
+    ;; W  | right_control
+    ;; E  | right_option
+    ;; R  | right_shift
+    ;; P  | caps_lock
+    ;; !! | mandatory command + control + optional + shift (hyper)
+    ;; ## | optional any
+
+
+ ;; define alias for modifers
+ ;; :modifiers {
+ ;;             }
+
+ ;; define froms
+ ;; use in <from>
+ ;; :froms {:1 {:key :d}
+ ;;         :2 {:key :d :modi :1}
+ ;;         :3 {:key :d :modi :left_command}
+ ;;         :4 {:key :d :modi [:left_command :right_shift]}
+ ;;         :5 {:key :d :modi {:mandatory [:left_command :right_shift]}}
+ ;;         :6 {:key :d :modi {:mandatory [:left_command :right_shift]
+ ;;                            :optional [:caps_lock]}}
+ ;;         :7 {:ckey :display_brightness_decrement}
+ ;;         :8 {:ckey :display_brightness_decrement :modi :left_command}
+ ;;         :9 {:pkey :button4 :modi :left_command}
+ ;;         :10 {:sim [:a :b] :modi :left_command}
+ ;;         :11 {:sim [:a :b]
+ ;;              :simo {:interrupt true
+ ;;                     :dorder :insensitive}
+ ;;              :modi :left_command}}
+
+ ;; define tos
+ ;; use in <to>
+ :tos {
+       :vertical-bar {:key :6 :modi [:left_option]}
+       :exclamation {:key :1 :modi [:left_option]}
+       :tilde {:key :2 :modi [:left_option]}
+       :hashtag {:key :3 :modi [:left_option]}
+       :lbraces {:key :4 :modi [:left_option]}
+       :rbraces {:key :equal_sign :modi [:left_option]}
+       :lparen {:key :5}
+       :rparen {:key :hyphen}
+       :lbracket {:key :5 :modi [:left_option]}
+       :rbracket {:key :hyphen :modi [:left_option]}
+       :langled {:key :grave_accent_and_tilde}
+       :rangled {:key :grave_accent_and_tilde :modi [:left_shift]}
+       :aerospace-switch-special {:key :grave_accent_and_tilde :modi [:left_command]}
+       :aerospace-switch-special-bis {:key :grave_accent_and_tilde :modi [:left_option]}
+       :switch-workspace-2 {:key :2 :modi [:left_option :left_control]}
+       :switch-workspace-3 {:key :3 :modi [:left_option :left_control]}
+       :switch-workspace-4 {:key :4 :modi [:left_option :left_control]}
+       :switch-workspace-5 {:key :5 :modi [:left_option :left_control]}
+       :switch-workspace-6 {:key :1 :modi [:left_command :left_shift]}
+       :switch-workspace-7 {:key :3 :modi [:left_option :left_control :left_shift]}
+       :switch-workspace-8 {:key :1 :modi [:left_option :left_shift]}
+       :switch-workspace-9 {:key :2 :modi [:left_command :left_shift]}
+       :switch-workspace-10 {:key :2 :modi [:left_option :left_shift :left_control]}
+       :switch-workspace-11 {:key :3 :modi [:left_command :left_shift]}
+       :switch-workspace-12 {:key :5 :modi [:left_command :left_shift]}
+       :switch-workspace-13 {:key :5 :modi [:left_option :left_shift :left_control]}
+       :switch-workspace-14 {:key :6 :modi [:left_command]}
+       :switch-workspace-15 {:key :6 :modi [:left_command :left_shift]}
+       :move-workspace-2 {:key :2 :modi [:left_option :left_control :left_shift]}
+       :move-workspace-3 {:key :3 :modi [:left_option :left_control :left_shift]}
+       :move-workspace-4 {:key :4 :modi [:left_option :left_control :left_shift]}
+       :move-workspace-5 {:key :5 :modi [:left_option :left_control :left_shift]}
+       :at {:key :0 :modi [:left_option]}
+       :backslash-me {:key :8 :modi [:left_option]}
+       }
+
+ ;;;; helper function to generate things little bit quicker
+ ;; quick define "layers" or "state" feature(use set_variable)
+ ;; can use as conditions in rule list
+ ;; {:<layer name> {:from <froms>}}
+ ;; :simlayers {:vi-mode {:key :d}}
+ ;; :simlayer-threshold 250
+
+ ;; main list
+ :main
+ ;; [<from> <to>] or
+ ;; [<from> <to> <conditions>] or
+ ;; [<from> <to> <conditions> <other options>]
+ ;; <from> can be keywords defined in froms or keycodes without `{:not-from true}`
+ ;; <to> can be keywords defined in tos, keycodes without `{:not-to true}`, string (shell script)
+ ;; <conditions> can be keywords defined in layers, devices, applications
+ ;; <other options> {:other {:parameters {:to_delayed_action_delay_milliseconds 100 :basic.to_if_alone_timeout_milliseconds 500 :basic.to_if_held_down_threshold_milliseconds 250}} }
+ [
+  {:des "Adapt keyboard"
+   :rules [
+           [:grave_accent_and_tilde :non_us_backslash]
+           [:non_us_backslash :grave_accent_and_tilde]
+           [:##left_option :left_command :lily58]
+           [:##left_command :left_option :lily58]
+           [:##left_option :left_command :moonlander]
+           [:##left_command :left_option :moonlander]
+           [:##left_command :left_option :varmilo]
+           [:##left_option :left_command :varmilo]
+           [:##right_command :right_option :varmilo]
+           [:##right_option :right_command :varmilo]
+           ;; [:right_control :right_command :builtin]
+           ;; [:right_command :right_option :builtin]
+           ;; [:right_option :right_command :builtin]
+           :lily58 :builtin
+           ]
+   }
+   {:des "Adapt keyboard for aerospace"
+    :rules [
+           [:!Cgrave_accent_and_tilde :aerospace-switch-special]
+           [:!Ograve_accent_and_tilde :aerospace-switch-special-bis]
+   ]
+   }
+  ; {:des "Adapt keyboard to yabai"
+  ;  :rules [
+  ;          [:!C1 :switch-workspace-7 :lily58]
+  ;          [:!O3 :switch-workspace-8 :lily58]
+  ;          [:!O1 :switch-workspace-10 :lily58]
+  ;          [:!C2 :switch-workspace-11 :lily58]
+  ;          [:!O2 :switch-workspace-12 :lily58]
+  ;          [:!C3 :switch-workspace-13 :lily58]
+  ;          [:!C5 :switch-workspace-14 :lily58]
+  ;          [:!O5 :switch-workspace-15 :lily58]
+
+  ;          [:!C1 :switch-workspace-7 :moonlander]
+  ;          [:!O3 :switch-workspace-8 :moonlander]
+  ;          [:!O1 :switch-workspace-10 :moonlander]
+  ;          [:!C2 :switch-workspace-11 :moonlander]
+  ;          [:!O2 :switch-workspace-12 :moonlander]
+  ;          [:!C3 :switch-workspace-13 :moonlander]
+  ;          [:!C5 :switch-workspace-14 :moonlander]
+  ;          [:!O5 :switch-workspace-15 :moonlander]
+
+  ;          [:!C1 :switch-workspace-12 :builtin]
+  ;          [:!O3 :switch-workspace-13 :builtin]
+  ;          [:!O1 :switch-workspace-6 :builtin]
+  ;          [:!C2 :switch-workspace-7 :builtin]
+  ;          [:!O2 :switch-workspace-8 :builtin]
+  ;          [:!C3 :switch-workspace-9 :builtin]
+  ;          [:!C5 :switch-workspace-10 :builtin]
+  ;          [:!O5 :switch-workspace-11 :builtin]
+  ;          ]
+  ;  }
+  {:des "Map right Option plus erdfcv to Bracket"
+   :rules [
+    [:!Q##e :lbraces]
+    [:!Q##r :rbraces]
+    [:!Q##d :lparen]
+    [:!Q##f :rparen]
+    [:!Q##c :lbracket]
+    [:!Q##v :rbracket]
+    [:!Q##z :langled]
+    [:!Q##x :rangled]
+    [:!Q##a :at]
+    ]
+   }
+  {:des "Change right_command+hjkl to arrow keys"
+   :rules [
+           [:!Q##h :left_arrow]
+           [:!Q##j :down_arrow]
+           [:!Q##k :up_arrow]
+           [:!Q##l :right_arrow]
+           ]
+   }
+  {:des "Change right_command+hjkl to arrow keys"
+   :rules [
+           [:!Q##h :left_arrow]
+           [:!Q##j :down_arrow]
+           [:!Q##k :up_arrow]
+           [:!Q##l :right_arrow]
+           ]
+   }
+  {:des "Change caps_lock to control if pressed with other keys, to escape if pressed alone."
+   :rules [[ :##caps_lock :left_control nil { :alone { :key :escape } }]]
+   }
+  {:des "Changing like in french mac keyboard"
+   :rules [
+           [:!Q##t :vertical-bar]
+           ;; [:!Q##1 :exclamation]
+           [:!Q##0 :at]
+           [:!Q##2 :tilde]
+           [:!Q##3 :hashtag]
+           [:!Q##4 :lbraces]
+           [:!Q##5 :lbracket]
+           [:!Q##6 :vertical-bar]
+           [:!Q##8 :backslash-me]
+           [:!TQ##k :page_up]
+           [:!TQ##j :page_down]
+           [:!E##t :vertical-bar]
+           ]
+   }
+  {:des "Yabai workaround"
+   :rules [
+           [:!O2 :switch-workspace-2]
+           [:!O3 :switch-workspace-3]
+           [:!O4 :switch-workspace-4]
+           [:!O5 :switch-workspace-5]
+           [:!OS2 :move-workspace-2]
+           [:!OS3 :move-workspace-3]
+           [:!OS4 :move-workspace-4]
+           [:!OS5 :move-workspace-5]
+           ]
+   }
+  ;; {:des "Homerow mods"
+  ;;  :rules [
+           ;; [:a :left_control nil { :alone { :key :a}}]
+           ;; [:s :right_option nil { :alone { :key :s }}]
+           ;; [:d :right_command nil { :alone { :key :a}}]
+           ;; [:f :left_shift nil { :alone { :key :f }}]
+           ;; [:j :left_shift nil { :alone { :key :j }}]
+           ;; [:k :right_command nil { :alone { :key :k} :params {:alone 10}}]
+  ]
+}
