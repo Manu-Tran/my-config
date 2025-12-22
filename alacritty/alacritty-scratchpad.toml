@@ -1,0 +1,36 @@
+import = [
+    "~/.config/alacritty/catppuccin-frappe.toml"
+]
+
+[shell]
+program = "/bin/zsh"
+# args = ["-l", "-c", "tmux"]
+
+[font]
+normal = { family = "MesloLGS NF", style = "Regular" }
+bold = { style = "Bold" }
+italic = { style = "Italic" }
+bold_italic = { style = "Bold Italic" }
+size = 20
+
+[mouse]
+hide_when_typing = true
+
+[hints]
+alphabet = "fjdkslzueirogh"
+
+[[hints.enabled]]
+command = "open"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = true
+binding = { key = "U", mods = "Command" }
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+
+
+[window]
+opacity = 0.85
+title = "Scratchpad"
+dynamic_title = false
+decorations = "None"
