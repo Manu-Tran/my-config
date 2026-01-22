@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -xe
+
+if [[ -z $1 ]]; then
+echo "Usage $0 <Ticket Name>"
+exit 1
+fi
+
+CREATION_LOGS=$(jira issue create -t "Task" -a $(jira me) -C "backend-ingestion" -s "$1" -b "-" --no-input)
+JIRA_TICKET=$(echo $CREATION_LOGS | grep "RUM-" | sed 's/.*\(RUM-.*\)/\1/g')
+jira issue move $JIRA_TICKET "IN PROGRESS"
+# EPIC_LIST=$(jira epic list --columns "KEY,SUMMARY" -w --no-headers --plain)
+# EPIC=$(gum choose --input-delimiter="\n" "$EPIC_LIST" --header="Choose epic :")
+# EPIC_KEY=$(echo "$EPIC" | awk '{ print $1 }')
+# jira epic add "$EPIC_KEY" "$JIRA_TICKET"
+echo "$JIRA_TICKET"

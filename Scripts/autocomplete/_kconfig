@@ -1,0 +1,4 @@
+#compdef kconfig
+
+compdef kconfig=kubectl
+

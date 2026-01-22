@@ -1,0 +1,2 @@
+#!/bin/bash
+kubectl exec "$@" -- bash -c  "cat /etc/datadog/logs-backend.conf"

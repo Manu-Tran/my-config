@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: New Task
+# key: task
+# --
+
+** TODO [[roam:$1][${1:task_name}]]

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#STAGED_PROJECT=$(git diff --staged --name-only --cached | grep ".*\.java" | sed 's/\([^/]*\)\/.*/\1/' | tr '\n' ',')
+STAGED_FILES=$(git diff --staged --name-only --cached | grep ".*\.py" | tr '\n' ' ')
+black $STAGED_FILES
+echo "Staging :"
+echo "$(git diff --staged --name-only --cached)"
+git add $STAGED_FILES

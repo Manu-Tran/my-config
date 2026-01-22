@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    branch=$(git rev-parse --abbrev-ref HEAD)
+else
+    branch=$1
+fi
+url=$(git config --get remote.origin.url | sed 's/git@//' | sed 's/:/\//')
+open "https://$url/compare/$branch?expand=1"
+

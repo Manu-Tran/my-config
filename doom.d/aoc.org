@@ -1,0 +1,14 @@
+#+title: advent of code
+
+- select day & year
+- auto DL readme & input file
+- create test file
+- start dev mode
+- run code and debug on test (go to dev mode)
+- run code on input and submit
+  - return to dev mode if wrong
+- switch to part 2
+- fetch readme again
+- Go to devmode
+- run code on input and submit
+  - return to dev mode if wrong

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -xe
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -c|--create-jira-ticket)
+      c=y
+      shift # past argument
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1") # save positional arg
+      shift # past argument
+      ;;
+  esac
+done
+
+set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+
+if [[ -z $1 ]]; then
+  echo "Usage : $0 [-c] <PR title>"
+  exit 1
+fi
+
+if [[ ! -z $c ]]; then
+  ISSUE_KEY=$(create_jira "$1" | tail -n 1)
+else
+  ISSUE_KEY=$(jira issue list -tTask --columns "KEY,SUMMARY" --plain --no-headers -a $(jira me) | gum choose | awk '{ print $1 }')
+
+  if [[ -z $ISSUE_KEY ]]; then
+    echo "No issue selected !"
+    exit 1
+  fi
+fi
+
+git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+
+URL=$(gh pr create --repo $(git config --get remote.origin.url) --body "$(cat .github/PULL_REQUEST_TEMPLATE.md)" --title "[RUM][$ISSUE_KEY] $1")
+open $URL

@@ -10,4 +10,4 @@
 # @raycast.packageName Web Searches
 # @raycast.argument1 { "type": "text", "placeholder": "workload" }
 
-open "https://sdp.ddbuild.io/#/deployments/services/${1// /-}"
+open "https://sdp.ddbuild.io/#/services/${1// /-}"

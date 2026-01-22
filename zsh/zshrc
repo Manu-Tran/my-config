@@ -1,3 +1,6 @@
+
+# zmodload zsh/zprof
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,8 +8,8 @@ zmodload zsh/zprof
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-autoload bashcompinit
-bashcompinit
+# autoload bashcompinit
+# bashcompinit
 
 # You may need to manually set your language environment
 #export LANG=fr_FR.UTF-8
@@ -71,6 +74,7 @@ plugins=(
   kubectl
   per-directory-history
   # sudo
+  ssh-agent
   systemd
   tmux
   # vi-mode
@@ -97,7 +101,7 @@ plugins=(
  alias google-java-format="java ~/Repositories/google-java-format/core/target/google-java-format-1.10-SNAPSHOT-all-deps.jar"
  alias tmuxr="tmux -u new-session -t 0"
  alias J="| jq"
- alias gcocs="gco $(current-staging)"
+ alias gcocs="gco \$(current-staging)"
 
 #Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -114,6 +118,8 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_rsa"
+# eval `ssh-agent`
+# ssh-add ~/.ssh/id_rsa
 
 # Go to https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png for color code
 
@@ -122,6 +128,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
 POWERLEVEL9K_ANACONDA_LEFT_DELIMITER=''
 POWERLEVEL9K_ANACONDA_RIGHT_DELIMITER=''
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_VCS_HIDE_TAGS=true
+
 # POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='238'
 # POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='178'
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
@@ -272,7 +280,7 @@ source ~/.cloudops-cli.completion
 export PATH="/usr/local/opt/lsof/bin:$PATH"
 export PATH="/usr/local/Cellar/emacs-mac/emacs-27.2-mac-8.2/bin:$PATH"
 ulimit -n 32768
-export DEVENV_MODE=BACKEND
+#export DEVENV_MODE=BACKEND
 export PATH="/usr/local/opt/openjdk@17/bin:$PATH"
 
 # google-cloud-sdk brew caveat
@@ -341,3 +349,20 @@ alias python="/usr/bin/python3"
 alias ls="ls --color=tty"
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
+tmux-window-name() {
+    if [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; then
+       ($TMUX_PLUGIN_MANAGER_PATH/tmux-window-name/scripts/rename_session_windows.py &)
+    fi
+}
+# add-zsh-hook chpwd tmux-window-name
+
+# zprof
+git-find-pr () {
+	open https://github.com/DataDog/$(pwd | rev | cut -d / -f 1 | rev)/pull/$(git log --reverse --format=%s --ancestry-path $1..origin/prod | grep "^Merge pull request #" | head -n 1 | cut -d " " -f 4 | tr -d "#")
+}
+
+export DOTNET_ROOT_ARM64=/usr/local/share/dotnet
+export DOTNET_ROOT_X64=/usr/local/share/dotnet/x64
+export DOTNET_ROOT="$(dirname $(which dotnet))"
+export PATH=/usr/local/share/dotnet:$PATH

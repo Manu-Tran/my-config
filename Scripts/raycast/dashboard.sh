@@ -10,7 +10,7 @@
 # @raycast.packageName Web Searches
 # @raycast.argument1 { "type": "text", "placeholder": "dashboard" }
 
-res=$(grep $(echo "$1" | sed 's/ /.*/') dashboard.ini | head -n 1 | sed 's|.*= "https://\(.*\)"|\1|')
+res=$(grep $(echo "$1" | sed 's/ /.*/g') dashboard.ini | head -n 1 | sed 's|.*= "https://\(.*\)"|\1|')
 if [[ -z $res ]]; then
     open "https://app.datadoghq.com/dashboard/lists?q=${1// /%20}"
 else

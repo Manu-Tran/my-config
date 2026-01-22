@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+    exit 1;
+fi
+
+if [[ $1 == "next" ]]; then
+    osascript -e 'tell application "Spotify" to next track';
+    exit 0;
+fi
+
+if [[ $1 == "previous" ]]; then
+    osascript -e 'tell application "Spotify" to previous track';
+    exit 0;
+fi
+if [[ $1 == "down" ]]; then
+    osascript -e 'tell application "Spotify"
+    set currentvol to get sound volume
+    -- volume wraps at 100 to 0
+    if currentvol < 10 then
+        set sound volume to 0
+    else
+        set sound volume to currentvol - 10
+    end if
+end tell';
+    exit 0;
+fi
+if [[ $1 == "up" ]]; then
+    osascript -e 'tell application "Spotify"
+    set currentvol to get sound volume
+    -- volume wraps at 100 to 0
+    if currentvol > 90 then
+        set sound volume to 100
+    else
+        set sound volume to currentvol + 10
+    end if
+end tell';
+    exit 0;
+fi
+if [[ $1 == "playpause" ]]; then
+    osascript -e 'tell application "Spotify" to playpause';
+    exit 0;
+fi

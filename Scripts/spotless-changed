@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -x
+
+# BRANCH=""
+BRANCH="prod"
+# CURRENT_STAGING=$(current-staging)
+
+# if [ $(git rev-list --count HEAD ^origin/$CURRENT_STAGING) -gt $(git rev-list --count HEAD ^prod) ]; then
+#     BRANCH="prod"
+# else
+#     BRANCH=$CURRENT_STAGING
+# fi
+
+
+CHANGED_PROJECT=$(git diff --name-only --merge-base $BRANCH | grep ".*\.java" | grep "domains" | sed 's/\(domains\/[^/]*\/[^/]*\/[^/]*\).*/\1/' | tr '\n' ',')
+echo $CHANGED_PROJECT;
+if [[ -n $CHANGED_PROJECT ]]; then
+    CHANGED_FILES=$(git diff --name-only --merge-base $BRANCH | grep ".*\.java" | grep "domains" | tr '\n' ' ')
+    mvn spotless:apply -pl $CHANGED_PROJECT -T0.5C
+    echo "Applied to files :"
+    echo "$(git diff --name-only --merge-base $BRANCH)"
+else
+    echo "No file staged !"
+    exit 0;
+fi

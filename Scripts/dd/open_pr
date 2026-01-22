@@ -1,0 +1,3 @@
+#!/bin/bash
+
+open $(gh pr list -H $(git rev-parse --abbrev-ref HEAD) --json "url" | grep "url" | sed 's/.*url":"\(.*\)"}]/\1/')

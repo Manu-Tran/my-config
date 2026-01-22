@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mutagen sync create --ignore-vcs --sync-mode=two-way-resolved --name=dogweb ~/dd/dogweb workspace-emmanueltran:~/dd/dogweb
+mutagen sync create --no-ignore-vcs --sync-mode=one-way-replica --ignore "index" --name=dogweb ~/dd/dogweb/.git workspace-emmanueltran:~/dd/dogweb/.git

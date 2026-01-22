@@ -34,7 +34,10 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'catppuccin)
+(setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
+
 (setq doom-modeline-window-width-limit fill-column)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -51,18 +54,59 @@
 ;; Completion Stuff =============================================================
 
 ;; Delay for completion
-(setq company-idle-delay 10
+(setq company-idle-delay 0
       company-minimum-prefix-length 3)
-;;
+
+(after! prog-mode
+  (setq company-idle-delay 10
+        company-minimum-prefix-length 3)
+  )
+
+(after! java-mode
+  (setq company-idle-delay 10
+        company-minimum-prefix-length 3)
+  )
+
+(after! text-mode
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 3)
+  )
+
+(setq +company-backend-alist
+      '((text-mode (:separate company-dabbrev company-yasnippet))
+        (prog-mode company-capf company-yasnippet)
+        (conf-mode company-capf company-dabbrev-code company-yasnippet)))
+
+;; accept completion from copilot and fallback to company
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . 'copilot-accept-completion)
+;;               ("C-n" . 'copilot-next-completion)
+;;               ("C-p" . 'copilot-previous-completion)
+;;               ("C-<tab>" . 'copilot-accept-completion-by-word)
+;;               ("C-RET" . 'copilot-accept-completion)
+;;               ("C-<return>" . 'copilot-accept-completion)))
+
+(use-package! citre)
+
+(use-package! org-excalidraw
+  :config
+  (setq org-excalidraw-directory "~/Documents/Excalidraw/")
+)
+
+;; (use-package! mermaid-ts-mode)
+;; (use-package! ob-mermaid)
+
 ;; (setq lsp-java-format-settings-url "file://Users/emmanuel.tran/dd/eclipse-java-google-style-format.xml")
 ;; (setq lsp-java-format-settings-profile "GoogleStyle")
-;; (setq lsp-ui-sideline-delay 10.0)
-;; (setq lsp-ui-doc-delay 1.5)
+(setq lsp-ui-sideline-delay 10.0)
+(setq lsp-ui-doc-delay 1.5)
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq lsp-idle-delay 3.0)
 (setq lsp-on-idle-hook nil)
-(setq lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:+UseStringDeduplication" "-XX:MaxMetaspaceSize=256m" "-Xms2048m" "-Xmx2048m" "-Dlog.level=ERROR"))
+(setq lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:+UseStringDeduplication" "-XX:MaxMetaspaceSize=256m" "-Xms4096m" "-Xmx4096m" "-Dlog.level=ERROR"))
  ;;"-cp \"~/dd/logs-backend-2/target/*\""
 (setq lsp-java-completion-max-results 20)
 (setq lsp-inhibit-message t)
@@ -77,7 +121,9 @@
 (setq lsp-ui-sideline-enable nil)
 (setq lsp-ui-sideline-show-code-actions nil)
 (setq lsp-ui-sideline-show-hover nil)
-
+(setq lsp-eldoc-enable-hover nil)
+(setq lsp-lens-enable nil)
+(setq lsp-response-timeout 3)
 
 ;; Always open in an already open window
 (setq display-buffer-base-action '(display-buffer-use-some-window))
@@ -87,10 +133,10 @@
 
 (setq lsp-enable-file-watchers nil)
 
-(add-hook 'code-review-mode-hook
-          (lambda ()
-            ;; include *Code-Review* buffer into current workspace
-            (persp-add-buffer (current-buffer))))
+;; (add-hook 'code-review-mode-hook
+;;           (lambda ()
+;;             ;; include *Code-Review* buffer into current workspace
+;;             (persp-add-buffer (current-buffer))))
 
 ;; (setq lsp-java-vmargs '("-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication"))
 ;; (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
@@ -100,9 +146,6 @@
 
 ;; Language of the grammar checking
 ;; (setq langtool-default-language "fr-FR")
-
-;; Fill Column At 80th character
-;;(require 'fill-column-indicator)
 
 (setq fci-rule-width 3)
 ;; (setq fci-rule-color "darkblue")
@@ -164,12 +207,18 @@
 (setq lsp-enable-symbol-highlighting nil)
 (after! dap-mode
         (dap-register-debug-template
-        "Java Attach"
-        (list :name "Java Attach"
+        "Java Attach Maven"
+        (list :name "Java Attach maven"
                 :type "java"
                 :request "attach"
                 :hostName "localhost"
                 :port 5005)))
+
+(setq display-fill-column-indicator-column 100)
+(after! cc-mode
+  (add-hook 'java-mode-hook #'display-fill-column-indicator-mode)
+  )
+
 
 (setq python-shell-exec-path '("/Users/emmanueltran/.pyenv/shims/"))
 
@@ -193,6 +242,9 @@
 
 ;; Remove trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Stop lagging after saving
+(setq lsp-before-save-edits nil)
 
 ;; Indent with spaces instead of tabs
 (setq-default indent-tabs-mode nil)
@@ -227,8 +279,10 @@
 
 (load! "calendar.el")
 (load! "advent-of-code.el")
+(load! "exercism.el")
 
 ;; Evil stuff ==================================================================
+
 (require 'evil-replace-with-register)
 (setq evil-replace-with-register-key (kbd "gr"))
 (evil-replace-with-register-install)
@@ -249,8 +303,19 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+
+(defun tkj/org-file-of-the-day()
+  (interactive)
+  (let ((daily-name (format-time-string "%Y/%Y-%m-%d")))
+    (find-file
+     (expand-file-name
+      (concat "~/org/daily/" daily-name ".org")))))
+
+;; (add-hook! 'org-mode-hook)
+;; =============================================================================
+
 ;; Workflow configuration
-;; (load! "orgconfig")
+(load! "orgconfig")
 
 ;; Protobuf mode
 (require 'protobuf-mode)
@@ -261,22 +326,13 @@
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 (setq yas-snippet-dirs (append yas-snippet-dirs '("~/.doom.d/my-snippets")))
 (setq magit-todos-keywords-list '("TODO(manut)" "FIXME(manut)" "REVIEW(manut)" "HACK(manut)" "DEPRECATED(manut)" "BUG(manut)" "XXX(manut)"))
-(defun tkj/org-file-of-the-day()
-  (interactive)
-  (let ((daily-name (format-time-string "%Y/%Y-%m-%d")))
-    (find-file
-     (expand-file-name
-      (concat "~/org/daily/" daily-name ".org")))))
 
+;; Don't show tags for magit because it is slow on dogweb (too many tags)
+(after! magit
+  (remove-hook! 'magit-status-headers-hook #'magit-insert-tags-header)
+  (remove-hook! 'magit-status-sections-hook #'magit-insert-unpushed-to-upstream-or-recent #'magit-insert-unpulled-from-upstream)
+)
 
-;;(org-babel-do-load-languages
-;; 'org-babel-load-languages
-;; '((emacs-lisp . t)
-;;   (julia . t)
-;;   (python . t)
-;;   (ipython . t)
-;;   (jupyter . t)))
-;; (setq ob-async-no-async-languages-alist '("ipython"))
 
 (defvar hexcolour-keywords
    '(("#[abcdef[:digit:]]\\{6\\}"
@@ -293,9 +349,12 @@
 
 ;; Allow for python to count _ as part of a word
 (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+;; (add-hook 'python-mode-hook #'tree-sitter-hl-mode)
 (after! python-mode
   (setq flycheck-python-pycompile-executable "/Users/emmanueltran/.pyenv/shims/python3"))
 
+;; to make magit status faster
+;; (delq! 'magit-insert-tags-header magit-status-headers-hook)
 
 
 ;; Language specific config
@@ -382,3 +441,29 @@
 ;   (setq org-dropbox-note-dir "~/org/sync")
 ;   (setq org-dropbox-datetree-file "~/org/sync/reference.org")
 ;   )
+
+;; (use-package! treesit-auto
+;;   :init
+;;   :config
+;;   (treesit-auto-add-to-auto-mode-alist 'all)
+;;   (global-treesit-auto-mode))
+
+(setq treesit-extra-load-path '("/usr/local/lib/tree-sitter"))
+(use-package! guess-language
+  :config
+  (setq guess-language-languages '(en fr))
+  (add-hook 'text-mode-hook #'guess-language-mode))
+
+;; Tree sitter HL stuff ====================================================================
+;; (after! tree-sitter-hl
+;;         (tree-sitter-hl-add-patterns 'java
+;;         [(scoped_identifier (scoped_identifier (identifier) @constant))
+;;          (import_declaration
+;;           (scoped_identifier
+;;                 (identifier) @type))
+;;          (field_access (field_access (identifier) @type) \. (identifier) @keyword (.eq? @keyword "class"))
+;;          (field_access (identifier) @type (identifier) @keyword (.eq? @keyword "class"))
+;;          (field_access (field_access (identifier) @constant))
+;;          (field_access (identifier) @type (.match? @type "^[A-Z]") (identifier) \.)
+;;          ])
+;; )

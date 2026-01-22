@@ -57,29 +57,32 @@
 ;; (package! example
 ;;   :recipe (:host github :repo "username/my-example-fork"))
 
-; (package! org-trello)
-(package! org-noter)
-;; (package! org-super-agenda)
-(package! clang-format)
-;; (package! spotify)
-(package! org-super-agenda)
-;; (package! walkman)
+;; ============= Adopted  ====================================================
 (package! evil-replace-with-register)
 (package! company-lsp)
 (package! fill-column-indicator)
-;; (package! jupyter)
-;; (package! ob-async)
-;; (package! ob-ipython)
+(package! catppuccin-theme)
+
+;; ============= Testing ====================================================
 (package! mvn)
 (package! bazel)
 (package! kubernetes)
 (package! kubernetes-evil)
 (package! dired-sidebar)
-
-(package! gitconfig-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitconfig-mode.el")))
-(package! gitignore-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitignore-mode.el")))
+(package! eglot-java)
 (package! protobuf-mode)
+(package! graphviz-dot)
+(package! citre)
+(package! devdocs-browser)
+(package! org-excalidraw
+  :recipe (:type git :host github :repo "wdavew/org-excalidraw"))
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+;; (package! mermaid-mode)
+;; (package! ob-mermaid)
+;; (package! mermaid-ts-mode
+;;   :recipe (:type git :host github :repo "JonathanHope/mermaid-ts-mode" :branch "main" :files ("mermaid-ts-mode.el")))
+(package! git-link)
+(package! edn)
+(package! treesit-auto)
+(package! guess-language)

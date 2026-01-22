@@ -70,22 +70,51 @@
       )
 
 (map! :leader
+      (:prefix ("p" . "project")
+      :desc "Search in whole project" "s" (lambda () (interactive)(+ivy/project-search :in (vc-root-dir-or-projectile)))
+      :desc "Search files in whole project" "f" (lambda () (interactive)(projectile-find-file-in-directory (vc-root-dir-or-projectile)))
+      )
+)
+
+(defun vc-root-dir-or-projectile ()
+        (if (vc-root-dir)
+                (vc-root-dir)
+                (projectile-project-root)
+                )
+        )
+
+;; (map! :n "z o" #'+fold/open)
+
+(map! :leader
       (:prefix ("s" . "search")
-      ;; :desc "Search in root project" "SPC" (lambda () (interactive)(+vertico/project-search :in (vc-root-dir)))
-      :desc "Find file in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir)))
-      :desc "Search file in root project" "f" (lambda () (interactive)(projectile-find-file-in-directory (vc-root-dir)))
+      ;; :desc "Search in root project" "SPC" (lambda () (interactive)(+vertico/project-search :in (vc-root-dir-or-projectile)))
+      :desc "Find file in root project" "SPC" (lambda () (interactive)(+ivy/project-search nil "" (vc-root-dir-or-projectile)))
+      :desc "Find file in root project" "P" (lambda () (interactive)(+ivy/project-search nil "" (vc-root-dir-or-projectile)))
+      :desc "Search file in root project" "f" (lambda () (interactive)(+ivy/projectile-find-file))
+      :desc "Search file in project" "F" (lambda () (interactive)(projectile-find-file-in-directory (vc-root-dir-or-projectile)))
+      :desc "Find file in project" "g" (lambda () (interactive)(+ivy/project-search))
+      :desc "Find file in root project" "G" (lambda () (interactive)(+ivy/project-search nil "" (vc-root-dir-or-projectile)))
       )
 )
 
 (map! :leader
       (:prefix ("n" . "notes")
       :desc "Go to work file" "w" (lambda () (interactive)(org-open-file "~/org/work.org"))
+      :desc "Go to life file" "L" (lambda () (interactive)(org-open-file "~/org/life.org"))
       )
+)
+
+(map! :leader
+      (:prefix ("c" . "code")
+                :desc "Format Module" "f" (lambda () (interactive)(mvn "spotless:apply"))
+               (:prefix ("m" . "maven")
+                :desc "Spotless Apply" "s" (lambda () (interactive)(mvn "spotless:apply"))
+      ))
 )
 
 ;; (map! :leader
 ;;       (:prefix-map ("p" . "project")
-;;       :desc "Find file in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir)))
+;;       :desc "Find file in root project" "SPC" (lambda () (interactive)(+ivy-file-search :in (vc-root-dir-or-projectile)))
 ;;       )
 ;; )
 
@@ -126,11 +155,17 @@
 (map! :desc "Scroll down other window" "Ï" (lambda () (interactive)(scroll-other-window 20)))
 (map! :desc "Scroll up other window"   "È" (lambda () (interactive)(scroll-other-window -20)))
 
+(map! :leader
+      (:prefix ("g" . "git")
+      :desc "Copy github link of the current line" "l"  #'git-link))
+
+(map! :n "gr" #'evil-replace-with-register)
+
 ;; Close fold at method level in java
 (map! :n "zs" (lambda () (interactive)(let ((line (evil-ex-current-line))) (progn (evil-goto-first-line) (+fold/close-all 3) (evil-goto-line line)))))
-(map! :n "zo" (lambda () (interactive)(hs-show-block)))
-(map! :n "zO" (lambda () (interactive)(hs-show-all)))
-(map! :n "zr" (lambda () (interactive)(hs-show-all)))
+;; (map! :n "zo" (lambda () (interactive)(hs-show-block)))
+;; (map! :n "zO" (lambda () (interactive)(hs-show-all)))
+;; (map! :n "zr" (lambda () (interactive)(hs-show-all)))
 
 ; #################### START OF THE DEFAULT CONFIG ##################
 
