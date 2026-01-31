@@ -226,12 +226,15 @@ esc = 'mode main'
 
 [mode.launch.binding]
 
-c = ['''exec-and-forget ~/bin/open_chrome_osascript.sh''', 'mode main', 'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
-shift-c = ['''exec-and-forget open -na 'Google Chrome' --args --profile-directory="Profile 1" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+# c = ['''exec-and-forget ~/bin/open_chrome_osascript.sh''', 'mode main', 'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+c = ['''exec-and-forget open -na 'Google Chrome' --args --profile-directory="Profile 1" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+shift-c = ['''exec-and-forget open -na 'Google Chrome' --args --profile-directory="Profile 2" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+j = ['''exec-and-forget open -na 'Jira' --args --profile-directory="Profile 2" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
 a = ['''exec-and-forget open -na 'Alacritty' ''', 'mode main', 'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
-q = ['''exec-and-forget open -na 'Google Calendar' --args --profile-directory="Profile 1" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+q = ['''exec-and-forget open -na 'Google Calendar' --args --profile-directory="datadoghq.com" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
 # launch_mode < a : open ~/Applications/Chrome\ Apps.localized/Google\ Calendar.app && osascript -e 'tell application "System Events" to keystroke key code 53'
-g = ['''exec-and-forget /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://mail.google.com/"''', 'move-node-to-workspace 10', 'mode main', 'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+g = ['''exec-and-forget open -na 'Gmail' --args --profile-directory="datadoghq.com" ''', 'mode main',  'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
+# g = ['''exec-and-forget /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://mail.google.com/"''', 'move-node-to-workspace 10', 'mode main', 'exec-and-forget echo -n "white" | nc -4u -w0 localhost 1738']
 # launch_mode < m : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://music.youtube.com/" && osascript -e 'tell application "System Events" to keystroke key code 53'
 # launch_mode < t : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="https://trello.com/" && osascript -e 'tell application "System Events" to keystroke key code 53'
 # # launch_mode < j : /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="http://localhost:8888/" && osascript -e 'tell application "System Events" to keystroke key code 53'
@@ -294,6 +297,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
+if.window-title-regex-substring = 'Main'
 run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
@@ -306,7 +310,7 @@ run = 'move-node-to-workspace 1'
 
 
 [[on-window-detected]]
-if.window-title-regex-substring = "Jira"
+if.app-name-regex-substring = "Jira"
 run = 'move-node-to-workspace 6'
 
 [[on-window-detected]]
@@ -322,11 +326,11 @@ if.app-name-regex-substring = 'Youtube Music'
 run = 'move-node-to-workspace A'
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome.app.kjbdgfilnfhdoflbpgamdcdgpehopbep'
+if.app-name-regex-substring = "Google Calendar"
 run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
-if.window-title-regex-substring = "Datadog Mail"
+if.app-name-regex-substring = "Gmail"
 run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]

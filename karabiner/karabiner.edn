@@ -77,10 +77,10 @@
        :rparen {:key :hyphen}
        :lbracket {:key :5 :modi [:left_option]}
        :rbracket {:key :hyphen :modi [:left_option]}
-       :langled {:key :grave_accent_and_tilde}
+       :langled {:key :non_us_backslash}
        :rangled {:key :grave_accent_and_tilde :modi [:left_shift]}
-       :aerospace-switch-special {:key :grave_accent_and_tilde :modi [:left_command]}
-       :aerospace-switch-special-bis {:key :grave_accent_and_tilde :modi [:left_option]}
+       :aerospace-switch-special {:key :non_us_backslash :modi [:left_command]}
+       :aerospace-switch-special-bis {:key :non_us_backslash :modi [:left_option]}
        :switch-workspace-2 {:key :2 :modi [:left_option :left_control]}
        :switch-workspace-3 {:key :3 :modi [:left_option :left_control]}
        :switch-workspace-4 {:key :4 :modi [:left_option :left_control]}
@@ -122,8 +122,8 @@
  [
   {:des "Adapt keyboard"
    :rules [
-           [:grave_accent_and_tilde :non_us_backslash]
-           [:non_us_backslash :grave_accent_and_tilde]
+           ;; [:grave_accent_and_tilde :non_us_backslash]
+           ;; [:non_us_backslash :grave_accent_and_tilde]
            [:##left_option :left_command :lily58]
            [:##left_command :left_option :lily58]
            [:##left_option :left_command :moonlander]
@@ -142,6 +142,8 @@
     :rules [
            [:!Cgrave_accent_and_tilde :aerospace-switch-special]
            [:!Ograve_accent_and_tilde :aerospace-switch-special-bis]
+           [:!Cnon_us_backslash :aerospace-switch-special]
+           [:!Onon_us_backslash :aerospace-switch-special-bis]
    ]
    }
   ; {:des "Adapt keyboard to yabai"
