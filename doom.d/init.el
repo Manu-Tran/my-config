@@ -8,7 +8,7 @@
     (global-undo-tree-mode -1)))
 
 (setq
- org-default-notes-file "/Users/emmanueltran/org/work.org"
+ org-default-notes-file "/Users/emmanuel.tran/org/work.org"
  initial-buffer-choice  org-default-notes-file)
 
 ;; This file controls what Doom modules are enabled and what order they load in.
@@ -91,7 +91,7 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       (spell +flyspell +aspell) ; tasing you for misspelling mispelling
+       ;;(spell +flyspell) ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 
        :tools

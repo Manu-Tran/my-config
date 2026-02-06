@@ -13,6 +13,9 @@
 (setq user-full-name "Emmanuel Tran (Manu)"
       user-mail-address "emmanuel.tran@gmail.com")
 
+;; Stop askip to quit
+(setq confirm-kill-emacs nil)
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -220,7 +223,7 @@
   )
 
 
-(setq python-shell-exec-path '("/Users/emmanueltran/.pyenv/shims/"))
+(setq python-shell-exec-path '("/Users/emmanuel.tran/.pyenv/shims/"))
 
 ;; (add-hook 'python-mode-hook 'conda-env-autoactivate-mode)
 ;; (conda-env-activate 'base)
@@ -351,7 +354,7 @@
 (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 ;; (add-hook 'python-mode-hook #'tree-sitter-hl-mode)
 (after! python-mode
-  (setq flycheck-python-pycompile-executable "/Users/emmanueltran/.pyenv/shims/python3"))
+  (setq flycheck-python-pycompile-executable "/Users/emmanuel.tran/.pyenv/shims/python3"))
 
 ;; to make magit status faster
 ;; (delq! 'magit-insert-tags-header magit-status-headers-hook)
