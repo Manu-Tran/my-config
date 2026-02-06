@@ -71,7 +71,7 @@
 (defvar +org-todo-work-file (expand-file-name "work.org" org-directory))
 (defvar +org-todo-life-file (expand-file-name "life.org" org-directory))
 
-(setq org-startup-folded t)
+(setq org-startup-folded "overview")
 ;; (defvar +org-capture-todo-file (+org--capture-local-root "todo.org"))
 ;; (defvar +org-capture-notes-file "notes.org")
 ;; (defvar +org-capture-someday-file "someday.org")
@@ -197,10 +197,10 @@
            "%[~/org/templates/interview.org]"
            :target (file "interview/%<%Y-%m-%d-%H>.org")
            :unnarrowed t)
-       ;; ("i" "interview" plain
-       ;;  "%?"
-       ;;  :target (file "interview/${slug}.org" "%[~/org/templates/interview.org]")
-       ;;  :unnarrowed t)
+       ("o" "outage" plain
+           "%[~/org/templates/incident.org]"
+           :target (file "outage/%<%Y-%m-%d-%H>.org")
+           :unnarrowed t)
        ))
 
 (defun my/interview-today ()
@@ -221,4 +221,24 @@
         (when (re-search-forward "^\\* Inbox" nil t)
           (org-end-of-subtree)
           (insert (format "\n* TODO Review interview [[file:%s][%s]]" interview-file timestamp))
+          (save-buffer))))))
+
+(defun my/outage ()
+  (interactive)
+  (let* ((today (format-time-string "%Y-%m-%d"))
+         (timestamp (format-time-string "%Y-%m-%d-%H"))
+         (outage-file (expand-file-name (format "outage/%s.org" timestamp) org-roam-directory))
+         (template (assoc "o" org-roam-capture-templates)))
+    ;; Create the interview file
+    (org-roam-capture-
+     :node (org-roam-node-create :title today)
+     :templates (list template)
+     :props '(:finalize find-file))
+    ;; Add todo to work inbox
+    (save-excursion
+      (with-current-buffer (find-file-noselect +org-todo-work-file)
+        (goto-char (point-min))
+        (when (re-search-forward "^\\* Inbox" nil t)
+          (org-end-of-subtree)
+          (insert (format "\n* TODO Review Outage [[file:%s][%s]]" outage-file timestamp))
           (save-buffer))))))
